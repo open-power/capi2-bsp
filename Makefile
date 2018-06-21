@@ -29,6 +29,7 @@ help:
 	@echo "=============================================================";
 	@echo "* AD9V3          Creates capi_bsp ip for AlphaData 9V3 card";
 	@echo "* N250SP         Creates capi_bsp ip for Nallatech 250S+ card";
+	@echo "* RCXVUP         Creates capi_bsp ip for XpressVUP-LP9PT card";
 	@echo "* clean          Removes all files generated in make process";
 	@echo "* help           Prints this message";
 	@echo "* Example : make AD9V3";
