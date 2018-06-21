@@ -20,17 +20,18 @@
 
 SHELL=/bin/bash
 
-export FPGA_PART          ?= xcku15p-ffva1156-2-i
-export PSL_VERSION        ?= 2.00
-export PSL_ROOT_DIR       ?= $(abspath .)
-export BUILD_DIR          ?= $(abspath .)/build_$(FPGA_PART)
-export PSL9_DIR           ?= $(abspath .)/psl9
-export PSL9_SRC           ?= $(PSL9_DIR)/src/verilog
-export CREATE_IP_DONE     ?= $(BUILD_DIR)/.psl_$(FPGA_PART)
-export CREATE_IP_TCL      ?= $(PSL_ROOT_DIR)/create_ip.tcl
-export PSL_OOC_XDC        ?= $(PSL_ROOT_DIR)/psl9_clocks_ooc.xdc
-export PSL9_ENCRYPTED_ZIP ?= "psl9_encrypted_v$(PSL_VERSION).zip"
-export PSL_LOGS_DIR       ?= $(BUILD_DIR)/logs
+export FPGA_PART           ?= xcku15p-ffva1156-2-i
+export PSL_VERSION         ?= 2.00
+export PSL_ROOT_DIR        ?= $(abspath .)
+export BUILD_DIR           ?= $(abspath .)/build_$(FPGA_PART)
+export PSL9_DIR            ?= $(abspath .)/psl9
+export PSL9_SRC            ?= $(PSL9_DIR)/src/verilog
+export CREATE_IP_DONE      ?= $(PSL_ROOT_DIR)/.psl_$(FPGA_PART)
+export CREATE_IP_TCL       ?= $(PSL_ROOT_DIR)/create_ip.tcl
+export PSL_OOC_XDC         ?= $(PSL_ROOT_DIR)/psl9_clocks_ooc.xdc
+export PSL9_ENCRYPTED_SRC  ?= "psl9_encrypted_v$(PSL_VERSION).zip"
+export PSL9_ENCRYPTED_CORE ?= "ibm.com_CAPI_PSL9_WRAP_$(PSL_VERSION).zip"
+export PSL_LOGS_DIR        ?= $(BUILD_DIR)/logs
 
 
 all: create_ip
@@ -50,13 +51,17 @@ help:
 %: %.sh
 
 unzip_psl9_encrypted:
-	@if [ -e "$(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_ZIP)" ]; then \
-	    echo "Extracting encrypted PSL9 sources from file $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_ZIP)"; \
-	    unzip $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_ZIP) -d $(PSL9_DIR); \
+	@if [ -e "$(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_CORE)" ]; then \
+	    echo "Extracting encrypted PSL9 IP core from file $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_CORE)"; \
+	    mkdir -p $(PSL9_DIR); \
+	    unzip $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_CORE) -d $(PSL9_DIR)/ip_repo; \
+	elif [ -e "$(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC)" ]; then \
+	    echo "Extracting encrypted PSL9 sources from file $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC)"; \
+	    unzip $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC) -d $(PSL9_DIR); \
 	else \
 	    echo "ERROR: PSL9 sources not found!"; \
-	    echo "ERROR: Missing $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_ZIP)"; \
-	    echo "Please download $(PSL9_ENCRYPTED_ZIP) and copy it to $(PSL_ROOT_DIR)"; \
+	    echo "ERROR: Missing $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC)"; \
+	    echo "Please download $(PSL9_ENCRYPTED_SRC) and copy it to $(PSL_ROOT_DIR)"; \
 	    echo; exit -1; \
 	fi
 

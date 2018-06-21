@@ -117,9 +117,22 @@ begin
 
     axi_icap_start_pre <= cpld_softreconfigreq  or  start ;
 
-    --16MiB is start address for user image in primary. RS pins not used in SPI mode
-    --wbstart_addr <= ( '0' & cpld_user_bs_req & '1' & '0' & "0000000000000000000000000000" );
+    --FIXME !!
+    --  In this section we tune the Warm Boot Register value, used when a User image is requested
+    --  when cpld_user_bs_req=1 for a Factory image, it will then try to load the User image at specified address
+    --BPI MODE :
+    --  16MiB is start address for user image in primary. RS pins not used in SPI mode
+    --  wbstart_addr <= ( '0' & cpld_user_bs_req & '1' & '0' & "0000000000000000000000000000" );
+    --SPI MODE :
+    -- setting 0x100_0000 as User space address (default for AD9V3 card and still used for RCXVUP as address expansion is not tested yet):
+    --  wbstart_addr <= ( "000" & "0000" & cpld_user_bs_req      & "000000000000000000000000" );
+    -- setting 0x400_0000 as User space address (default for RCXVUP card, not implemented yet):
+    --  wbstart_addr <= ( "000" & "00" & cpld_user_bs_req & "00" & "000000000000000000000000" );
+
+    -- setting 0x100_0000 as User space address (default for AD9V3 card)
     wbstart_addr <= ( "000" & "0000" & cpld_user_bs_req & "000000000000000000000000" );
+
+
     dff_wbstart_addrl1: capi_rise_vdff GENERIC MAP ( width => 32 ) PORT MAP (
          dout => wbstart_addr_l1,
          din => wbstart_addr,

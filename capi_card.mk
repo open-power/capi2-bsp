@@ -62,7 +62,7 @@ $(PSL_IP): $(PSL_CREATE_IP_DONE)
 	@if [ ! -d $@ ]; then                                                                              \
 	    echo "ERROR: Variable PSL_IP needs to point to directory containing the packaged IP for PSL."; \
 	    echo "ERROR: Its value is $(PSL_IP)";                                                          \
-            echo "ERROR: That is no valid path.   Terminating.";                                           \
+	    echo "ERROR: That is no valid path.   Terminating.";                                           \
 	    exit -1;                                                                                       \
 	fi
 
@@ -85,3 +85,4 @@ clean:
 	@$(RM) .create_ip_done
 	@$(RM) -r vivado.*
 	@$(RM) -r build
+	@$(RM) -r .Xil

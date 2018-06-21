@@ -21,7 +21,9 @@
 #Adding source files
 add_files -norecurse $common_src/capi_en_rise_dff.vhdl >> $log_file
 add_files -norecurse $common_src/capi_en_rise_vdff.vhdl >> $log_file
+add_files -norecurse $common_src/capi_fifo.vhdl >> $log_file
 add_files -norecurse $common_src/CAPI_FPGA_RESET_GEN.v >> $log_file
+add_files -norecurse $common_src/capi_ram.vhdl >> $log_file
 add_files -norecurse $common_src/capi_rise_dff_init1.vhdl >> $log_file
 add_files -norecurse $common_src/capi_rise_dff.vhdl >> $log_file
 add_files -norecurse $common_src/capi_rise_vdff.vhdl >> $log_file
