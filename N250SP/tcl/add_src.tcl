@@ -35,7 +35,6 @@ add_files -norecurse $common_src/capi_rise_dff.vhdl >> $log_file
 add_files -norecurse $common_src/capi_rise_vdff.vhdl >> $log_file
 add_files -norecurse $common_src/capi_sreconfig.vhdl >> $log_file
 add_files -norecurse $common_src/CAPI_STP_COUNTER.v >> $log_file
-add_files -norecurse $common_src/capi_xilmltbt.vhdl >> $log_file
 add_files -norecurse $common_src/capi_xilstrte3.vhdl >> $log_file
 
 add_files -scan_for_includes $fpga_src/capi_gpo.vhdl >> $log_file
