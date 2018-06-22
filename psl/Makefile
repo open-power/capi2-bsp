@@ -59,9 +59,8 @@ unzip_psl9_encrypted:
 	    echo "Extracting encrypted PSL9 sources from file $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC)"; \
 	    unzip $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC) -d $(PSL9_DIR); \
 	else \
-	    echo "ERROR: PSL9 sources not found!"; \
-	    echo "ERROR: Missing $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC)"; \
-	    echo "Please download $(PSL9_ENCRYPTED_SRC) and copy it to $(PSL_ROOT_DIR)"; \
+	    echo "ERROR: Missing PSL9 IP core $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_CORE)"; \
+	    echo "Please download $(PSL9_ENCRYPTED_CORE) and copy it to $(PSL_ROOT_DIR)"; \
 	    echo; exit -1; \
 	fi
 
