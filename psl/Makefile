@@ -54,10 +54,10 @@ unzip_psl9_encrypted:
 	@if [ -e "$(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_CORE)" ]; then \
 	    echo "Extracting encrypted PSL9 IP core from file $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_CORE)"; \
 	    mkdir -p $(PSL9_DIR); \
-	    unzip $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_CORE) -d $(PSL9_DIR)/ip_repo; \
+	    unzip -qq $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_CORE) -d $(PSL9_DIR)/ip_repo; \
 	elif [ -e "$(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC)" ]; then \
 	    echo "Extracting encrypted PSL9 sources from file $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC)"; \
-	    unzip $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC) -d $(PSL9_DIR); \
+	    unzip -qq $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_SRC) -d $(PSL9_DIR); \
 	else \
 	    echo "ERROR: Missing PSL9 IP core $(PSL_ROOT_DIR)/$(PSL9_ENCRYPTED_CORE)"; \
 	    echo "Please download $(PSL9_ENCRYPTED_CORE) and copy it to $(PSL_ROOT_DIR)"; \
