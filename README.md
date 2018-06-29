@@ -25,7 +25,7 @@ From the menu, select "CAPI"->"Coherent Accelerator Processor Interface (CAPI)" 
 and download the required zip archive contained in "**PSL IP Source Files for POWER9 CAPI**".  
 Alternatively, the following link will provide direct access:
 
-https://www-355.ibm.com/systems/power/openpower/tgcmDocumentRepository.xhtml?aliasId=CAPI 
+https://www-355.ibm.com/systems/power/openpower/posting.xhtml?postingId=1BED44BCA884D845852582B70076A89A 
 
 Please copy the downloaded zip file to the subdirectory [psl](./psl).
 
