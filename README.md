@@ -73,7 +73,7 @@ In that directory the build process also expects to find the archived PSL9 IP co
 where `PSL_VERSION` is an environment variable used by the build process to identify the PSL version.
 If that variable is not defined, the default value `2.00` will be assumed, currently.
 
-While it is not ***necessary*** to explicitly build the PSL9 IP for a card, calling
+While it is not *necessary* to explicitly build the PSL9 IP for a card, calling
 ```
 make -C <CARD_NAME> psl
 ```
