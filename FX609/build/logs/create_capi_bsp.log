@@ -1,0 +1,26 @@
+WARNING: [filemgmt 56-12] File '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/common/src/capi_rise_dff.vhdl' cannot be added to the project because it already exists in the project, skipping this file
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/psl/build_xcvu9p-fsgd2104-2L-e/output'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/afs/bb/proj/fpga/xilinx/Vivado/2017.4/data/ip'.
+WARNING: [IP_Flow 19-1834] The constraints file "capi_bsp_config.xdc" is added to the synthesis file group only, but will be used for both synthesis and implementation in the IP generation.
+WARNING: [IP_Flow 19-1834] The constraints file "capi_bsp_floorplan.xdc" is added to the synthesis file group only, but will be used for both synthesis and implementation in the IP generation.
+WARNING: [IP_Flow 19-1834] The constraints file "capi_bsp_io.xdc" is added to the synthesis file group only, but will be used for both synthesis and implementation in the IP generation.
+WARNING: [IP_Flow 19-1834] The constraints file "capi_bsp_timing.xdc" is added to the synthesis file group only, but will be used for both synthesis and implementation in the IP generation.
+WARNING: [IP_Flow 19-4747] Not inferring AXIMM interface 'ha0' due to missing slave read-channel signals ARADDR ARVALID ARREADY RDATA RREADY.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'pci_user_reset' as interface 'pci_user_reset'.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'pcie_rst_n' as interface 'pcie_rst_n'.
+INFO: [IP_Flow 19-4728] Bus Interface 'pcie_rst_n': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-2181] Payment Required is not set for this core.
+INFO: [IP_Flow 19-2187] The Product Guide file is missing.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/psl/build_xcvu9p-fsgd2104-2L-e/output'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/capi_bsp_gen'.
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'capi_bsp_wrap'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'capi_bsp_wrap'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'capi_bsp_wrap'...
+INFO: [xilinx.com:ip:sem_ultra:3.1-333] sem_ultra_0: c_board 
+INFO: [xilinx.com:ip:sem_ultra:3.1-333] sem_ultra_0: c_board 
+generate_target: Time (s): cpu = 00:00:32 ; elapsed = 00:00:42 . Memory (MB): peak = 2312.574 ; gain = 24.238 ; free physical = 52910 ; free virtual = 173299
+INFO: [filemgmt 56-106] Converting IP 'capi_bsp_wrap' into core container format.
+INFO: [filemgmt 56-101] Creating core container '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/ip/capi_bsp_wrap.xcix' for IP 'capi_bsp_wrap'
+convert_ips: Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 2312.578 ; gain = 0.004 ; free physical = 51757 ; free virtual = 171923

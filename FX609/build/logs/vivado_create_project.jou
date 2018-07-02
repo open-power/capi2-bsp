@@ -1,0 +1,11 @@
+#-----------------------------------------------------------
+# Vivado v2017.4.1 (64-bit)
+# SW Build 2117270 on Tue Jan 30 15:31:13 MST 2018
+# IP Build 2095745 on Tue Jan 30 17:13:15 MST 2018
+# Start of session at: Thu Jun 14 11:34:20 2018
+# Process ID: 1092
+# Current directory: /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609
+# Command line: vivado -quiet -mode batch -source /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/common/tcl/create_capi_bsp.tcl -notrace -log /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/logs/vivado_create_project.log -journal /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/logs/vivado_create_project.jou
+# Log file: /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/logs/vivado_create_project.log
+# Journal file: /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/logs/vivado_create_project.jou
+#-----------------------------------------------------------

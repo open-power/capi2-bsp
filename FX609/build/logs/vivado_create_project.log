@@ -1,0 +1,59 @@
+#-----------------------------------------------------------
+# Vivado v2017.4.1 (64-bit)
+# SW Build 2117270 on Tue Jan 30 15:31:13 MST 2018
+# IP Build 2095745 on Tue Jan 30 17:13:15 MST 2018
+# Start of session at: Thu Jun 14 11:34:20 2018
+# Process ID: 1092
+# Current directory: /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609
+# Command line: vivado -quiet -mode batch -source /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/common/tcl/create_capi_bsp.tcl -notrace -log /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/logs/vivado_create_project.log -journal /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/logs/vivado_create_project.jou
+# Log file: /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/logs/vivado_create_project.log
+# Journal file: /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/logs/vivado_create_project.jou
+#-----------------------------------------------------------
+[CREATE REQUIRED IP..] start 11:34:33 Thu Jun 14 2018
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/afs/bb/proj/fpga/xilinx/Vivado/2017.4/data/ip'.
+create_ip: Time (s): cpu = 00:00:11 ; elapsed = 00:00:37 . Memory (MB): peak = 1529.055 ; gain = 268.367 ; free physical = 48519 ; free virtual = 168077
+INFO: [Device 21-403] Loading part xcvu9p-fsgd2104-2L-e
+xit::create_sub_core: Time (s): cpu = 00:00:19 ; elapsed = 00:00:48 . Memory (MB): peak = 2241.289 ; gain = 712.234 ; free physical = 46223 ; free virtual = 166412
+create_ip: Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 2266.543 ; gain = 1.000 ; free physical = 45311 ; free virtual = 165519
+WARNING: [IP_Flow 19-3374] An attempt to modify the value of disabled parameter 'MMCM_CLKIN2_PERIOD' from '10.0' to '14.999' has been ignored for IP 'uscale_plus_clk_wiz'
+INFO: [xilinx.com:ip:sem_ultra:3.1-333] sem_ultra_0: c_board 
+[CREATE REQUIRED IP..] done  11:36:19 Thu Jun 14 2018
+[CREATE CAPI BSP.....] start 11:36:19 Thu Jun 14 2018
+Adding design sources to capi_bsp project
+WARNING: [filemgmt 56-12] File '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/common/src/capi_rise_dff.vhdl' cannot be added to the project because it already exists in the project, skipping this file
+Adding PSL IP to capi_bsp project
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/psl/build_xcvu9p-fsgd2104-2L-e/output'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/afs/bb/proj/fpga/xilinx/Vivado/2017.4/data/ip'.
+Adding card specific IP to capi_bsp project
+Adding constraints to capi_bsp project
+Packaging capi_bsp project as IP
+WARNING: [IP_Flow 19-1834] The constraints file "capi_bsp_config.xdc" is added to the synthesis file group only, but will be used for both synthesis and implementation in the IP generation.
+WARNING: [IP_Flow 19-1834] The constraints file "capi_bsp_floorplan.xdc" is added to the synthesis file group only, but will be used for both synthesis and implementation in the IP generation.
+WARNING: [IP_Flow 19-1834] The constraints file "capi_bsp_io.xdc" is added to the synthesis file group only, but will be used for both synthesis and implementation in the IP generation.
+WARNING: [IP_Flow 19-1834] The constraints file "capi_bsp_timing.xdc" is added to the synthesis file group only, but will be used for both synthesis and implementation in the IP generation.
+WARNING: [IP_Flow 19-4747] Not inferring AXIMM interface 'ha0' due to missing slave read-channel signals ARADDR ARVALID ARREADY RDATA RREADY.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'pci_user_reset' as interface 'pci_user_reset'.
+INFO: [IP_Flow 19-4753] Inferred signal 'reset' from port 'pcie_rst_n' as interface 'pcie_rst_n'.
+INFO: [IP_Flow 19-4728] Bus Interface 'pcie_rst_n': Added interface parameter 'POLARITY' with value 'ACTIVE_LOW'.
+INFO: [IP_Flow 19-2181] Payment Required is not set for this core.
+INFO: [IP_Flow 19-2187] The Product Guide file is missing.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/psl/build_xcvu9p-fsgd2104-2L-e/output'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/capi_bsp_gen'.
+Generating capi_bsp IP
+INFO: [IP_Flow 19-1686] Generating 'Instantiation Template' target for IP 'capi_bsp_wrap'...
+INFO: [IP_Flow 19-1686] Generating 'Synthesis' target for IP 'capi_bsp_wrap'...
+INFO: [IP_Flow 19-1686] Generating 'Simulation' target for IP 'capi_bsp_wrap'...
+INFO: [xilinx.com:ip:sem_ultra:3.1-333] sem_ultra_0: c_board 
+INFO: [xilinx.com:ip:sem_ultra:3.1-333] sem_ultra_0: c_board 
+generate_target: Time (s): cpu = 00:00:32 ; elapsed = 00:00:42 . Memory (MB): peak = 2312.574 ; gain = 24.238 ; free physical = 52910 ; free virtual = 173299
+Applying patches
+Creating capi_bsp IP container
+INFO: [filemgmt 56-106] Converting IP 'capi_bsp_wrap' into core container format.
+INFO: [filemgmt 56-101] Creating core container '/afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/ip/capi_bsp_wrap.xcix' for IP 'capi_bsp_wrap'
+convert_ips: Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 2312.578 ; gain = 0.004 ; free physical = 51757 ; free virtual = 171923
+Created /afs/vlsilab.boeblingen.ibm.com/u/luyong/capi/vol3/CAPI2-BSP/FX609/build/ip/capi_bsp_wrap.xcix
+[CREATE CAPI BSP.....] done  11:37:12 Thu Jun 14 2018
