@@ -1,9 +1,0 @@
-INFO: [IP_Flow 19-234] Refreshing IP repositories
-INFO: [IP_Flow 19-1704] No user IP repositories specified
-INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/afs/bb/proj/fpga/xilinx/Vivado/2017.4/data/ip'.
-create_ip: Time (s): cpu = 00:00:11 ; elapsed = 00:00:37 . Memory (MB): peak = 1529.055 ; gain = 268.367 ; free physical = 48519 ; free virtual = 168077
-INFO: [Device 21-403] Loading part xcvu9p-fsgd2104-2L-e
-xit::create_sub_core: Time (s): cpu = 00:00:19 ; elapsed = 00:00:48 . Memory (MB): peak = 2241.289 ; gain = 712.234 ; free physical = 46223 ; free virtual = 166412
-create_ip: Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 2266.543 ; gain = 1.000 ; free physical = 45311 ; free virtual = 165519
-WARNING: [IP_Flow 19-3374] An attempt to modify the value of disabled parameter 'MMCM_CLKIN2_PERIOD' from '10.0' to '14.999' has been ignored for IP 'uscale_plus_clk_wiz'
-INFO: [xilinx.com:ip:sem_ultra:3.1-333] sem_ultra_0: c_board 
