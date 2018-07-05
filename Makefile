@@ -17,7 +17,7 @@
 SHELL=/bin/bash
 export ROOT_DIR ?= $(abspath .)
 
-export CARDS += AD9V3 N250SP
+export CARDS += AD9V3 N250SP RCXVUP
 
 include $(ROOT_DIR)/capi_bsp_env.mk
 
