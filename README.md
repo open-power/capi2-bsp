@@ -6,6 +6,9 @@ Depends on PSL sources that can be obtained as zip archive from `<TBD>`
 Currently, support for the following cards is implemented:
 * [AD9V3](./AD9V3) (AlphaData 9V3)
 * [N250SP](./N250SP) (Nallatech 250S+)
+* [RCXVUP](./RCXVUP) (ReflexCES XpressVUP-LP9PT)
+* [FX609](./FX609) (Flyslice FX609QL)
+* [S241](./S241) (Semptian NSA241)
 
 ## Creating container via make process
 Before creating the CAPI board support IP container, the P9 PSL (PSL9) sources have to be made available for the build process.
