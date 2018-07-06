@@ -71,7 +71,7 @@ BEGIN
       wrad => wrad,
       wrdata => wrdata,
 
-      rden => '1', --rden, --'1',
+      rden => '1',
       rdad => rdad,
       rddata => rddata
     );
