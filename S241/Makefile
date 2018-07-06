@@ -18,7 +18,7 @@ SHELL=/bin/bash
 
 export FPGA_CARD    = S241
 export FPGA_DISPLAY = "Semptian-S241"
-export FPGA_PART    = xcvu9p-fsgd2104-2L-e
+export FPGA_PART    = xcvu9p-flgb2104-2L-e
 export FPGA_SRC     = $(ROOT_DIR)/ultrascale_plus/src
 
 include ../capi_card.mk
