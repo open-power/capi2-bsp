@@ -17,6 +17,8 @@ Currently, support for the following cards is implemented:
 * [AD9V3](./AD9V3) (AlphaData 9V3)
 * [N250SP](./N250SP) (Nallatech 250S+)
 * [RCXVUP](./RCXVUP) (ReflexCES XpressVUP-LP9PT)
+* [FX609](./FX609) (Flyslice FX609QL)
+* [S241](./S241) (Semptian NSA241)
 
 The build process for the CAPI 2.0 board support depends on POWER9 PSL (PSL9) sources that can be obtained as zip archive from the IBM Portal for OpenPOWER
 
