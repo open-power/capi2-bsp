@@ -406,12 +406,10 @@ Signal spi_mosi_secondary_out: std_logic;
 Signal spi_miso_secondary_in: std_logic;
 Signal spi_cen_secondary_out: std_logic;
 
-Signal golden_user: std_logic;
 Signal dummy_q: std_logic_vector(0 to 63);
 Signal dummy_reduce: std_logic;
 
 attribute dont_touch : string;
-attribute dont_touch of golden_user : signal is "true";
 attribute dont_touch of dummy_q : signal is "true";
 
 begin
@@ -422,16 +420,6 @@ dff_dummy_q: capi_rise_vdff GENERIC MAP ( width => 64 ) PORT MAP (
          clk   => pcihip0_psl_clk
 );
 dummy_reduce <= or_reduce(dummy_q);
-
----------------------
--- User vs. Factory image select
----------------------
-
-dff_golden_user: capi_rise_dff_init1 PORT MAP (
-  dout => golden_user,
-  din => golden_user,
-  clk   => icap_clk
-);
 
 
 --===================
@@ -467,7 +455,7 @@ v:       capi_vsec
 
 
          pci_pi_nperst0  => pci_pi_nperst0,
-         cpld_usergolden  => golden_user,
+         cpld_usergolden  => cpld_usergolden,
          cpld_softreconfigreq  => cpld_softreconfigreq,
          cpld_user_bs_req  => cpld_user_bs_req,
          cpld_oe   => cpld_oe,

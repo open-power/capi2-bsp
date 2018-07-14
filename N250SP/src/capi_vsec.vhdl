@@ -805,6 +805,7 @@ begin
                    gate_and(vsec_0x54,vsec54data) or
                    gate_and(vsec_0x58,vsec58data) or
 
+                   -- reserved registers
                    gate_and(vsec_0x14,vsec14data) or
                    gate_and(vsec_0x18,i2cacc_rddata(32 to 63)) or
                    gate_and(vsec_0x1C,i2cacc_rddata(0 to 31)) or
@@ -882,9 +883,10 @@ begin
     sreconfig_en <= vsec_0x10  and  cseb_be_l(0)  and  wren_pulse_in ;
 
     sreconfig_wdat2 <=  not vsec_wrdata(2) ;
-    sreconfig_wdat3 <=  not vsec_wrdata(3) ;
+    -- image_loaded: 0=factory 1=user.  If this is user image, invert bit 3
+    -- (aka bit 28 - image select) so that default is to reload same image
+    sreconfig_wdat3 <=  image_loaded xor vsec_wrdata(3) ;
     sreconfig_wrdat <= ( sreconfig_wdat2 & sreconfig_wdat3 );
-
 
     -- v2bit reconfig_cntl_d = vsec_wrdata.[2..3];
     reconfig_cntl_d <= sreconfig_wrdat ;
@@ -898,10 +900,9 @@ begin
     v10const <= "0000000000000000000000000000" ;  -- Base Image Revision --
 
     sreconfig_rdat2 <=  not reconfig_cntl_q(0) ;
-    sreconfig_rdat3 <=  not reconfig_cntl_q(1) ;
+    sreconfig_rdat3 <=  image_loaded xor reconfig_cntl_q(1) ;
     --concat(type=v32bit) (vsec10data, image_loaded, 0b0, reconfig_cntl_q, v10const);
     vsec10data <= ( image_loaded & '0' & sreconfig_rdat2 & sreconfig_rdat3 & v10const );
-
 
     req_reconfig <= vsec10data(2) ;
     req_user <= vsec10data(3) ;
@@ -916,7 +917,6 @@ begin
          req_user => req_user,
          psl_clk => psl_clk
     );
-
 
  -- -- End Section -- --
 
@@ -1141,8 +1141,6 @@ begin
     vpd44data <= vpd44data_q when (vpd_usehardcoded = '0') else vpd44data_be(24 to 31) & vpd44data_be(16 to 23) & vpd44data_be(8 to 15) & vpd44data_be(0 to 7);
 
     -- use hardcoded data generated with this:
-    -- ./surelock_vpd2rbf.pl -id "FlashGT+ PCIe CAPI2 Adapter" -f flashgtp_vpd_dummy.csv
-    -- xxd -c 4 -ps flashgtp_vpd_dummy.vpdrbf | perl -ne 'chomp;  printf(" when \"%06b\" => vpd44data_be <= X\"%s\";\n",$i,$_); $i++;'
     process (vpdadr) begin
                        case vpdadr is
                          when "000000" => vpd44data_be <= X"821b0046";
@@ -1230,7 +1228,7 @@ begin
                  hi2c_rd_q; --else hold on to prior value
     hi2c_dataval_d <= '1' when ((hi2c_rd_d = '0') and (hi2c_cmdval_d = '1')) else
                       '0'; --treat write data as valid any time a write is being performed
-    --hi2c_cmdin_d(0) <= '1';--IBM space is entire 256 byte chip
+    --hi2c_cmdin_d(0) <= '1';       -- entire 256 byte chip
     hi2c_cmdin_d(0 to 5) <= vpdadr; --Dword address within 256 byte space.
     hi2c_cmdin_d(6 to 7) <= i2c_byteop_d(1 to 2); --byte address within dword
     hi2c_datain_d <= vpdwrdat(24 to 31) when (i2c_byteop_d = "000") else
