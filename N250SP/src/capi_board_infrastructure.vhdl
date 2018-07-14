@@ -396,12 +396,6 @@ signal prf_wr_dynamic_bw: std_logic_vector(0 to 31); -- NEW
 signal efes16:  std_logic_vector(0 to 15);
 signal efes64:  std_logic_vector(0 to 63);
 
-Signal gold_factory: std_logic;
-
-attribute mark_debug of i2cacc_rden : signal is "true";
-attribute mark_debug of i2cacc_wren : signal is "true";
-attribute mark_debug of i2cacc_data : signal is "true";
-attribute mark_debug of i2cacc_rddata : signal is "true";
 
 begin
 
