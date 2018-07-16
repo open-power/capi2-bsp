@@ -26,6 +26,8 @@ module CAPI_FPGA_RESET_GEN
    parameter COUNT_TO = 10'd1000                             ;
 // Wire/Reg declaration
    reg [9:0]     pll_locked_counter_l                        ;
+   reg           reset_reg                                   ;
+
    wire          rst_pll_lock_n                              ;
 
    always @(posedge CLK or negedge PLL_LOCKED)
@@ -35,6 +37,9 @@ module CAPI_FPGA_RESET_GEN
      else if (pll_locked_counter_l != COUNT_TO)
        pll_locked_counter_l <= pll_locked_counter_l + 10'd1  ;
 
-   assign RESET = pll_locked_counter_l != COUNT_TO           ;
+   always @(posedge CLK)
+     reset_reg <= pll_locked_counter_l != COUNT_TO           ;
+
+   assign RESET = reset_reg                                  ;
 
 endmodule
