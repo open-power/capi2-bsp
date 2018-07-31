@@ -19,7 +19,7 @@
 ############################################################################
 
 # from PSL9_WRAP.xdc
-set_false_path -from [get_pins {*/capi_fpga_reset/pll_locked_counter_l_reg[*]/C}]
+#set_false_path -from [get_pins {*/*/capi_fpga_reset/pll_locked_counter_l_reg[*]}]
 
 #set_false_path -from [get_pins {*/XSL9_WRAP/XSL9/RGS/XSL_PARAM_CG_PARREG_RGS_203/gr_data_ff_reg[*]*/C}]
 #set_false_path -from [get_pins {*/XSL9_WRAP/XSL9/RGS/XSL_PARAM_CG_PARREG_RGS_10/gr_data_ff_reg[*]*/C}]

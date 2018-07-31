@@ -18,6 +18,3 @@
 ############################################################################
 ############################################################################
 #Semptian S241 timing constraints
-
-# from PSL9_WRAP.xdc
-set_false_path -from [get_pins {*/*/capi_fpga_reset/pll_locked_counter_l_reg[*]/C}]
