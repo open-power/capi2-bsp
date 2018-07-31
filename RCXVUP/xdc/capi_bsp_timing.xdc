@@ -19,6 +19,3 @@
 ############################################################################
 #Reflex-Ces XpressVUP-LP9PT timing constraints
 
-# from PSL9_WRAP.xdc
-set_false_path -from [get_pins {*/psl_fpga_reset/pll_locked_counter_l_reg[*]/C}]
-
