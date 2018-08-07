@@ -1200,7 +1200,7 @@ I => sys_rst_n   -- 1-bit input: Buffer input
 --        avoid glitches to sem core to prevent false errors or worse
 --        also used to clock multiboot logic so keep enabled when link goes down
 -- clock_lite_ce <= clock_gen_locked and not(user_reset);
-dff_icap_clk_ce: psl_rise_dff PORT MAP (
+dff_icap_clk_ce: capi_rise_dff PORT MAP (
      dout => icap_clk_ce,
      din => icap_clk_ce_d,
      clk   => pcihip0_psl_clk
