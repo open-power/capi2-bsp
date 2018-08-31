@@ -49,15 +49,20 @@ source $card_tcl/add_src.tcl
 set_property top $top_level [current_fileset]
 
 # Add PSL IP path to IP repository paths
-puts "Adding PSL IP to capi_bsp project"
+#puts "Adding PSL IP to capi_bsp project"
+puts "Importing PSL IP into capi_bsp project"
 set_property ip_repo_paths "[file normalize $psl_ip_dir]" [current_project]
 # Rebuild user ip_repo's index before adding any source files
 update_ip_catalog >> $log_file
-add_files -norecurse                             $psl_ip_dir/PSL9_WRAP_0/PSL9_WRAP_0.xci  -force >> $log_file
+#add_files -norecurse                             $psl_ip_dir/PSL9_WRAP_0/PSL9_WRAP_0.xci  -force >> $log_file
+import_ip $psl_ip_dir/PSL9_WRAP_0/PSL9_WRAP_0.xci >> $log_file
 
 # Add card specific IP
-puts "Adding card specific IP to capi_bsp project"
-source $card_tcl/add_ip.tcl
+#puts "Adding card specific IP to capi_bsp project"
+#source $card_tcl/add_ip.tcl
+# Import card specific IP
+puts "Importing card specific IP into capi_bsp project"
+source $card_tcl/import_ip.tcl
 
 # Add constraint files
 puts "Adding constraints to capi_bsp project"
