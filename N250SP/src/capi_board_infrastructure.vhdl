@@ -41,17 +41,20 @@ ENTITY capi_board_infrastructure IS
          -- b_flash_dq_sim                : inout std_logic_vector(3 downto 0);
 
          pci_pi_nperst0                : in    std_logic;
+         user_lnk_up                   : in    std_logic;
          pcihip0_psl_clk               : in    std_logic;
          icap_clk                      : in    std_logic;
          cpld_usergolden               : in    std_logic;  -- bool
          crc_error                     : out   std_logic;
 
          -- power supply controller UCD9090 PMBUS
-         b_basei2c_scl                 : inout std_logic                     ;                                       -- clock
-         b_basei2c_sda                 : inout std_logic                     ;                                       -- data
+         b_basei2c_scl                 : inout std_logic;  -- clock
+         b_basei2c_sda                 : inout std_logic;  -- data
          -- PTMON/VPD PMBUS
-         b_smbus_scl                   : inout std_logic; -- clock temp mon/vpd
-         b_smbus_sda                 : inout std_logic);  -- data
+         b_smbus_scl                   : inout std_logic;  -- clock temp mon/vpd
+         b_smbus_sda                   : inout std_logic   -- data
+         -- i_fpga_smbus_en_n             : in    std_logic
+  );
 END capi_board_infrastructure;
 
 
@@ -154,6 +157,7 @@ Component capi_vsec
 
 
          pci_pi_nperst0                : in    std_logic;
+         user_lnk_up                   : in    std_logic;
          cpld_usergolden               : in    std_logic;
          cpld_softreconfigreq          : out   std_logic;
          cpld_user_bs_req              : out   std_logic;
@@ -186,16 +190,7 @@ Component capi_vsec
          i2cacc_wren : out std_logic;
          i2cacc_data : out std_logic_vector(0 to 63);
          i2cacc_rden : out std_logic;
-         i2cacc_rddata  : in std_logic_vector(0 to 63);
-
-         prf_wr_overall_ticks_data     : in    std_logic_vector(0 to 127);
-         prf_wr_overall_samples_data   : in    std_logic_vector(0 to 63);
-         prf_rd_overall_ticks_data     : in    std_logic_vector(0 to 127);
-         prf_rd_overall_samples_data   : in    std_logic_vector(0 to 63);
-         prf_rd_max_lat_dynamic_avg    : in    std_logic_vector(0 to 31);
-         prf_rd_dynamic_bw             : in    std_logic_vector(0 to 31)   ;  -- NEW
-         prf_wr_dynamic_bw             : in    std_logic_vector(0 to 31)   ;  -- NEW
-         prf_rd_max_lat :in std_logic_vector(0 to 31)
+         i2cacc_rddata  : in std_logic_vector(0 to 63)
        );
 End Component capi_vsec;
 
@@ -384,24 +379,10 @@ Signal icap_mltbt_writedata: std_logic_vector(0 to 31);  -- v32bit
 Signal icap_release: std_logic;  -- bool
 Signal icap_request: std_logic;  -- bool
 
--- -------------- -- PRF vectors
-signal prf_wr_overall_ticks_data: std_logic_vector(0 to 127);
-signal prf_rd_overall_ticks_data: std_logic_vector(0 to 127);
-signal prf_wr_overall_samples_data: std_logic_vector(0 to 63);
-signal prf_rd_overall_samples_data: std_logic_vector(0 to 63);
-signal prf_rd_max_lat_dynamic_avg: std_logic_vector(0 to 31);
-signal prf_rd_max_lat: std_logic_vector(0 to 31);
-signal prf_rd_dynamic_bw: std_logic_vector(0 to 31); -- NEW
-signal prf_wr_dynamic_bw: std_logic_vector(0 to 31); -- NEW
-signal efes16:  std_logic_vector(0 to 15);
-signal efes64:  std_logic_vector(0 to 63);
+-- Signal fpga_smbus_en_n: std_logic;
 
 
 begin
-
-
-
-
 
 --===================
       -- Flash pins
@@ -463,14 +444,14 @@ startupe3:capi_xilstrte3
     -- vsec logic
 v:       capi_vsec
       PORT MAP (
-          cfg_ext_read_received => cfg_ext_read_received,
-      cfg_ext_write_received => cfg_ext_write_received,
-      cfg_ext_register_number => cfg_ext_register_number,
-      cfg_ext_function_number => cfg_ext_function_number,
-      cfg_ext_write_data => cfg_ext_write_data,
-      cfg_ext_write_byte_enable => cfg_ext_write_byte_enable,
-      cfg_ext_read_data => cfg_ext_read_data,
-      cfg_ext_read_data_valid => cfg_ext_read_data_valid,
+         cfg_ext_read_received => cfg_ext_read_received,
+         cfg_ext_write_received => cfg_ext_write_received,
+         cfg_ext_register_number => cfg_ext_register_number,
+         cfg_ext_function_number => cfg_ext_function_number,
+         cfg_ext_write_data => cfg_ext_write_data,
+         cfg_ext_write_byte_enable => cfg_ext_write_byte_enable,
+         cfg_ext_read_data => cfg_ext_read_data,
+         cfg_ext_read_data_valid => cfg_ext_read_data_valid,
 
          hi2c_cmdval => hi2c1_cmdval,
          hi2c_dataval => hi2c1_dataval,
@@ -486,9 +467,10 @@ v:       capi_vsec
          i2ch_error => i2ch1_error,
          i2ch_dataout => i2ch1_dataout,
          i2ch_ready => i2ch1_ready,
-
+         -- fpga_smbus_en_n => fpga_smbus_en_n,
 
          pci_pi_nperst0  => pci_pi_nperst0,
+         user_lnk_up  => user_lnk_up,
          cpld_usergolden  => cpld_usergolden,
          cpld_softreconfigreq  => cpld_softreconfigreq,
          cpld_user_bs_req  => cpld_user_bs_req,
@@ -521,14 +503,6 @@ v:       capi_vsec
          i2cacc_rden => i2cacc_rden,
          i2cacc_rddata => i2cacc_rddata,
 
-         prf_wr_overall_ticks_data   => prf_wr_overall_ticks_data,
-         prf_rd_overall_ticks_data   => prf_rd_overall_ticks_data,
-         prf_wr_overall_samples_data => prf_wr_overall_samples_data,
-         prf_rd_overall_samples_data => prf_rd_overall_samples_data,
-         prf_rd_max_lat_dynamic_avg  => prf_rd_max_lat_dynamic_avg,
-         prf_rd_max_lat  => prf_rd_max_lat,
-         prf_rd_dynamic_bw  => prf_rd_dynamic_bw,  -- NEW
-         prf_wr_dynamic_bw  => prf_wr_dynamic_bw,  -- NEW
          psl_clk   => pcihip0_psl_clk  -- 250MHz clock, not a psl_clk
     );
 
@@ -674,5 +648,11 @@ i2cacc: capi_i2cacc
          i2cacc_rddata => i2cacc_rddata
 
        );
+
+-- ibuf_fpga_smbus_en_n : IBUF
+--   PORT MAP (
+--     O => fpga_smbus_en_n,  -- 1-bit output: Buffer output
+--     I => i_fpga_smbus_en_n   -- 1-bit input: Buffer input
+--   );
 
 END capi_board_infrastructure;
