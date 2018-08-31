@@ -78,6 +78,8 @@ ENTITY capi_bsp IS
     b_basei2c_sda         : inout std_logic;  -- data
     b_smbus_scl           : inout std_logic;  -- clock
     b_smbus_sda           : inout std_logic;  -- data
+    -- when i_fpga_smbus_en_n=0, host smbus is isolated from fpga/vpd/ptmon and fpga can drive scl/sda without arbitration
+    -- i_fpga_smbus_en_n     : in    std_logic;
 
 --LEDs
     o_led_red             : out   std_logic_vector(1 downto 0);
@@ -640,6 +642,7 @@ Component capi_board_infrastructure
     b_flash_dq                                     : inout std_logic_vector(15 downto 4);
 
     pci_pi_nperst0                                 : in    std_logic;
+    user_lnk_up                                    : in    std_logic;
     pcihip0_psl_clk                                : in    std_logic;
     icap_clk                                       : in    std_logic;
     cpld_usergolden                                : in    std_logic;  -- bool
@@ -650,6 +653,7 @@ Component capi_board_infrastructure
     -- PTMON/VPD PMBUS
     b_smbus_scl                                    : inout std_logic;      -- clock
     b_smbus_sda                                    : inout std_logic       -- data
+    -- i_fpga_smbus_en_n                              : in std_logic
   );
 END Component capi_board_infrastructure;
 
@@ -753,19 +757,19 @@ signal        axis_cc_tlast   : std_logic;
 signal        axis_cc_tuser   : std_logic_vector(80 downto 0);
 signal        axis_cc_tkeep   : std_logic_vector(15 downto 0);
 
-Signal pcihip0_psl_clk  : std_logic;
-Signal pcihip0_psl_rst  : std_logic;
-Signal user_lnk_up  : std_logic;
+Signal pcihip0_psl_clk        : std_logic;
+Signal pcihip0_psl_rst        : std_logic;
+Signal user_lnk_up            : std_logic;
 
-Signal xip_cfg_fc_sel_sig   : std_logic_vector(2 downto 0);
-Signal xip_cfg_fc_ph_sig    : std_logic_vector(7 downto 0);
-Signal xip_cfg_fc_pd_sig    : std_logic_vector(11 downto 0);
-Signal xip_cfg_fc_np_sig    : std_logic_vector(7 downto 0);
-Signal cfg_dsn_sig  : std_logic_vector(63 downto 0);
+Signal xip_cfg_fc_sel_sig     : std_logic_vector(2 downto 0);
+Signal xip_cfg_fc_ph_sig      : std_logic_vector(7 downto 0);
+Signal xip_cfg_fc_pd_sig      : std_logic_vector(11 downto 0);
+Signal xip_cfg_fc_np_sig      : std_logic_vector(7 downto 0);
+Signal cfg_dsn_sig            : std_logic_vector(63 downto 0);
 
-Signal sys_clk    : std_logic;
-Signal sys_clk_gt   : std_logic;
-Signal sys_rst_n_c   : std_logic;
+Signal sys_clk                : std_logic;
+Signal sys_clk_gt             : std_logic;
+Signal sys_rst_n_c            : std_logic;
 
 
 
@@ -1256,6 +1260,7 @@ capi_bis : capi_board_infrastructure
     b_flash_dq                  => b_flash_dq,
 
     pci_pi_nperst0              => sys_rst_n_c,
+    user_lnk_up                 => user_lnk_up,
     pcihip0_psl_clk             => pcihip0_psl_clk,
     icap_clk                    => icap_clk,
     cpld_usergolden             => gold_factory,
@@ -1264,6 +1269,7 @@ capi_bis : capi_board_infrastructure
     b_basei2c_sda               => b_basei2c_sda,
     b_smbus_scl                 => b_smbus_scl,
     b_smbus_sda                 => b_smbus_sda
+    -- i_fpga_smbus_en_n           => i_fpga_smbus_en_n
   );
 
 
