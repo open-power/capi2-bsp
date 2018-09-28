@@ -142,7 +142,7 @@ set_property -dict [list                                        \
                     CONFIG.CLKOUT1_DRIVES {BUFG}                \
                     CONFIG.CLKOUT1_JITTER {88.305}              \
                     CONFIG.CLKOUT1_PHASE_ERROR {80.553}         \
-                    CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {225.000} \
+                    CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {250.000} \
                     CONFIG.CLKOUT2_DRIVES {BUFG}                \
                     CONFIG.CLKOUT2_JITTER {99.067}              \
                     CONFIG.CLKOUT2_PHASE_ERROR {80.553}         \
@@ -154,12 +154,12 @@ set_property -dict [list                                        \
                     CONFIG.CLKOUT3_REQUESTED_OUT_FREQ {125.000} \
                     CONFIG.CLKOUT3_USED {true}                  \
                     CONFIG.FEEDBACK_SOURCE {FDBK_AUTO}          \
-                    CONFIG.MMCM_CLKFBOUT_MULT_F {4.500}         \
+                    CONFIG.MMCM_CLKFBOUT_MULT_F {5.000}         \
                     CONFIG.MMCM_CLKIN1_PERIOD {4.000}           \
-                    CONFIG.MMCM_CLKIN2_PERIOD {14.999}          \
+                    CONFIG.MMCM_CLKIN2_PERIOD {10.000}          \
                     CONFIG.MMCM_CLKOUT0_DIVIDE_F {5.000}        \
-                    CONFIG.MMCM_CLKOUT1_DIVIDE {9}              \
-                    CONFIG.MMCM_CLKOUT2_DIVIDE {9}              \
+                    CONFIG.MMCM_CLKOUT1_DIVIDE {10}             \
+                    CONFIG.MMCM_CLKOUT2_DIVIDE {10}             \
                     CONFIG.MMCM_DIVCLK_DIVIDE {1}               \
                     CONFIG.NUM_OUT_CLKS {3}                     \
                     CONFIG.PRIM_IN_FREQ {250.000}               \
