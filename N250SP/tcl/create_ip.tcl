@@ -18,8 +18,7 @@
 ############################################################################
 ############################################################################
 
-# user can set a specific value for the action clock lower than the 250MHz nominal clock
-#Parameter is defined in N250SP/Makefile
+# user can set a specific value for the Action clock lower than the 250MHz nominal clock
 set action_clock_freq $::env(FPGA_ACTION_CLK)
 
 # Create PCIe4 IP
