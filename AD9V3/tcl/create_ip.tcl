@@ -18,6 +18,8 @@
 ############################################################################
 ############################################################################
 
+# user can set a specific value for the Action clock lower than the 250MHz nominal clock
+set action_clock_freq $::env(FPGA_ACTION_CLK)
 
 # Create PCIe4 IP
 create_ip -name pcie4_uscale_plus -vendor xilinx.com -library ip -module_name pcie4_uscale_plus_0 -dir $ip_dir >> $log_file
@@ -95,38 +97,27 @@ set_property -dict [list                                               \
                     CONFIG.axisten_freq {250}                          \
                    ] [get_ips pcie4_uscale_plus_0] >> $log_file
 
-#Normal 250MHz psl clock
-create_ip -name clk_wiz -vendor xilinx.com -library ip -module_name uscale_plus_clk_wiz -dir  $ip_dir >> $log_file
+#Create Clock IP
+# Possible values for different action frequencies
+# CONFIG.CLKOUT1_JITTER             {88.305}  {85.736}
+# CONFIG.CLKOUT1_PHASE_ERROR        {80.553}  {79.008}
+# CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {225.000} {250.000}
+# CONFIG.CLKOUT2_JITTER             {99.067}  {98.122}
+# CONFIG.CLKOUT2_PHASE_ERROR        {80.553}  {79.008}
+# CONFIG.CLKOUT3_JITTER             {99.067}  {98.122}
+# CONFIG.CLKOUT3_PHASE_ERROR        {80.553}  {79.008}
+#
+# CONFIG.MMCM_CLKFBOUT_MULT_F       {4.500}   {5.000}
+# CONFIG.MMCM_CLKIN2_PERIOD         {14.999}  {10.000}
+# CONFIG.MMCM_CLKOUT1_DIVIDE        {9}       {10}
+# CONFIG.MMCM_CLKOUT2_DIVIDE        {9}       {10}
+#
+if { $action_clock_freq == "225MHZ" } {
+#Create 225MHz specific Clock IP
+  puts " CAUTION: Action clock has been set to 225MHZ (vs. 250MHZ)"
+  create_ip -name clk_wiz -vendor xilinx.com -library ip -module_name uscale_plus_clk_wiz -dir $ip_dir >> $log_file
 
-#set_property -dict [list CONFIG.CLKIN1_JITTER_PS {40.0} \
-#CONFIG.CLKOUT1_DRIVES {BUFG} \
-#CONFIG.CLKOUT1_JITTER {85.736} \
-#CONFIG.CLKOUT1_PHASE_ERROR {79.008} \
-#CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {250} \
-#CONFIG.CLKOUT2_DRIVES {BUFG} \
-#CONFIG.CLKOUT2_JITTER {98.122} \
-#CONFIG.CLKOUT2_PHASE_ERROR {79.008} \
-#CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {125} \
-#CONFIG.CLKOUT2_USED {true} \
-#CONFIG.CLKOUT3_DRIVES {BUFGCE} \
-#CONFIG.CLKOUT3_JITTER {98.122} \
-#CONFIG.CLKOUT3_PHASE_ERROR {79.008} \
-#CONFIG.CLKOUT3_REQUESTED_OUT_FREQ {125} \
-#CONFIG.CLKOUT3_USED {true} \
-#CONFIG.FEEDBACK_SOURCE {FDBK_AUTO} \
-#CONFIG.MMCM_CLKFBOUT_MULT_F {5.000} \
-#CONFIG.MMCM_CLKIN1_PERIOD {4.000} \
-#CONFIG.MMCM_CLKIN2_PERIOD {10.0} \
-#CONFIG.MMCM_CLKOUT0_DIVIDE_F {5.000} \
-#CONFIG.MMCM_CLKOUT1_DIVIDE {10} \
-#CONFIG.MMCM_CLKOUT2_DIVIDE {10} \
-#CONFIG.MMCM_DIVCLK_DIVIDE {1} \
-#CONFIG.NUM_OUT_CLKS {2} \
-#CONFIG.NUM_OUT_CLKS {3} \
-#CONFIG.PRIM_IN_FREQ {250}] [get_ips uscale_plus_clk_wiz]
-
-#Increase psl clock period by 10% to ease timing
-set_property -dict [list                                        \
+  set_property -dict [list                                        \
                     CONFIG.CLKIN1_JITTER_PS {40.0}              \
                     CONFIG.CLKOUT1_DRIVES {BUFG}                \
                     CONFIG.CLKOUT1_JITTER {88.305}              \
@@ -154,11 +145,43 @@ set_property -dict [list                                        \
                     CONFIG.PRIM_IN_FREQ {250.000}               \
                     CONFIG.USE_INCLK_SWITCHOVER {false}         \
                    ] [get_ips uscale_plus_clk_wiz] >> $log_file
+} else {
+# create a 250MHz Clock IP
+  puts " Action clock is set to 250MHZ (default)"
+  create_ip -name clk_wiz -vendor xilinx.com -library ip -module_name uscale_plus_clk_wiz -dir $ip_dir >> $log_file
+  set_property -dict [list                                    \
+                    CONFIG.CLKIN1_JITTER_PS {40.0}          \
+                    CONFIG.CLKOUT1_DRIVES {BUFG}            \
+                    CONFIG.CLKOUT1_JITTER {85.736}          \
+                    CONFIG.CLKOUT1_PHASE_ERROR {79.008}     \
+                    CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {250.000} \
+                    CONFIG.CLKOUT2_DRIVES {BUFG}            \
+                    CONFIG.CLKOUT2_JITTER {98.122}          \
+                    CONFIG.CLKOUT2_PHASE_ERROR {79.008}     \
+                    CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {125} \
+                    CONFIG.CLKOUT2_USED {true}              \
+                    CONFIG.CLKOUT3_DRIVES {BUFGCE}          \
+                    CONFIG.CLKOUT3_JITTER {98.122}          \
+                    CONFIG.CLKOUT3_PHASE_ERROR {79.008}     \
+                    CONFIG.CLKOUT3_REQUESTED_OUT_FREQ {125} \
+                    CONFIG.CLKOUT3_USED {true}              \
+                    CONFIG.FEEDBACK_SOURCE {FDBK_AUTO}      \
+                    CONFIG.MMCM_CLKFBOUT_MULT_F {5.000}     \
+                    CONFIG.MMCM_CLKIN1_PERIOD {4.000}       \
+                    CONFIG.MMCM_CLKIN2_PERIOD {10.000}      \
+                    CONFIG.MMCM_CLKOUT0_DIVIDE_F {5.000}    \
+                    CONFIG.MMCM_CLKOUT1_DIVIDE {10}         \
+                    CONFIG.MMCM_CLKOUT2_DIVIDE {10}         \
+                    CONFIG.MMCM_DIVCLK_DIVIDE {1}           \
+                    CONFIG.NUM_OUT_CLKS {3}                 \
+                    CONFIG.PRIM_IN_FREQ {250}               \
+                   ] [get_ips uscale_plus_clk_wiz] >> $log_file
+}
 
 create_ip -name sem_ultra -vendor xilinx.com -library ip -module_name sem_ultra_0 -dir $ip_dir >> $log_file
 set_property -dict [list                       \
                     CONFIG.MODE {detect_only}  \
-                    CONFIG.CLOCK_PERIOD {8000} \
+                    CONFIG.CLOCK_PERIOD {10000} \
                    ] [get_ips sem_ultra_0] >> $log_file
 
 set_property generate_synth_checkpoint false [get_files pcie4_uscale_plus_0.xci] >> $log_file
