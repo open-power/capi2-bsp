@@ -99,9 +99,9 @@ set_property -dict [list                                               \
 
 #Create Clock IP
 # Possible values for different action frequencies
+# CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {225.000} {250.000}
 # CONFIG.CLKOUT1_JITTER             {88.305}  {85.736}
 # CONFIG.CLKOUT1_PHASE_ERROR        {80.553}  {79.008}
-# CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {225.000} {250.000}
 # CONFIG.CLKOUT2_JITTER             {99.067}  {98.122}
 # CONFIG.CLKOUT2_PHASE_ERROR        {80.553}  {79.008}
 # CONFIG.CLKOUT3_JITTER             {99.067}  {98.122}

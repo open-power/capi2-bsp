@@ -133,7 +133,6 @@ set_property -dict [list                                               \
 #CONFIG.MMCM_CLKOUT1_DIVIDE {10} \
 #CONFIG.MMCM_CLKOUT2_DIVIDE {10} \
 #CONFIG.MMCM_DIVCLK_DIVIDE {1} \
-#CONFIG.NUM_OUT_CLKS {2} \
 #CONFIG.NUM_OUT_CLKS {3} \
 #CONFIG.PRIM_IN_FREQ {250}] [get_ips uscale_plus_clk_wiz]
 

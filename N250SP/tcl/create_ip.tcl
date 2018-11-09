@@ -143,6 +143,7 @@ if { $action_clock_freq == "225MHZ" } {
                     CONFIG.MMCM_DIVCLK_DIVIDE {1}           \
                     CONFIG.NUM_OUT_CLKS {3}                 \
                     CONFIG.PRIM_IN_FREQ {250}               \
+                    CONFIG.USE_INCLK_SWITCHOVER {false}         \
                    ] [get_ips uscale_plus_clk_wiz] >> $log_file
 } else {
 # create a 250MHz Clock IP
