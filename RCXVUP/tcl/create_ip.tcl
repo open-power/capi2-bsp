@@ -19,7 +19,12 @@
 ############################################################################
 
 # user can set a specific value for the Action clock lower than the 250MHz nominal clock
-set action_clock_freq $::env(FPGA_ACTION_CLK)
+if {[info exists FPGA_ACTION_CLK ]} {
+  set action_clock_freq $::env(FPGA_ACTION_CLK)
+} else {
+  set action_clock_freq "250MHz"
+}
+
 
 # Create PCIe4 IP
 create_ip -name pcie4_uscale_plus -vendor xilinx.com -library ip -module_name pcie4_uscale_plus_0 -dir $ip_dir >> $log_file
@@ -116,7 +121,7 @@ set_property -dict [list                                               \
 #
 if { $action_clock_freq == "225MHZ" } {
   #Create 225MHz specific Clock IP
-  puts " CAUTION: Action clock has been set to 225MHZ (vs. 250MHZ)"
+  puts " CAUTION: Action clock has been set to 225MHZ (default is 250MHZ)"
 
   create_ip -name clk_wiz -vendor xilinx.com -library ip -module_name uscale_plus_clk_wiz -dir  $ip_dir >> $log_file
   set_property -dict [list                                        \
