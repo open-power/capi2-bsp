@@ -165,5 +165,3 @@ set_property -dict [list                       \
 set_property generate_synth_checkpoint false [get_files pcie4_uscale_plus_0.xci] >> $log_file
 set_property generate_synth_checkpoint false [get_files uscale_plus_clk_wiz.xci] >> $log_file
 set_property generate_synth_checkpoint false [get_files sem_ultra_0.xci] >> $log_file
-
-#TODO: patch CAP_NEXTPTR for pcie
