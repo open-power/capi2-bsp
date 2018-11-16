@@ -22,10 +22,10 @@
 # Create PCIe4 IP
 create_ip -name pcie4_uscale_plus -vendor xilinx.com -library ip -module_name pcie4_uscale_plus_0 -dir $ip_dir >> $log_file
 set_property -dict [list                                               \
-                    CONFIG.enable_gen4 {true}                          \
+                    CONFIG.enable_gen4 {false}                         \
                     CONFIG.gen4_eieos_0s7 {true}                       \
-                    CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {16.0_GT/s}      \
-                    CONFIG.PL_LINK_CAP_MAX_LINK_WIDTH {X8}             \
+                    CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {8.0_GT/s}       \
+                    CONFIG.PL_LINK_CAP_MAX_LINK_WIDTH {X16}            \
                     CONFIG.AXISTEN_IF_EXT_512_CQ_STRADDLE {true}       \
                     CONFIG.AXISTEN_IF_EXT_512_RC_4TLP_STRADDLE {false} \
                     CONFIG.axisten_if_enable_client_tag {true}         \
@@ -54,7 +54,6 @@ set_property -dict [list                                               \
                     CONFIG.legacy_ext_pcie_cfg_space_enabled {true}    \
                     CONFIG.mode_selection {Advanced}                   \
                     CONFIG.en_gt_selection {true}                      \
-                    CONFIG.select_quad {GTY_Quad_225}                  \
                     CONFIG.AXISTEN_IF_EXT_512_RQ_STRADDLE {true}       \
                     CONFIG.PF0_MSIX_CAP_PBA_BIR {BAR_1:0}              \
                     CONFIG.PF0_MSIX_CAP_TABLE_BIR {BAR_1:0}            \
@@ -93,6 +92,8 @@ set_property -dict [list                                               \
                     CONFIG.coreclk_freq {500}                          \
                     CONFIG.plltype {QPLL0}                             \
                     CONFIG.axisten_freq {250}                          \
+                    CONFIG.pcie_blk_locn {X1Y0}                        \
+                    CONFIG.select_quad {GTY_Quad_227}                  \
                    ] [get_ips pcie4_uscale_plus_0] >> $log_file
 
 #Normal 250MHz psl clock
