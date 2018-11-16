@@ -22,7 +22,7 @@
 # Create PCIe4 IP
 create_ip -name pcie4_uscale_plus -vendor xilinx.com -library ip -module_name pcie4_uscale_plus_0 -dir $ip_dir >> $log_file
 set_property -dict [list                                               \
-                    CONFIG.enable_gen4 {false}                         \
+                    CONFIG.enable_gen4 {true}                          \
                     CONFIG.gen4_eieos_0s7 {true}                       \
                     CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {8.0_GT/s}       \
                     CONFIG.PL_LINK_CAP_MAX_LINK_WIDTH {X16}            \
