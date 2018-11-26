@@ -16,9 +16,9 @@
 
 SHELL=/bin/bash
 
-export FPGA_CARD    = N250SP
-export FPGA_DISPLAY = "Nallatech 250S+"
-export FPGA_PART    = xcku15p-ffva1156-2-i
-export FPGA_SRC     = $(ROOT_DIR)/ultrascale_plus/src
+export FPGA_CARD       = N250SP
+export FPGA_DISPLAY    = "Nallatech 250S+"
+export FPGA_PART       = xcku15p-ffva1156-2-i
+export FPGA_SRC        = $(ROOT_DIR)/ultrascale_plus/src
 
 include ../capi_card.mk

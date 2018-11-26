@@ -72,6 +72,9 @@ psl_ip_create: $(PSL9_DIR)
 	@mkdir -p $(BUILD_DIR)
 	@mkdir -p $(PSL_LOGS_DIR)
 	@echo "Creating PSL IP for $(FPGA_PART) ..."
+	@if [ $(FPGA_PART) == "xcvu9p-flgb2104-2l-e-es1" ]; then \
+	    echo " CAUTION : Engineering Samples (RCXVUP card) are not supported by Vivado 2018.1 or later. Please check that you are using Vivado 2017.4"; \
+	fi
 	@cd $(BUILD_DIR) && vivado -quiet -mode batch -source $(CREATE_IP_TCL) -notrace -log $(PSL_LOGS_DIR)/vivado_create_ip.log -journal $(PSL_LOGS_DIR)/vivado_create_ip.jou
 	@echo "[CREATE IP...] done  `date "+%Y-%m-%d %H:%M:%S"`"
 

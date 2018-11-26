@@ -16,6 +16,10 @@
 
 export ROOT_DIR ?= $(abspath ..)
 
+ifndef FPGA_ACTION_CLK
+export FPGA_ACTION_CLK = "250MHZ"
+endif
+
 include $(ROOT_DIR)/capi_bsp_env.mk
 
 export PSL_IP             ?= $(PSL_DIR)/build_$(FPGA_PART)/output
@@ -46,6 +50,7 @@ $(CARD_LOGS):
 
 
 $(CARD_CAPI_BSP_GEN): $(CARD_LOGS)
+	@echo "Creating the PSL for the $(FPGACARD) card."
 	@echo "[PREPARE DIRECTORIES.] start "`date +"%T %a %b %d %Y"`
 	@mkdir -p $(CARD_CAPI_BSP_GEN)
 	@echo "[PREPARE DIRECTORIES.] done  "`date +"%T %a %b %d %Y"`
@@ -75,6 +80,12 @@ $(CARD_DIR)/.create_ip_done: $(PSL_IP)
 	@echo "Starting vivado in $(VIVADO_MODE) mode ..."
 	@vivado -quiet -mode $(VIVADO_MODE) -source $(COMMON_TCL)/create_capi_bsp.tcl -notrace -log $(CARD_LOGS)/vivado_create_project.log  -journal $(CARD_LOGS)/vivado_create_project.jou
 	@touch $(CARD_DIR)/.create_ip_done
+	@if [ $(FPGA_ACTION_CLK) == "225MHZ" ]; then		\
+            touch .action_clk_225MHZ;                           \
+        fi
+	@if [ $(FPGA_ACTION_CLK) == "250MHZ" ]; then		\
+            touch .action_clk_250MHZ;                           \
+	fi
 
 
 create_ip: $(CARD_DIR)/.create_ip_done
@@ -83,6 +94,7 @@ create_ip: $(CARD_DIR)/.create_ip_done
 clean:
 	@$(RM) *~
 	@$(RM) .create_ip_done
+	@$(RM) .action_clk_*
 	@$(RM) -r vivado.*
 	@$(RM) -r build
 	@$(RM) -r .Xil
