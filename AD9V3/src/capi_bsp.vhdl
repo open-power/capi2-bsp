@@ -868,7 +868,7 @@ p:  PSL9_WRAP_0
         psl_build_ver   => psl_build_ver,
         afu_clk         => psl_clk,            -- TBD AM.
 
-        PSL_RST         => psl_reset_sig,
+        PSL_RST         => pcihip0_psl_rst,  -- was psl_reset_sig,
         PSL_CLK         => psl_clk,
         PCIHIP_PSL_RST  => pcihip0_psl_rst,
         PCIHIP_PSL_CLK  => pcihip0_psl_clk
@@ -1193,7 +1193,7 @@ PORT MAP  (
     clk_out2    => psl_clk_div2, -- 125MHz out to psl_accel if required (went to PSL logic)
     clk_out3  => icap_clk,     -- Goes to SEM, multiboot
     clk_out3_ce => icap_clk_ce,     -- gate off while unstable to prevent SEM errors
-    reset   => '0', -- Driven by PCIHIP
+    reset   => '0', -- was driven by PCIHIP, hardware fix for perst
     locked   => clk_wiz_2_locked
   );
 
