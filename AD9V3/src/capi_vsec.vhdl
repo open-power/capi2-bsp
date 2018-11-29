@@ -780,8 +780,7 @@ begin
     sreconfig_wdat2 <=  not vsec_wrdata(2) ;
     -- image_loaded: 0=factory 1=user.  If this is user image, invert bit 3
     -- (aka bit 28 - image select) so that default is to reload same image
-    -- sreconfig_wdat3 <=  image_loaded xor vsec_wrdata(3) ; --BM took following line from RCXVUP config
-    sreconfig_wdat3 <=  not vsec_wrdata(3) ;
+    sreconfig_wdat3 <=  image_loaded xor vsec_wrdata(3) ; --BM took following line from RCXVUP config    sreconfig_wdat3 <=  not vsec_wrdata(3) ;
     sreconfig_wrdat <= ( sreconfig_wdat2 & sreconfig_wdat3 );
 
     -- v2bit reconfig_cntl_d = vsec_wrdata.[2..3];
@@ -796,8 +795,7 @@ begin
     v10const <= "0000000000000000000000000000" ;  -- Base Image Revision --
 
     sreconfig_rdat2 <=  not reconfig_cntl_q(0) ;
-    -- sreconfig_rdat3 <=  image_loaded xor reconfig_cntl_q(1) ; --BM took following line from RCXVUP config
-    sreconfig_rdat3 <=  not reconfig_cntl_q(1) ;
+    sreconfig_rdat3 <=  image_loaded xor reconfig_cntl_q(1) ; --BM took following line from RCXVUP config     sreconfig_rdat3 <=  not reconfig_cntl_q(1) ;
     --concat(type=v32bit) (vsec10data, image_loaded, 0b0, reconfig_cntl_q, v10const);
     vsec10data <= ( image_loaded & '0' & sreconfig_rdat2 & sreconfig_rdat3 & v10const );
 
