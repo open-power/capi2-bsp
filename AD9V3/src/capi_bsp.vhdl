@@ -31,38 +31,10 @@ ENTITY capi_bsp IS
     pci_pi_refclk_n0      : in    std_logic                     ;                                       -- 100MHz Refclk
 
 -- Xilinx requires both pins of differential transceivers
-    pci0_i_rxp_in0        : in    std_logic;
-    pci0_i_rxn_in0        : in    std_logic;
-    pci0_i_rxp_in1        : in    std_logic;
-    pci0_i_rxn_in1        : in    std_logic;
-    pci0_i_rxp_in2        : in    std_logic;
-    pci0_i_rxn_in2        : in    std_logic;
-    pci0_i_rxp_in3        : in    std_logic;
-    pci0_i_rxn_in3        : in    std_logic;
-    pci0_i_rxp_in4        : in    std_logic;
-    pci0_i_rxn_in4        : in    std_logic;
-    pci0_i_rxp_in5        : in    std_logic;
-    pci0_i_rxn_in5        : in    std_logic;
-    pci0_i_rxp_in6        : in    std_logic;
-    pci0_i_rxn_in6        : in    std_logic;
-    pci0_i_rxp_in7        : in    std_logic;
-    pci0_i_rxn_in7        : in    std_logic;
-    pci0_o_txp_out0       : out   std_logic;
-    pci0_o_txn_out0       : out   std_logic;
-    pci0_o_txp_out1       : out   std_logic;
-    pci0_o_txn_out1       : out   std_logic;
-    pci0_o_txp_out2       : out   std_logic;
-    pci0_o_txn_out2       : out   std_logic;
-    pci0_o_txp_out3       : out   std_logic;
-    pci0_o_txn_out3       : out   std_logic;
-    pci0_o_txp_out4       : out   std_logic;
-    pci0_o_txn_out4       : out   std_logic;
-    pci0_o_txp_out5       : out   std_logic;
-    pci0_o_txn_out5       : out   std_logic;
-    pci0_o_txp_out6       : out   std_logic;
-    pci0_o_txn_out6       : out   std_logic;
-    pci0_o_txp_out7       : out   std_logic;
-    pci0_o_txn_out7       : out   std_logic;
+    pcie_txp              : out std_logic_vector(15 downto 0)   ;
+    pcie_txn              : out std_logic_vector(15 downto 0)   ;
+    pcie_rxp              : in  std_logic_vector(15 downto 0)   ;
+    pcie_rxn              : in  std_logic_vector(15 downto 0)   ;
 
 -- AFU interface (psl_accel)
     -- Command interface
@@ -189,10 +161,10 @@ End Component OBUF;
 -- Component pcie4_uscale_plus_0
 Component pcie4_uscale_plus_0
   PORT(
-    pci_exp_txn : out STD_LOGIC_VECTOR (7 downto 0 );
-    pci_exp_txp : out STD_LOGIC_VECTOR (7 downto 0 );
-    pci_exp_rxn : in STD_LOGIC_VECTOR (7 downto 0 );
-    pci_exp_rxp : in STD_LOGIC_VECTOR (7 downto 0 );
+    pci_exp_txn : out STD_LOGIC_VECTOR (15 downto 0 );
+    pci_exp_txp : out STD_LOGIC_VECTOR (15 downto 0 );
+    pci_exp_rxn : in STD_LOGIC_VECTOR (15 downto 0 );
+    pci_exp_rxp : in STD_LOGIC_VECTOR (15 downto 0 );
               user_clk                                       : out   STD_LOGIC;
               user_reset                                     : out   STD_LOGIC;
               user_lnk_up                                    : out   STD_LOGIC;
@@ -672,10 +644,10 @@ Signal psl_clk_div2: std_logic;  -- bool
 Signal sys_clk_p   :  std_logic ;
 Signal sys_clk_n   : std_logic ;
 Signal sys_rst_n   : std_logic ;
-Signal pci_exp_txn : STD_LOGIC_VECTOR (7 downto 0 );
-Signal pci_exp_txp : STD_LOGIC_VECTOR (7 downto 0 );
-Signal pci_exp_rxn : STD_LOGIC_VECTOR (7 downto 0 );
-Signal pci_exp_rxp : STD_LOGIC_VECTOR (7 downto 0 );
+Signal pci_exp_txn : STD_LOGIC_VECTOR (15 downto 0 );
+Signal pci_exp_txp : STD_LOGIC_VECTOR (15 downto 0 );
+Signal pci_exp_rxn : STD_LOGIC_VECTOR (15 downto 0 );
+Signal pci_exp_rxp : STD_LOGIC_VECTOR (15 downto 0 );
 
 signal       psl_reset_sig: std_logic;
 signal        axis_cq_tvalid : std_logic;
@@ -896,7 +868,7 @@ p:  PSL9_WRAP_0
         psl_build_ver   => psl_build_ver,
         afu_clk         => psl_clk,            -- TBD AM.
 
-        PSL_RST         => psl_reset_sig,
+        PSL_RST         => pcihip0_psl_rst,  -- was psl_reset_sig,
         PSL_CLK         => psl_clk,
         PCIHIP_PSL_RST  => pcihip0_psl_rst,
         PCIHIP_PSL_CLK  => pcihip0_psl_clk
@@ -913,38 +885,11 @@ two2   <= one1 & one1;
 sys_clk_p   <= pci_pi_refclk_p0 ;
 sys_clk_n   <= pci_pi_refclk_n0;
 sys_rst_n   <= pci_pi_nperst0;
-pci0_o_txn_out0 <= pci_exp_txn(0);
-pci0_o_txp_out0 <= pci_exp_txp(0);
-pci_exp_rxn(0) <= pci0_i_rxp_in0;
-pci_exp_rxp(0) <= pci0_i_rxn_in0;
-pci0_o_txn_out1 <= pci_exp_txn(1);
-pci0_o_txp_out1 <= pci_exp_txp(1);
-pci_exp_rxn(1) <= pci0_i_rxp_in1;
-pci_exp_rxp(1) <= pci0_i_rxn_in1;
-pci0_o_txn_out2 <= pci_exp_txn(2);
-pci0_o_txp_out2 <= pci_exp_txp(2);
-pci_exp_rxn(2) <= pci0_i_rxp_in2;
-pci_exp_rxp(2) <= pci0_i_rxn_in2;
-pci0_o_txn_out3 <= pci_exp_txn(3);
-pci0_o_txp_out3 <= pci_exp_txp(3);
-pci_exp_rxn(3) <= pci0_i_rxp_in3;
-pci_exp_rxp(3) <= pci0_i_rxn_in3;
-pci0_o_txn_out4 <= pci_exp_txn(4);
-pci0_o_txp_out4 <= pci_exp_txp(4);
-pci_exp_rxn(4) <= pci0_i_rxp_in4;
-pci_exp_rxp(4) <= pci0_i_rxn_in4;
-pci0_o_txn_out5 <= pci_exp_txn(5);
-pci0_o_txp_out5 <= pci_exp_txp(5);
-pci_exp_rxn(5) <= pci0_i_rxp_in5;
-pci_exp_rxp(5) <= pci0_i_rxn_in5;
-pci0_o_txn_out6 <= pci_exp_txn(6);
-pci0_o_txp_out6 <= pci_exp_txp(6);
-pci_exp_rxn(6) <= pci0_i_rxp_in6;
-pci_exp_rxp(6) <= pci0_i_rxn_in6;
-pci0_o_txn_out7 <= pci_exp_txn(7);
-pci0_o_txp_out7 <= pci_exp_txp(7);
-pci_exp_rxn(7) <= pci0_i_rxp_in7;
-pci_exp_rxp(7) <= pci0_i_rxn_in7;
+
+pcie_txn(15 downto 0)    <= pci_exp_txn(15 downto 0);
+pcie_txp(15 downto 0)    <= pci_exp_txp(15 downto 0);
+pci_exp_rxn(15 downto 0) <= pcie_rxn(15 downto 0);
+pci_exp_rxp(15 downto 0) <= pcie_rxp(15 downto 0);
 
 pci_user_reset <= pcihip0_psl_rst;
 pci_clock_125MHz <= psl_clk_div2;
@@ -1215,7 +1160,7 @@ PORT MAP  (
     clk_out2    => psl_clk_div2, -- 125MHz out to psl_accel if required (went to PSL logic)
     clk_out3  => icap_clk,     -- Goes to SEM, multiboot
     clk_out3_ce => icap_clk_ce,     -- gate off while unstable to prevent SEM errors
-    reset   => '0', -- Driven by PCIHIP
+    reset   => '0', -- was driven by PCIHIP, hardware fix for perst
     locked   => clk_wiz_2_locked
   );
 

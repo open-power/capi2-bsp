@@ -28,8 +28,8 @@ create_ip -name pcie4_uscale_plus -vendor xilinx.com -library ip -module_name pc
 set_property -dict [list                                               \
                     CONFIG.enable_gen4 {true}                          \
                     CONFIG.gen4_eieos_0s7 {true}                       \
-                    CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {16.0_GT/s}      \
-                    CONFIG.PL_LINK_CAP_MAX_LINK_WIDTH {X8}             \
+                    CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {8.0_GT/s}       \
+                    CONFIG.PL_LINK_CAP_MAX_LINK_WIDTH {X16}            \
                     CONFIG.AXISTEN_IF_EXT_512_CQ_STRADDLE {true}       \
                     CONFIG.AXISTEN_IF_EXT_512_RC_4TLP_STRADDLE {false} \
                     CONFIG.axisten_if_enable_client_tag {true}         \
@@ -58,7 +58,6 @@ set_property -dict [list                                               \
                     CONFIG.legacy_ext_pcie_cfg_space_enabled {true}    \
                     CONFIG.mode_selection {Advanced}                   \
                     CONFIG.en_gt_selection {true}                      \
-                    CONFIG.select_quad {GTY_Quad_225}                  \
                     CONFIG.AXISTEN_IF_EXT_512_RQ_STRADDLE {true}       \
                     CONFIG.PF0_MSIX_CAP_PBA_BIR {BAR_1:0}              \
                     CONFIG.PF0_MSIX_CAP_TABLE_BIR {BAR_1:0}            \
@@ -97,6 +96,8 @@ set_property -dict [list                                               \
                     CONFIG.coreclk_freq {500}                          \
                     CONFIG.plltype {QPLL0}                             \
                     CONFIG.axisten_freq {250}                          \
+                    CONFIG.pcie_blk_locn {X1Y0}                        \
+                    CONFIG.select_quad {GTY_Quad_227}                  \
                    ] [get_ips pcie4_uscale_plus_0] >> $log_file
 
 #Create Clock IP
@@ -119,33 +120,32 @@ if { $action_clock_freq == "225MHZ" } {
   puts " CAUTION: Action clock has been set to 225MHZ (default is 250MHZ)"
   create_ip -name clk_wiz -vendor xilinx.com -library ip -module_name uscale_plus_clk_wiz -dir $ip_dir >> $log_file
 
-  set_property -dict [list                                        \
+  set_property -dict [list                                      \
                     CONFIG.CLKIN1_JITTER_PS {40.0}              \
                     CONFIG.CLKOUT1_DRIVES {BUFG}                \
-                    CONFIG.CLKOUT1_JITTER {88.305}              \
-                    CONFIG.CLKOUT1_PHASE_ERROR {80.553}         \
-                    CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {225.000} \
+                    CONFIG.CLKOUT1_JITTER {85.736}              \
+                    CONFIG.CLKOUT1_PHASE_ERROR {79.008}         \
+                    CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {250.000} \
                     CONFIG.CLKOUT2_DRIVES {BUFG}                \
-                    CONFIG.CLKOUT2_JITTER {99.067}              \
-                    CONFIG.CLKOUT2_PHASE_ERROR {80.553}         \
+                    CONFIG.CLKOUT2_JITTER {98.122}              \
+                    CONFIG.CLKOUT2_PHASE_ERROR {79.008}         \
                     CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {125.000} \
                     CONFIG.CLKOUT2_USED {true}                  \
                     CONFIG.CLKOUT3_DRIVES {BUFGCE}              \
-                    CONFIG.CLKOUT3_JITTER {99.067}              \
-                    CONFIG.CLKOUT3_PHASE_ERROR {80.553}         \
+                    CONFIG.CLKOUT3_JITTER {98.122}              \
+                    CONFIG.CLKOUT3_PHASE_ERROR {79.008}         \
                     CONFIG.CLKOUT3_REQUESTED_OUT_FREQ {125.000} \
                     CONFIG.CLKOUT3_USED {true}                  \
                     CONFIG.FEEDBACK_SOURCE {FDBK_AUTO}          \
-                    CONFIG.MMCM_CLKFBOUT_MULT_F {4.500}         \
+                    CONFIG.MMCM_CLKFBOUT_MULT_F {5.000}         \
                     CONFIG.MMCM_CLKIN1_PERIOD {4.000}           \
-                    CONFIG.MMCM_CLKIN2_PERIOD {14.999}          \
+                    CONFIG.MMCM_CLKIN2_PERIOD {10.000}          \
                     CONFIG.MMCM_CLKOUT0_DIVIDE_F {5.000}        \
-                    CONFIG.MMCM_CLKOUT1_DIVIDE {9}              \
-                    CONFIG.MMCM_CLKOUT2_DIVIDE {9}              \
+                    CONFIG.MMCM_CLKOUT1_DIVIDE {10}             \
+                    CONFIG.MMCM_CLKOUT2_DIVIDE {10}             \
                     CONFIG.MMCM_DIVCLK_DIVIDE {1}               \
                     CONFIG.NUM_OUT_CLKS {3}                     \
                     CONFIG.PRIM_IN_FREQ {250.000}               \
-                    CONFIG.USE_INCLK_SWITCHOVER {false}         \
                    ] [get_ips uscale_plus_clk_wiz] >> $log_file
 } else {
 # create a 250MHz Clock IP
@@ -189,5 +189,3 @@ set_property -dict [list                       \
 set_property generate_synth_checkpoint false [get_files pcie4_uscale_plus_0.xci] >> $log_file
 set_property generate_synth_checkpoint false [get_files uscale_plus_clk_wiz.xci] >> $log_file
 set_property generate_synth_checkpoint false [get_files sem_ultra_0.xci] >> $log_file
-
-#TODO: patch CAP_NEXTPTR for pcie
