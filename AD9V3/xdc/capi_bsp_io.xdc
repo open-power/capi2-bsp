@@ -34,14 +34,7 @@ set_property PACKAGE_PIN AA7 [get_ports pci_pi_refclk_p0]
 #set_property PACKAGE_PIN AJ7 [get_ports pci_pi_refclk_p1]
 
 ## PCIE LANES ####################
-#set_property PACKAGE_PIN H4 [get_ports pci0_o_txn_out0]
-#set_property PACKAGE_PIN K4 [get_ports pci0_o_txn_out1]
-#set_property PACKAGE_PIN M4 [get_ports pci0_o_txn_out2]
-#set_property PACKAGE_PIN P4 [get_ports pci0_o_txn_out3]
-#set_property PACKAGE_PIN T4 [get_ports pci0_o_txn_out4]
-#set_property PACKAGE_PIN V4 [get_ports pci0_o_txn_out5]
-#set_property PACKAGE_PIN AB4 [get_ports pci0_o_txn_out6]
-#set_property PACKAGE_PIN AD4 [get_ports pci0_o_txn_out7]
+# package_pin for pcie lanes are specified by the location of the IP
 
 #Flash Interface
 set_property PACKAGE_PIN AG30 [get_ports {spi_miso_secondary}]
