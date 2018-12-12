@@ -451,23 +451,23 @@ end Component uscale_plus_clk_wiz;
 
 
 -- Component capi_fpga_reset
-Component CAPI_FPGA_RESET_GEN
-  PORT (
-    PLL_LOCKED                                     : in  std_logic;
-    CLK                                            : in  std_logic;
-    RESET                                          : out std_logic
-  );
-End Component CAPI_FPGA_RESET_GEN;
+--jsv Component CAPI_FPGA_RESET_GEN
+--  PORT (
+--    PLL_LOCKED                                     : in  std_logic;
+--    CLK                                            : in  std_logic;
+--    RESET                                          : out std_logic
+--  );
+--End Component CAPI_FPGA_RESET_GEN;
 
--- Component capi_stp_counter
-Component CAPI_STP_COUNTER
-  PORT (
-    CLK                                            : in  std_logic;
-    RESET                                          : in  std_logic;
-    STP_COUNTER_1sec                               : out std_logic;
-    STP_COUNTER_MSB                                : out std_logic
-  );
-End Component CAPI_STP_COUNTER;
+--jsv Component capi_stp_counter
+--Component CAPI_STP_COUNTER
+--  PORT (
+--    CLK                                            : in  std_logic;
+--    RESET                                          : in  std_logic;
+--    STP_COUNTER_1sec                               : out std_logic;
+--    STP_COUNTER_MSB                                : out std_logic
+--  );
+--End Component CAPI_STP_COUNTER;
 
 
 -- Component psl
@@ -771,17 +771,13 @@ Signal sys_clk                : std_logic;
 Signal sys_clk_gt             : std_logic;
 Signal sys_rst_n_c            : std_logic;
 
-
-
-Signal stp_counter_msb_sig : std_logic;
-Signal stp_counter_1sec_sig : std_logic;
-Signal sys_clk_counter_1sec_sig : std_logic;
-Signal user_clock_sig  : std_logic;
-
+--Signal stp_counter_msb_sig : std_logic;
+--Signal stp_counter_1sec_sig : std_logic;
+--Signal sys_clk_counter_1sec_sig : std_logic;
+--Signal user_clock_sig  : std_logic;
 signal clk_wiz_2_locked : std_logic;
 
 signal efes32             : std_logic_vector(31 downto 0);
---signal efes1024           : std_logic_vector(1023 downto 0);
 signal one1             : std_logic;
 signal two2             : std_logic_vector(1 downto 0);
 
@@ -809,7 +805,7 @@ Signal led_blue : std_logic_vector(1 downto 0);
 begin
 
 -- psl_build_ver   <= x"0000685a";    -- March 15, 2017 With Subsystem ID = x060f for capi_flash script
-psl_build_ver   <= x"00006900";    -- March 22, 2017 With Eyal's fixes and With Subsystem ID = x060f for capi_flash script
+psl_build_ver   <= x"00006900";    -- March 22, 2017 With fixes and With Subsystem ID = x060f for capi_flash script
 -- hd0_cpl_laddr <= "000" & hd0_cpl_laddr_0_6;
 
 
@@ -948,7 +944,8 @@ PORT MAP (
   psl_build_ver       => psl_build_ver,
   afu_clk             => psl_clk,            -- TBD AM.
 
---PSL_RST             => psl_reset_sig,
+  -- PSL_RST and PCIHIP_PSL_RST must both be asserted if one is asserted
+  -- If only 1 is asserted, async fifo gets into invalid state
   PSL_RST             => pcihip0_psl_rst,    -- hardware fix for perst
   PSL_CLK             => psl_clk,
   PCIHIP_PSL_RST      => pcihip0_psl_rst,
@@ -958,7 +955,6 @@ PORT MAP (
 cfg_dsn_sig <= x"00000001" & x"01" & x"000A35";
 
 efes32   <= x"00000000";
---efes1024 <= x"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 one1   <= '1';
 two2   <= one1 & one1;
 
@@ -998,8 +994,8 @@ pci0_o_txp_out7   <= pci_exp_txp(7);
 pci_exp_rxn(7)    <= pci0_i_rxp_in7;
 pci_exp_rxp(7)    <= pci0_i_rxn_in7;
 
-pci_user_reset    <= pcihip0_psl_rst;
-pci_clock_125MHz  <= psl_clk_div2;
+--jsv pci_user_reset    <= pcihip0_psl_rst;
+-- pci_clock_125MHz  <= psl_clk_div2;
 
 
 pcihip0:      pcie4_uscale_plus_0
@@ -1059,7 +1055,7 @@ pcihip0:      pcie4_uscale_plus_0
     cfg_current_speed => open,     -- out STD_LOGIC_VECTOR ( 1 downto 0 );
     cfg_max_payload => open,      -- out STD_LOGIC_VECTOR ( 1 downto 0 );
     cfg_max_read_req => open,      -- out STD_LOGIC_VECTOR ( 2 downto 0 );
-    cfg_function_status => open,     -- out STD_LOGIC_VECTOR ( 15 downto 0 );
+    cfg_function_status => open,     -- out STD_LOGIC_VECTOR ( 15 downto 0 ); FIXME for NVMe: cfg_function_status
     cfg_function_power_state => open,     -- out STD_LOGIC_VECTOR ( 11 downto 0 );
     cfg_vf_status => open,      -- out STD_LOGIC_VECTOR ( 503 downto 0 );
     cfg_vf_power_state => open,     -- out STD_LOGIC_VECTOR ( 755 downto 0 );
@@ -1314,11 +1310,11 @@ refclk_ibuf : IBUFDS_GTE4
 -- REFCLK_ICNTL_RX  => "00"  -- Refer to Transceiver User Guide
 -- )
   port map (
-    O   => sys_clk_gt,   -- 1-bit output: Refer to Transceiver User Guide
-    ODIV2  => sys_clk,   -- 1-bit output: Refer to Transceiver User Guide
-    CEB  => '0',   -- 1'b0,   -- 1-bit input: Refer to Transceiver User Guide
-    I   => sys_clk_p,   -- 1-bit input: Refer to Transceiver User Guide
-    IB   => sys_clk_n   -- 1-bit input: Refer to Transceiver User Guide
+    O   => sys_clk_gt,  -- 1-bit output: Refer to Transceiver User Guide
+    ODIV2  => sys_clk,  -- 1-bit output: Refer to Transceiver User Guide
+    CEB  => '0',        -- 1-bit input:  Refer to Transceiver User Guide
+    I   => sys_clk_p,   -- 1-bit input:  Refer to Transceiver User Guide
+    IB   => sys_clk_n   -- 1-bit input:  Refer to Transceiver User Guide
   );
 -- End of IBUFDS_GTE4_inst instantiation
 
@@ -1328,10 +1324,9 @@ IBUF_inst : IBUF
     O => sys_rst_n_c,  -- 1-bit output: Buffer output
     I => sys_rst_n   -- 1-bit input: Buffer input
   );
--- End of IBUF_inst instantiation
 
 
--- toddg: gate icap_clk until clocks are stable after link up
+--        gate icap_clk until clocks are stable after link up
 --        avoid glitches to sem core to prevent false errors or worse
 --        also used to clock multiboot logic so keep enabled when link goes down
 icap_clk_ce_din <= icap_clk_ce or (not(pcihip0_psl_rst) and user_lnk_up and clk_wiz_2_locked);
@@ -1350,28 +1345,28 @@ pll0:         uscale_plus_clk_wiz
     clk_out2    => psl_clk_div2,    -- 125MHz out to psl_accel if required (went to PSL logic)
     clk_out3    => icap_clk,        -- Goes to SEM, multiboot
     clk_out3_ce => icap_clk_ce,     -- gate off while unstable to prevent SEM errors
-    --reset   => pcihip0_psl_rst,   -- Driven by PCIHIP
+    -- reset was pcihip0_psl_rst.  this killed the clock to icap before a reconfig could complete
     reset       => '0',             -- hardware fix for perst
     locked      => clk_wiz_2_locked
   );
 
 
---Component capi_fpga_reset
-capi_fpga_reset:CAPI_FPGA_RESET_GEN
- PORT MAP (
-   PLL_LOCKED  => clk_wiz_2_locked,
-   CLK   => psl_clk,
-   RESET  => psl_reset_sig
- );
+--jsv Component capi_fpga_reset
+--capi_fpga_reset:CAPI_FPGA_RESET_GEN
+-- PORT MAP (
+--   PLL_LOCKED  => clk_wiz_2_locked,
+--   CLK   => psl_clk,
+--   RESET  => psl_reset_sig
+-- );
 
 -- Component capi_stp_counter
-csc:          CAPI_STP_COUNTER
- PORT MAP (
-   CLK   => psl_clk,
-   RESET  => psl_reset_sig,
-   STP_COUNTER_1sec => stp_counter_1sec_sig,
-   STP_COUNTER_MSB => stp_counter_msb_sig
- );
+--csc:          CAPI_STP_COUNTER
+-- PORT MAP (
+--   CLK   => psl_clk,
+--   RESET  => psl_reset_sig,
+--   STP_COUNTER_1sec => stp_counter_1sec_sig,
+--   STP_COUNTER_MSB => stp_counter_msb_sig
+-- );
 
 ------ sys_clk_p_out: CAPI_STP_COUNTER
 ------  PORT MAP (
@@ -1381,13 +1376,13 @@ csc:          CAPI_STP_COUNTER
 ------    STP_COUNTER_MSB => open
 ------    );
 
-user_clock:   CAPI_STP_COUNTER
- PORT MAP (
-   CLK   => pcihip0_psl_clk,
-   RESET  => pcihip0_psl_rst,
-   STP_COUNTER_1sec => user_clock_sig,
-   STP_COUNTER_MSB => open
- );
+--user_clock:   CAPI_STP_COUNTER
+-- PORT MAP (
+--   CLK   => pcihip0_psl_clk,
+--   RESET  => pcihip0_psl_rst,
+--   STP_COUNTER_1sec => user_clock_sig,
+--   STP_COUNTER_MSB => open
+-- );
 
 
 END capi_bsp;

@@ -498,42 +498,42 @@ Signal pfl_flash_grant: std_logic;  -- bool
 Signal pfl_flash_reqn: std_logic;  -- bool
 
 
-attribute mark_debug of read_sm : signal is "true";
-attribute mark_debug of erase_sm : signal is "true";
-attribute mark_debug of pgm_sm : signal is "true";
-attribute mark_debug of main_sm : signal is "true";
+attribute mark_debug of read_sm : signal is "false";
+attribute mark_debug of erase_sm : signal is "false";
+attribute mark_debug of pgm_sm : signal is "false";
+attribute mark_debug of main_sm : signal is "false";
 
-attribute mark_debug of rsm_adv : signal is "true";
-attribute mark_debug of esm_adv : signal is "true";
-attribute mark_debug of psm_adv : signal is "true";
-attribute mark_debug of cnt_en : signal is "true";
+attribute mark_debug of rsm_adv : signal is "false";
+attribute mark_debug of esm_adv : signal is "false";
+attribute mark_debug of psm_adv : signal is "false";
+attribute mark_debug of cnt_en : signal is "false";
 
-attribute mark_debug of f_program_req : signal is "true";
-attribute mark_debug of f_num_blocks : signal is "true";
-attribute mark_debug of f_program_data : signal is "true";
-attribute mark_debug of f_program_data_val : signal is "true";
-attribute mark_debug of f_program_data_ack : signal is "true";
-attribute mark_debug of f_done : signal is "true";
-attribute mark_debug of f_start_blk : signal is "true";
+attribute mark_debug of f_program_req : signal is "false";
+attribute mark_debug of f_num_blocks : signal is "false";
+attribute mark_debug of f_program_data : signal is "false";
+attribute mark_debug of f_program_data_val : signal is "false";
+attribute mark_debug of f_program_data_ack : signal is "false";
+attribute mark_debug of f_done : signal is "false";
+attribute mark_debug of f_start_blk : signal is "false";
 
-attribute mark_debug of f_read_req : signal is "true";
-attribute mark_debug of f_num_words_m1 : signal is "true";
-attribute mark_debug of f_read_start_addr : signal is "true";
-attribute mark_debug of f_read_data : signal is "true";
-attribute mark_debug of f_read_data_val : signal is "true";
-attribute mark_debug of f_read_data_ack : signal is "true";
+attribute mark_debug of f_read_req : signal is "false";
+attribute mark_debug of f_num_words_m1 : signal is "false";
+attribute mark_debug of f_read_start_addr : signal is "false";
+attribute mark_debug of f_read_data : signal is "false";
+attribute mark_debug of f_read_data_val : signal is "false";
+attribute mark_debug of f_read_data_ack : signal is "false";
 
-attribute mark_debug of flash_dataout_d : signal is "true";
-attribute mark_debug of flash_datain_d : signal is "true";
-attribute mark_debug of flash_addr_d : signal is "true";
-attribute mark_debug of flash_intf_oe_d : signal is "true";
-attribute mark_debug of flash_dat_oe_d : signal is "true";
-attribute mark_debug of flash_wen_d : signal is "true";
-attribute mark_debug of flash_oen_d : signal is "true";
-attribute mark_debug of flash_cen_d : signal is "true";
-attribute mark_debug of flash_rstn_d : signal is "true";
-attribute mark_debug of flash_intf_oe_unrep_d : signal is "true";
-attribute mark_debug of flash_dat_oe_unrep_d : signal is "true";
+attribute mark_debug of flash_dataout_d : signal is "false";
+attribute mark_debug of flash_datain_d : signal is "false";
+attribute mark_debug of flash_addr_d : signal is "false";
+attribute mark_debug of flash_intf_oe_d : signal is "false";
+attribute mark_debug of flash_dat_oe_d : signal is "false";
+attribute mark_debug of flash_wen_d : signal is "false";
+attribute mark_debug of flash_oen_d : signal is "false";
+attribute mark_debug of flash_cen_d : signal is "false";
+attribute mark_debug of flash_rstn_d : signal is "false";
+attribute mark_debug of flash_intf_oe_unrep_d : signal is "false";
+attribute mark_debug of flash_dat_oe_unrep_d : signal is "false";
 
 
 begin
@@ -1637,7 +1637,7 @@ begin
     ---- Next State Controls ----
     rsm_rst <= rsm_s15  or   not read_flash ;
 
-    -- toddg: add read_flash to this expression to force rsm to good state on error
+    -- add read_flash to this expression to force rsm to good state on error
     rsm_rd_nxt_wrd <= (read_flash and rsm_s12   and   not rsm_done) ;                      -- Continue reading data until complete                  --
 
     rsm_p1 <=  not (rsm_rst  or  rsm_rd_nxt_wrd) ;                                          -- Increment to next state                               --
