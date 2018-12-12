@@ -448,28 +448,6 @@ Component uscale_plus_clk_wiz
   );
 end Component uscale_plus_clk_wiz;
 
-
-
--- Component capi_fpga_reset
---jsv Component CAPI_FPGA_RESET_GEN
---  PORT (
---    PLL_LOCKED                                     : in  std_logic;
---    CLK                                            : in  std_logic;
---    RESET                                          : out std_logic
---  );
---End Component CAPI_FPGA_RESET_GEN;
-
---jsv Component capi_stp_counter
---Component CAPI_STP_COUNTER
---  PORT (
---    CLK                                            : in  std_logic;
---    RESET                                          : in  std_logic;
---    STP_COUNTER_1sec                               : out std_logic;
---    STP_COUNTER_MSB                                : out std_logic
---  );
---End Component CAPI_STP_COUNTER;
-
-
 -- Component psl
 Component PSL9_WRAP_0
   PORT (
@@ -994,7 +972,7 @@ pci0_o_txp_out7   <= pci_exp_txp(7);
 pci_exp_rxn(7)    <= pci0_i_rxp_in7;
 pci_exp_rxp(7)    <= pci0_i_rxn_in7;
 
---jsv pci_user_reset    <= pcihip0_psl_rst;
+-- pci_user_reset    <= pcihip0_psl_rst;
 -- pci_clock_125MHz  <= psl_clk_div2;
 
 
@@ -1349,40 +1327,5 @@ pll0:         uscale_plus_clk_wiz
     reset       => '0',             -- hardware fix for perst
     locked      => clk_wiz_2_locked
   );
-
-
---jsv Component capi_fpga_reset
---capi_fpga_reset:CAPI_FPGA_RESET_GEN
--- PORT MAP (
---   PLL_LOCKED  => clk_wiz_2_locked,
---   CLK   => psl_clk,
---   RESET  => psl_reset_sig
--- );
-
--- Component capi_stp_counter
---csc:          CAPI_STP_COUNTER
--- PORT MAP (
---   CLK   => psl_clk,
---   RESET  => psl_reset_sig,
---   STP_COUNTER_1sec => stp_counter_1sec_sig,
---   STP_COUNTER_MSB => stp_counter_msb_sig
--- );
-
------- sys_clk_p_out: CAPI_STP_COUNTER
-------  PORT MAP (
-------    CLK   => sys_clk,
-------    RESET  => pcihip0_psl_rst,
-------    STP_COUNTER_1sec => sys_clk_counter_1sec_sig,
-------    STP_COUNTER_MSB => open
-------    );
-
---user_clock:   CAPI_STP_COUNTER
--- PORT MAP (
---   CLK   => pcihip0_psl_clk,
---   RESET  => pcihip0_psl_rst,
---   STP_COUNTER_1sec => user_clock_sig,
---   STP_COUNTER_MSB => open
--- );
-
 
 END capi_bsp;
