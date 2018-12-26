@@ -957,7 +957,7 @@ pci_exp_rxp(15 downto 0) <= pcie_rxp(15 downto 0);
 --pci_exp_rxp(15) <= pci0_i_rxn_in15;
 
 pci_user_reset <= pcihip0_psl_rst;
-pci_clock_125MHz <= psl_clk_div2;
+pci_clock_125MHz <= psl_clk;
 
 
 pcihip0:      pcie4_uscale_plus_0
@@ -1221,8 +1221,8 @@ icap_clk_ce_d <= icap_clk_ce or (clk_wiz_2_locked and not(pcihip0_psl_rst));
 pll0:         uscale_plus_clk_wiz
 PORT MAP  (
     clk_in1  => pcihip0_psl_clk, -- Driven by PCIHIP
-    clk_out1  => psl_clk,   -- Goes to PSL logic
-    clk_out2    => psl_clk_div2, -- 125MHz out to psl_accel if required (went to PSL logic)
+    clk_out1  => psl_clk_div2,   -- Goes to PSL logic
+    clk_out2    => psl_clk,      -- 125MHz out to psl_accel if required (went to PSL logic)
     clk_out3  => icap_clk,     -- Goes to SEM, multiboot
     clk_out3_ce => icap_clk_ce,     -- gate off while unstable to prevent SEM errors
     reset   => '0', -- Driven by PCIHIP
