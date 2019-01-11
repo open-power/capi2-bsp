@@ -113,8 +113,6 @@ Component capi_reversebus16
 End Component capi_reversebus16;
 
 
-attribute mark_debug : string;
-
 
 function gate_and (gate : std_logic; din : std_logic_vector) return std_logic_vector is
 begin
@@ -496,44 +494,6 @@ Signal f_memstat_int2: std_logic_vector(0 to 15);
 
 Signal pfl_flash_grant: std_logic;  -- bool
 Signal pfl_flash_reqn: std_logic;  -- bool
-
-
-attribute mark_debug of read_sm : signal is "false";
-attribute mark_debug of erase_sm : signal is "false";
-attribute mark_debug of pgm_sm : signal is "false";
-attribute mark_debug of main_sm : signal is "false";
-
-attribute mark_debug of rsm_adv : signal is "false";
-attribute mark_debug of esm_adv : signal is "false";
-attribute mark_debug of psm_adv : signal is "false";
-attribute mark_debug of cnt_en : signal is "false";
-
-attribute mark_debug of f_program_req : signal is "false";
-attribute mark_debug of f_num_blocks : signal is "false";
-attribute mark_debug of f_program_data : signal is "false";
-attribute mark_debug of f_program_data_val : signal is "false";
-attribute mark_debug of f_program_data_ack : signal is "false";
-attribute mark_debug of f_done : signal is "false";
-attribute mark_debug of f_start_blk : signal is "false";
-
-attribute mark_debug of f_read_req : signal is "false";
-attribute mark_debug of f_num_words_m1 : signal is "false";
-attribute mark_debug of f_read_start_addr : signal is "false";
-attribute mark_debug of f_read_data : signal is "false";
-attribute mark_debug of f_read_data_val : signal is "false";
-attribute mark_debug of f_read_data_ack : signal is "false";
-
-attribute mark_debug of flash_dataout_d : signal is "false";
-attribute mark_debug of flash_datain_d : signal is "false";
-attribute mark_debug of flash_addr_d : signal is "false";
-attribute mark_debug of flash_intf_oe_d : signal is "false";
-attribute mark_debug of flash_dat_oe_d : signal is "false";
-attribute mark_debug of flash_wen_d : signal is "false";
-attribute mark_debug of flash_oen_d : signal is "false";
-attribute mark_debug of flash_cen_d : signal is "false";
-attribute mark_debug of flash_rstn_d : signal is "false";
-attribute mark_debug of flash_intf_oe_unrep_d : signal is "false";
-attribute mark_debug of flash_dat_oe_unrep_d : signal is "false";
 
 
 begin
