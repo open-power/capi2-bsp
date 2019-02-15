@@ -18,10 +18,13 @@
 ############################################################################
 ############################################################################
 
-# from PSL9_WRAP.xdc
-#set_false_path -from [get_pins {*/*/capi_fpga_reset/pll_locked_counter_l_reg[*]}]
-set_false_path -from [get_pins -hierarchical -filter {NAME =~ c0/U0/pcihip0/inst*/user_reset_reg*/C}]
-
-#set_false_path -from [get_pins {*/XSL9_WRAP/XSL9/RGS/XSL_PARAM_CG_PARREG_RGS_203/gr_data_ff_reg[*]*/C}]
-#set_false_path -from [get_pins {*/XSL9_WRAP/XSL9/RGS/XSL_PARAM_CG_PARREG_RGS_10/gr_data_ff_reg[*]*/C}]
-#set_false_path -from [get_pins {*/XSL9_WRAP/XSL9/RGS/XSL_PARAM_CG_PARREG_RGS_18/gr_data_ff_reg[*]*/C}]
+##create_pblock capi_bsp
+##add_cells_to_pblock [get_pblocks capi_bsp] [get_cells -quiet [list c0/U0/p]]
+###resize_pblock psl -add {SLICE_X0Y0:SLICE_X104Y260 DSP48E2_X0Y0:DSP48E2_X7Y103 RAMB18_X0Y0:RAMB18_X7Y103 RAMB36_X0Y0:RAMB36_X7Y51 URAM288_X0Y0:URAM288_X0Y19}
+##resize_pblock  [get_pblocks capi_bsp] -add {CLOCKREGION_X0Y0:CLOCKREGION_X3Y3}
+#
+create_pblock capi_bsp
+#resize_pblock capi_bsp -add CLOCKREGION_X2Y0:CLOCKREGION_X3Y4
+resize_pblock capi_bsp -add CLOCKREGION_X1Y0:CLOCKREGION_X3Y3
+#add_cells_to_pblock capi_bsp [get_cells [list c0/U0/p]]
+set_property LOC BUFGCE_X0Y96 [get_cells c0/U0/pcihip0/inst/user_reset_BUFG_inst]
