@@ -88,9 +88,6 @@ oe:      in std_logic);
 oe:      in std_logic);
   End Component capi_gpio12;
 
-
-
-
 Component capi_i2c
   PORT(psl_clk: in std_logic;
 
@@ -117,15 +114,13 @@ Component capi_i2c
 i2cm_ready:out std_logic);
 End Component capi_i2c;
 
-
-
 Component capi_xilstrte3
     PORT(
          datain: out std_logic_vector(3 downto 0);
          dataout                       : in    std_logic_vector(3 downto 0);
          ce_in                         : in    std_logic;
          datat                         : in    std_logic;
-         ce_t                          :    in std_logic);
+         ce_t                          : in    std_logic);
 End Component capi_xilstrte3;
 
 Component capi_vsec
@@ -431,15 +426,6 @@ fdq:     capi_gpio12
       );
 
 
-      --startupe3 primitive must drive flash data 3:0 and ce on xilinx ultrascale parts
-startupe3:capi_xilstrte3
-        PORT MAP (
-           datain => flash_datain(3 downto 0),
-           dataout => flash_dataout(3 downto 0),
-           ce_in => flash_cen(0),
-           datat => flash_dat_oe,
-           ce_t => flash_intf_oe
-      );
 
     -- vsec logic
 v:       capi_vsec

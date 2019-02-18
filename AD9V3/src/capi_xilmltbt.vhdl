@@ -194,16 +194,16 @@ instruction_address <= count_l;
 process (instruction_address, wbstart_addr_l3_swapendianness)
 begin
   case instruction_address is
-    when "0000" => data <= X"3FFFFFFFF";
-    when "0001" => data <= X"0FFFFFFFF";
-    when "0010" => data <= X"05599AA66";
-    when "0011" => data <= X"004000000";
-    when "0100" => data <= X"00C400080";
+    when "0000" => data <= X"3FFFFFFFF"; -- csib=1, rdwrb=1 (read),  pad word
+    when "0001" => data <= X"0FFFFFFFF"; -- csib=0, rdwrb=0 (write), pad word
+    when "0010" => data <= X"05599AA66"; -- write sync word
+    when "0011" => data <= X"004000000"; -- write (byte swapped) NOP: 2000_0000
+    when "0100" => data <= X"00C400080"; -- 30020001 write WBSTAR register, word count=1
     when "0101" => data <= X"0" & wbstart_addr_l3_swapendianness;
-    when "0110" => data <= X"00C000180";
-    when "0111" => data <= X"0000000F0";
-    when "1000" => data <= X"004000000";
-    when "1001" => data <= X"3FFFFFFFF";
+    when "0110" => data <= X"00C000180"; -- 30008001 write CMD register, word count=1
+    when "0111" => data <= X"0000000F0"; -- CMD[4:0]=01111 IPROG trigger warm boot
+    when "1000" => data <= X"004000000"; -- NOP
+    when "1001" => data <= X"3FFFFFFFF"; -- pad word
     when "1010" => data <= X"3FFFFFFFF";
     when "1011" => data <= X"3FFFFFFFF";
     when "1100" => data <= X"3FFFFFFFF";

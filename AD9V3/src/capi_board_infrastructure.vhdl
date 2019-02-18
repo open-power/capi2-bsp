@@ -48,18 +48,6 @@ END capi_board_infrastructure;
 
 ARCHITECTURE capi_board_infrastructure OF capi_board_infrastructure IS
 
-Component capi_rise_dff
-  PORT (clk   : in std_logic;
-        dout  : out std_logic;
-        din   : in std_logic);
-End Component capi_rise_dff;
-
-Component capi_rise_dff_init1
-  PORT (clk   : in std_logic;
-        dout  : out std_logic;
-        din   : in std_logic);
-End Component capi_rise_dff_init1;
-
 Component capi_rise_vdff
   GENERIC ( width : positive );
   PORT (clk   : in std_logic;
@@ -119,14 +107,6 @@ Component capi_i2c
          i2cm_dataout                  : out   std_logic_vector(0 to 7);
 i2cm_ready:out std_logic);
 End Component capi_i2c;
-
-Component capi_xilstrte3
-    PORT(datain: out std_logic_vector(0 to 3);
-         dataout                       : in    std_logic_vector(0 to 3);
-         ce_in                         : in    std_logic;
-         datat                         : in    std_logic;
-         ce_t                          :    in std_logic);
-End Component capi_xilstrte3;
 
 Component capi_vsec
   PORT(psl_clk: in std_logic;
@@ -189,16 +169,7 @@ Component capi_vsec
          i2cacc_wren : out std_logic;
          i2cacc_data : out std_logic_vector(0 to 63);
          i2cacc_rden : out std_logic;
-         i2cacc_rddata  : in std_logic_vector(0 to 63);
-
-         prf_wr_overall_ticks_data     : in    std_logic_vector(0 to 127);
-         prf_wr_overall_samples_data   : in    std_logic_vector(0 to 63);
-         prf_rd_overall_ticks_data     : in    std_logic_vector(0 to 127);
-         prf_rd_overall_samples_data   : in    std_logic_vector(0 to 63);
-         prf_rd_max_lat_dynamic_avg    : in    std_logic_vector(0 to 31);
-         prf_rd_dynamic_bw             : in    std_logic_vector(0 to 31)   ;  -- NEW
-         prf_wr_dynamic_bw             : in    std_logic_vector(0 to 31)   ;  -- NEW
-         prf_rd_max_lat :in std_logic_vector(0 to 31)
+         i2cacc_rddata  : in std_logic_vector(0 to 63)
        );
 End Component capi_vsec;
 
@@ -300,19 +271,6 @@ Signal f_stat_erase: std_logic;  -- bool
 Signal f_stat_program: std_logic;  -- bool
 Signal f_stat_read: std_logic;  -- bool
 
-Signal flash_addr: std_logic_vector(0 to 25);  -- v26bit
-Signal flash_advn: std_logic;  -- bool
-Signal flash_cen: std_logic_vector(0 to 1);  -- v2bit
-Signal flash_clk: std_logic;  -- bool
-Signal flash_dat_oe: std_logic;  -- bool
-Signal flash_datain: std_logic_vector(0 to 15);  -- v16bit
-Signal flash_dataout: std_logic_vector(0 to 15);  -- v16bit
-Signal flash_intf_oe: std_logic;  -- bool
-Signal flash_oen: std_logic;  -- bool
-Signal flash_rstn: std_logic;  -- bool
-Signal flash_wen: std_logic;  -- bool
-Signal flash_wpn: std_logic;  -- bool
-
 Signal f_states: std_logic_vector(0 to 31);
 Signal f_memstat: std_logic_vector(0 to 15);
 Signal f_memstat_past: std_logic_vector(0 to 15);
@@ -376,18 +334,6 @@ Signal icap_mltbt_writedata: std_logic_vector(0 to 31);  -- v32bit
 Signal icap_release: std_logic;  -- bool
 Signal icap_request: std_logic;  -- bool
 
--- -------------- -- PRF vectors
-signal prf_wr_overall_ticks_data: std_logic_vector(0 to 127);
-signal prf_rd_overall_ticks_data: std_logic_vector(0 to 127);
-signal prf_wr_overall_samples_data: std_logic_vector(0 to 63);
-signal prf_rd_overall_samples_data: std_logic_vector(0 to 63);
-signal prf_rd_max_lat_dynamic_avg: std_logic_vector(0 to 31);
-signal prf_rd_max_lat: std_logic_vector(0 to 31);
-signal prf_rd_dynamic_bw: std_logic_vector(0 to 31); -- NEW
-signal prf_wr_dynamic_bw: std_logic_vector(0 to 31); -- NEW
-signal efes16:  std_logic_vector(0 to 15);
-signal efes64:  std_logic_vector(0 to 63);
-
 Signal spi_in_startup: std_logic_vector(0 to 3);
 Signal spi_in_primary: std_logic_vector(0 to 3);
 Signal spi_mosi_startup: std_logic;
@@ -429,14 +375,14 @@ dummy_reduce <= or_reduce(dummy_q);
     -- vsec logic
 v:       capi_vsec
       PORT MAP (
-          cfg_ext_read_received => cfg_ext_read_received,
-      cfg_ext_write_received => cfg_ext_write_received,
-      cfg_ext_register_number => cfg_ext_register_number,
-      cfg_ext_function_number => cfg_ext_function_number,
-      cfg_ext_write_data => cfg_ext_write_data,
-      cfg_ext_write_byte_enable => cfg_ext_write_byte_enable,
-      cfg_ext_read_data => cfg_ext_read_data,
-      cfg_ext_read_data_valid => cfg_ext_read_data_valid,
+         cfg_ext_read_received => cfg_ext_read_received,
+         cfg_ext_write_received => cfg_ext_write_received,
+         cfg_ext_register_number => cfg_ext_register_number,
+         cfg_ext_function_number => cfg_ext_function_number,
+         cfg_ext_write_data => cfg_ext_write_data,
+         cfg_ext_write_byte_enable => cfg_ext_write_byte_enable,
+         cfg_ext_read_data => cfg_ext_read_data,
+         cfg_ext_read_data_valid => cfg_ext_read_data_valid,
 
          hi2c_cmdval => hi2c1_cmdval,
          hi2c_dataval => hi2c1_dataval,
@@ -487,43 +433,36 @@ v:       capi_vsec
          i2cacc_rden => i2cacc_rden,
          i2cacc_rddata => i2cacc_rddata,
 
-         prf_wr_overall_ticks_data   => prf_wr_overall_ticks_data,
-         prf_rd_overall_ticks_data   => prf_rd_overall_ticks_data,
-         prf_wr_overall_samples_data => prf_wr_overall_samples_data,
-         prf_rd_overall_samples_data => prf_rd_overall_samples_data,
-         prf_rd_max_lat_dynamic_avg  => prf_rd_max_lat_dynamic_avg,
-         prf_rd_max_lat  => prf_rd_max_lat,
-         prf_rd_dynamic_bw  => prf_rd_dynamic_bw,  -- NEW
-         prf_wr_dynamic_bw  => prf_wr_dynamic_bw,  -- NEW
          psl_clk   => pcihip0_psl_clk  -- 250MHz clock, not a psl_clk
     );
 
       --startupe3 primitive must drive flash data 3:0 and ce on xilinx ultrascale parts
 --Startup Primitive Access to deicated config pins
 STARTUPE3_inst : STARTUPE3
-generic map (
-PROG_USR => "FALSE", -- Activate program event security feature. Requires encrypted bitstreams.
-SIM_CCLK_FREQ => 0.0 -- Set the Configuration Clock Frequency(ns) for simulation
-)
-port map (
---CFGCLK => CFGCLK, -- 1-bit output: Configuration main clock output
---CFGMCLK => CFGMCLK, -- 1-bit output: Configuration internal oscillator clock output
-DI => spi_in_startup, -- 4-bit output: Allow receiving on the D input pin
---EOS => EOS, -- 1-bit output: Active-High output signal indicating the End Of Startup
---PREQ => PREQ, -- 1-bit output: PROGRAM request to fabric output
-DO => ("000" & spi_mosi_startup), -- 4-bit input: Allows control of the D pin output
-DTS=> "1110", -- 4-bit input: Allows tristate of the D pin
-FCSBO => spi_cen_startup, -- 1-bit input: Contols the FCS_B pin for flash access
-FCSBTS => '0', -- 1-bit input: Tristate the FCS_B pin
-GSR => '0', -- 1-bit input: Global Set/Reset input (GSR cannot be used for the port)
-GTS => '0', -- 1-bit input: Global 3-state input (GTS cannot be used for the port name)
-KEYCLEARB => '1', -- 1-bit input: Clear AES Decrypter Key input from Battery-Backed RAM (BBRAM)
-PACK => '0', -- 1-bit input: PROGRAM acknowledge input
-USRCCLKO => spi_clk_startup, -- 1-bit input: User CCLK input
-USRCCLKTS => '0', -- 1-bit input: User CCLK 3-state enable input
-USRDONEO => '0', -- 1-bit input: User DONE pin output control
-USRDONETS => '1' -- 1-bit input: User DONE 3-state enable output
-);
+  generic map (
+    PROG_USR => "FALSE", -- Activate program event security feature. Requires encrypted bitstreams.
+    SIM_CCLK_FREQ => 0.0 -- Set the Configuration Clock Frequency(ns) for simulation
+  )
+  port map (
+    --CFGCLK => CFGCLK, -- 1-bit output: Configuration main clock output
+    --CFGMCLK => CFGMCLK, -- 1-bit output: Configuration internal oscillator clock output
+    DI => spi_in_startup, -- 4-bit output: Allow receiving on the D input pin
+    --EOS => EOS, -- 1-bit output: Active-High output signal indicating the End Of Startup
+    --PREQ => PREQ, -- 1-bit output: PROGRAM request to fabric output
+    DO => ("000" & spi_mosi_startup), -- 4-bit input: Allows control of the D pin output
+    DTS=> "1110", -- 4-bit input: Allows tristate of the D pin
+    FCSBO => spi_cen_startup, -- 1-bit input: Contols the FCS_B pin for flash access
+    FCSBTS => '0', -- 1-bit input: Tristate the FCS_B pin
+    GSR => '0', -- 1-bit input: Global Set/Reset input (GSR cannot be used for the port)
+    GTS => '0', -- 1-bit input: Global 3-state input (GTS cannot be used for the port name)
+    KEYCLEARB => '1', -- 1-bit input: Clear AES Decrypter Key input from Battery-Backed RAM (BBRAM)
+    PACK => '0', -- 1-bit input: PROGRAM acknowledge input
+    USRCCLKO => spi_clk_startup, -- 1-bit input: User CCLK input
+    USRCCLKTS => '0', -- 1-bit input: User CCLK 3-state enable input
+    USRDONEO => '0', -- 1-bit input: User DONE pin output control
+    USRDONETS => '1' -- 1-bit input: User DONE 3-state enable output
+  );
+
 spi_cen_startup <= spi_cen_primary;
 spi_clk_startup <= spi_clk;
 spi_mosi_startup <= spi_mosi_primary;

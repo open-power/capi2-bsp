@@ -30,38 +30,10 @@ ENTITY capi_bsp IS
     pci_pi_refclk_n0      : in    std_logic;     -- 100MHz Refclk
 
 -- Xilinx requires both pins of differential transceivers
-    pci0_i_rxp_in0        : in    std_logic;
-    pci0_i_rxn_in0        : in    std_logic;
-    pci0_i_rxp_in1        : in    std_logic;
-    pci0_i_rxn_in1        : in    std_logic;
-    pci0_i_rxp_in2        : in    std_logic;
-    pci0_i_rxn_in2        : in    std_logic;
-    pci0_i_rxp_in3        : in    std_logic;
-    pci0_i_rxn_in3        : in    std_logic;
-    pci0_i_rxp_in4        : in    std_logic;
-    pci0_i_rxn_in4        : in    std_logic;
-    pci0_i_rxp_in5        : in    std_logic;
-    pci0_i_rxn_in5        : in    std_logic;
-    pci0_i_rxp_in6        : in    std_logic;
-    pci0_i_rxn_in6        : in    std_logic;
-    pci0_i_rxp_in7        : in    std_logic;
-    pci0_i_rxn_in7        : in    std_logic;
-    pci0_o_txp_out0       : out   std_logic;
-    pci0_o_txn_out0       : out   std_logic;
-    pci0_o_txp_out1       : out   std_logic;
-    pci0_o_txn_out1       : out   std_logic;
-    pci0_o_txp_out2       : out   std_logic;
-    pci0_o_txn_out2       : out   std_logic;
-    pci0_o_txp_out3       : out   std_logic;
-    pci0_o_txn_out3       : out   std_logic;
-    pci0_o_txp_out4       : out   std_logic;
-    pci0_o_txn_out4       : out   std_logic;
-    pci0_o_txp_out5       : out   std_logic;
-    pci0_o_txn_out5       : out   std_logic;
-    pci0_o_txp_out6       : out   std_logic;
-    pci0_o_txn_out6       : out   std_logic;
-    pci0_o_txp_out7       : out   std_logic;
-    pci0_o_txn_out7       : out   std_logic;
+    pcie_txp              : out std_logic_vector(7 downto 0);
+    pcie_txn              : out std_logic_vector(7 downto 0);
+    pcie_rxp              : in  std_logic_vector(7 downto 0);
+    pcie_rxn              : in  std_logic_vector(7 downto 0);
 
 
 -- Flash Interface
@@ -189,20 +161,13 @@ ENTITY capi_bsp IS
     hd0_cpl_data          : out   std_logic_vector(0 to 1023);
 --    hd0_cpl_dpar          : out   std_logic_vector(0 to 15);
 
-    gold_factory          : in  std_logic;
+    gold_factory          : in    std_logic;
 
-    pci_user_reset        : out std_logic;  --PCI hip user_reset signal if required
-    pci_clock_125MHz      : out std_logic   --125MHz clock if required
+    pci_user_reset        : out   std_logic;  --PCI hip user_reset signal if required
+    pci_clock_125MHz      : out   std_logic   --125MHz clock if required
 );
 
-       -- attribute secure_config : string;
-       -- attribute secure_config of capi_bsp : entity is "PROTECT";
-       -- attribute secure_netlist : string;
-       -- attribute secure_netlist of capi_bsp : entity is "ENCRYPT";
 END capi_bsp;
-
-
-
 
 ARCHITECTURE capi_bsp OF capi_bsp IS
 
@@ -217,55 +182,53 @@ Component OBUF
   );
 End Component OBUF;
 
-
--- Component pcie4_uscale_plus_0
 Component pcie4_uscale_plus_0
   PORT(
     pci_exp_txn : out STD_LOGIC_VECTOR (7 downto 0 );
     pci_exp_txp : out STD_LOGIC_VECTOR (7 downto 0 );
     pci_exp_rxn : in STD_LOGIC_VECTOR (7 downto 0 );
     pci_exp_rxp : in STD_LOGIC_VECTOR (7 downto 0 );
-              user_clk                                       : out   STD_LOGIC;
-              user_reset                                     : out   STD_LOGIC;
-              user_lnk_up                                    : out   STD_LOGIC;
+    user_clk                   : out   STD_LOGIC;
+    user_reset                 : out   STD_LOGIC;
+    user_lnk_up                : out   STD_LOGIC;
     s_axis_rq_tdata : in STD_LOGIC_VECTOR ( 511 downto 0 );
     s_axis_rq_tkeep : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              s_axis_rq_tlast                                : in    STD_LOGIC;
+    s_axis_rq_tlast            : in    STD_LOGIC;
     s_axis_rq_tready : out STD_LOGIC_VECTOR ( 3 downto 0 );
     s_axis_rq_tuser : in STD_LOGIC_VECTOR ( 136 downto 0 );
-              s_axis_rq_tvalid                               : in    STD_LOGIC;
+    s_axis_rq_tvalid           : in    STD_LOGIC;
     m_axis_rc_tdata : out STD_LOGIC_VECTOR ( 511 downto 0 );
     m_axis_rc_tkeep : out STD_LOGIC_VECTOR ( 15 downto 0 );
-              m_axis_rc_tlast                                : out   STD_LOGIC;
+    m_axis_rc_tlast            : out   STD_LOGIC;
     m_axis_rc_tready : in STD_LOGIC_VECTOR ( 0 downto 0 );
     m_axis_rc_tuser : out STD_LOGIC_VECTOR ( 160 downto 0 );
-              m_axis_rc_tvalid                               : out   STD_LOGIC;
+    m_axis_rc_tvalid           : out   STD_LOGIC;
     m_axis_cq_tdata : out STD_LOGIC_VECTOR ( 511 downto 0 );
     m_axis_cq_tkeep : out STD_LOGIC_VECTOR ( 15 downto 0 );
-              m_axis_cq_tlast                                : out   STD_LOGIC;
+    m_axis_cq_tlast            : out   STD_LOGIC;
     m_axis_cq_tready : in STD_LOGIC_VECTOR ( 0 downto 0 );
     m_axis_cq_tuser : out STD_LOGIC_VECTOR ( 182 downto 0 );
-              m_axis_cq_tvalid                               : out   STD_LOGIC;
+    m_axis_cq_tvalid           : out   STD_LOGIC;
     s_axis_cc_tdata : in STD_LOGIC_VECTOR ( 511 downto 0 );
     s_axis_cc_tkeep : in STD_LOGIC_VECTOR ( 15 downto 0 );
-              s_axis_cc_tlast                                : in    STD_LOGIC;
+    s_axis_cc_tlast            : in    STD_LOGIC;
     s_axis_cc_tready : out STD_LOGIC_VECTOR ( 3 downto 0 );
     s_axis_cc_tuser : in STD_LOGIC_VECTOR ( 80 downto 0 );
-              s_axis_cc_tvalid                               : in    STD_LOGIC;
+    s_axis_cc_tvalid           : in    STD_LOGIC;
     pcie_rq_seq_num0 : out STD_LOGIC_VECTOR ( 5 downto 0 );
-              pcie_rq_seq_num_vld0                           : out   STD_LOGIC;
+    pcie_rq_seq_num_vld0                 : out   STD_LOGIC;
     pcie_rq_seq_num1 : out STD_LOGIC_VECTOR ( 5 downto 0 );
-              pcie_rq_seq_num_vld1                           : out   STD_LOGIC;
+    pcie_rq_seq_num_vld1                 : out   STD_LOGIC;
     pcie_rq_tag0 : out STD_LOGIC_VECTOR ( 7 downto 0 );
     pcie_rq_tag1 : out STD_LOGIC_VECTOR ( 7 downto 0 );
     pcie_rq_tag_av : out STD_LOGIC_VECTOR ( 3 downto 0 );
-              pcie_rq_tag_vld0                               : out   STD_LOGIC;
-              pcie_rq_tag_vld1                               : out   STD_LOGIC;
+    pcie_rq_tag_vld0           : out   STD_LOGIC;
+    pcie_rq_tag_vld1           : out   STD_LOGIC;
     pcie_tfc_nph_av : out STD_LOGIC_VECTOR ( 3 downto 0 );
     pcie_tfc_npd_av : out STD_LOGIC_VECTOR ( 3 downto 0 );
     pcie_cq_np_req : in STD_LOGIC_VECTOR ( 1 downto 0 );
     pcie_cq_np_req_count : out STD_LOGIC_VECTOR ( 5 downto 0 );
-              cfg_phy_link_down                              : out   STD_LOGIC;
+    cfg_phy_link_down          : out   STD_LOGIC;
     cfg_phy_link_status : out STD_LOGIC_VECTOR ( 1 downto 0 );
     cfg_negotiated_width : out STD_LOGIC_VECTOR ( 2 downto 0 );
     cfg_current_speed : out STD_LOGIC_VECTOR ( 1 downto 0 );
@@ -278,17 +241,17 @@ Component pcie4_uscale_plus_0
     cfg_link_power_state : out STD_LOGIC_VECTOR ( 1 downto 0 );
     cfg_mgmt_addr : in STD_LOGIC_VECTOR ( 9 downto 0 );
     cfg_mgmt_function_number : in STD_LOGIC_VECTOR ( 7 downto 0 );
-              cfg_mgmt_write                                 : in    STD_LOGIC;
+    cfg_mgmt_write             : in    STD_LOGIC;
     cfg_mgmt_write_data : in STD_LOGIC_VECTOR ( 31 downto 0 );
     cfg_mgmt_byte_enable : in STD_LOGIC_VECTOR ( 3 downto 0 );
-              cfg_mgmt_read                                  : in    STD_LOGIC;
+    cfg_mgmt_read              : in    STD_LOGIC;
     cfg_mgmt_read_data : out STD_LOGIC_VECTOR ( 31 downto 0 );
-              cfg_mgmt_read_write_done                       : out   STD_LOGIC;
-              cfg_mgmt_debug_access                          : in    STD_LOGIC;
-              cfg_err_cor_out                                : out   STD_LOGIC;
-              cfg_err_nonfatal_out                           : out   STD_LOGIC;
-              cfg_err_fatal_out                              : out   STD_LOGIC;
-              cfg_local_error_valid                          : out   STD_LOGIC;
+    cfg_mgmt_read_write_done             : out   STD_LOGIC;
+    cfg_mgmt_debug_access                : in    STD_LOGIC;
+    cfg_err_cor_out            : out   STD_LOGIC;
+    cfg_err_nonfatal_out                 : out   STD_LOGIC;
+    cfg_err_fatal_out          : out   STD_LOGIC;
+    cfg_local_error_valid                : out   STD_LOGIC;
 --     cfg_ltr_enable : out STD_LOGIC;
     cfg_local_error_out : out STD_LOGIC_VECTOR ( 4 downto 0 );
     cfg_ltssm_state : out STD_LOGIC_VECTOR ( 5 downto 0 );
@@ -296,18 +259,18 @@ Component pcie4_uscale_plus_0
     cfg_tx_pm_state : out STD_LOGIC_VECTOR ( 1 downto 0 );
     cfg_rcb_status : out STD_LOGIC_VECTOR ( 3 downto 0 );
     cfg_obff_enable : out STD_LOGIC_VECTOR ( 1 downto 0 );
-              cfg_pl_status_change                           : out   STD_LOGIC;
+    cfg_pl_status_change                 : out   STD_LOGIC;
     cfg_tph_requester_enable : out STD_LOGIC_VECTOR ( 3 downto 0 );
     cfg_tph_st_mode : out STD_LOGIC_VECTOR ( 11 downto 0 );
     cfg_vf_tph_requester_enable : out STD_LOGIC_VECTOR ( 251 downto 0 );
     cfg_vf_tph_st_mode : out STD_LOGIC_VECTOR ( 755 downto 0 );
-              cfg_msg_received                               : out   STD_LOGIC;
+    cfg_msg_received           : out   STD_LOGIC;
     cfg_msg_received_data : out STD_LOGIC_VECTOR ( 7 downto 0 );
     cfg_msg_received_type : out STD_LOGIC_VECTOR ( 4 downto 0 );
-              cfg_msg_transmit                               : in    STD_LOGIC;
+    cfg_msg_transmit           : in    STD_LOGIC;
     cfg_msg_transmit_type : in STD_LOGIC_VECTOR ( 2 downto 0 );
     cfg_msg_transmit_data : in STD_LOGIC_VECTOR ( 31 downto 0 );
-              cfg_msg_transmit_done                          : out   STD_LOGIC;
+    cfg_msg_transmit_done                : out   STD_LOGIC;
     cfg_fc_ph : out STD_LOGIC_VECTOR ( 7 downto 0 );
     cfg_fc_pd : out STD_LOGIC_VECTOR ( 11 downto 0 );
     cfg_fc_nph : out STD_LOGIC_VECTOR ( 7 downto 0 );
@@ -317,54 +280,53 @@ Component pcie4_uscale_plus_0
     cfg_fc_sel : in STD_LOGIC_VECTOR ( 2 downto 0 );
     cfg_dsn : in STD_LOGIC_VECTOR ( 63 downto 0 );
     cfg_bus_number : out STD_LOGIC_VECTOR ( 7 downto 0 );
-              cfg_power_state_change_ack                     : in    STD_LOGIC;
-              cfg_power_state_change_interrupt               : out   STD_LOGIC;
-              cfg_err_cor_in                                 : in    STD_LOGIC;
-              cfg_err_uncor_in                               : in    STD_LOGIC;
+    cfg_power_state_change_ack           : in    STD_LOGIC;
+    cfg_power_state_change_interrupt     : out   STD_LOGIC;
+    cfg_err_cor_in             : in    STD_LOGIC;
+    cfg_err_uncor_in           : in    STD_LOGIC;
     cfg_flr_in_process : out STD_LOGIC_VECTOR ( 3 downto 0 );
     cfg_flr_done : in STD_LOGIC_VECTOR ( 3 downto 0 );
     cfg_vf_flr_in_process : out STD_LOGIC_VECTOR ( 251 downto 0 );
     cfg_vf_flr_func_num : in STD_LOGIC_VECTOR ( 7 downto 0 );
     cfg_vf_flr_done : in STD_LOGIC_VECTOR ( 0 to 0 );
-              cfg_link_training_enable                       : in    STD_LOGIC;
-              cfg_ext_read_received                          : out   STD_LOGIC;
-              cfg_ext_write_received                         : out   STD_LOGIC;
+    cfg_link_training_enable             : in    STD_LOGIC;
+    cfg_ext_read_received                : out   STD_LOGIC;
+    cfg_ext_write_received               : out   STD_LOGIC;
     cfg_ext_register_number : out STD_LOGIC_VECTOR ( 9 downto 0 );
     cfg_ext_function_number : out STD_LOGIC_VECTOR ( 7 downto 0 );
     cfg_ext_write_data : out STD_LOGIC_VECTOR ( 31 downto 0 );
     cfg_ext_write_byte_enable : out STD_LOGIC_VECTOR ( 3 downto 0 );
     cfg_ext_read_data : in STD_LOGIC_VECTOR ( 31 downto 0 );
-              cfg_ext_read_data_valid                        : in    STD_LOGIC;
+    cfg_ext_read_data_valid              : in    STD_LOGIC;
     cfg_interrupt_int : in STD_LOGIC_VECTOR ( 3 downto 0 );
     cfg_interrupt_pending : in STD_LOGIC_VECTOR ( 3 downto 0 );
-              cfg_interrupt_sent                             : out   STD_LOGIC;
+    cfg_interrupt_sent         : out   STD_LOGIC;
 
     cfg_interrupt_msi_enable : out STD_LOGIC_VECTOR ( 3 downto 0 );
     cfg_interrupt_msi_mmenable : out STD_LOGIC_VECTOR ( 11 downto 0 );
-              cfg_interrupt_msi_mask_update                  : out   STD_LOGIC;
+    cfg_interrupt_msi_mask_update        : out   STD_LOGIC;
     cfg_interrupt_msi_data : out STD_LOGIC_VECTOR ( 31 downto 0 );
     cfg_interrupt_msi_select : in STD_LOGIC_VECTOR ( 1 downto 0 );
     cfg_interrupt_msi_int : in STD_LOGIC_VECTOR ( 31 downto 0 );
     cfg_interrupt_msi_pending_status : in STD_LOGIC_VECTOR ( 31 downto 0 );
-              cfg_interrupt_msi_pending_status_data_enable   : in    STD_LOGIC;
+    cfg_interrupt_msi_pending_status_data_enable   : in    STD_LOGIC;
     cfg_interrupt_msi_pending_status_function_num : in STD_LOGIC_VECTOR ( 1 downto 0 );
-              cfg_interrupt_msi_sent                         : out   STD_LOGIC;
-              cfg_interrupt_msi_fail                         : out   STD_LOGIC;
+    cfg_interrupt_msi_sent               : out   STD_LOGIC;
+    cfg_interrupt_msi_fail               : out   STD_LOGIC;
     cfg_interrupt_msi_attr : in STD_LOGIC_VECTOR ( 2 downto 0 );
-              cfg_interrupt_msi_tph_present                  : in    STD_LOGIC;
+    cfg_interrupt_msi_tph_present        : in    STD_LOGIC;
     cfg_interrupt_msi_tph_type : in STD_LOGIC_VECTOR ( 1 downto 0 );
     cfg_interrupt_msi_tph_st_tag : in STD_LOGIC_VECTOR ( 7 downto 0 );
     cfg_interrupt_msi_function_number : in STD_LOGIC_VECTOR ( 7 downto 0 );
-              cfg_pm_aspm_l1_entry_reject                    : in    STD_LOGIC;
-              cfg_pm_aspm_tx_l0s_entry_disable               : in    STD_LOGIC;
-              cfg_hot_reset_out                              : out   STD_LOGIC;
-              cfg_config_space_enable                        : in    STD_LOGIC;
-              cfg_req_pm_transition_l23_ready                : in    STD_LOGIC;
-              cfg_hot_reset_in                               : in    STD_LOGIC;
+    cfg_pm_aspm_l1_entry_reject          : in    STD_LOGIC;
+    cfg_pm_aspm_tx_l0s_entry_disable     : in    STD_LOGIC;
+    cfg_hot_reset_out          : out   STD_LOGIC;
+    cfg_config_space_enable              : in    STD_LOGIC;
+    cfg_req_pm_transition_l23_ready      : in    STD_LOGIC;
+    cfg_hot_reset_in           : in    STD_LOGIC;
     cfg_ds_port_number : in STD_LOGIC_VECTOR ( 7 downto 0 );
     cfg_ds_bus_number : in STD_LOGIC_VECTOR ( 7 downto 0 );
     cfg_ds_device_number : in STD_LOGIC_VECTOR ( 4 downto 0 );
-
 
 --     cfg_pm_aspm_l1_entry_reject : in STD_LOGIC;
 --     cfg_pm_aspm_tx_l0s_entry_disable : in STD_LOGIC;
@@ -391,23 +353,14 @@ Component pcie4_uscale_plus_0
 --     cfg_subsys_id_pf2 : in STD_LOGIC_VECTOR ( 15 downto 0 );
 --     cfg_subsys_id_pf3 : in STD_LOGIC_VECTOR ( 15 downto 0 );
 
-              sys_clk                                        : in    STD_LOGIC;
-              sys_clk_gt                                     : in    STD_LOGIC;
-              sys_reset                                      : in    STD_LOGIC;
-              phy_rdy_out                                    : out   STD_LOGIC
-
- -- New for 2016.4
- --   int_qpll0lock_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
- --   int_qpll0outrefclk_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
- --   int_qpll0outclk_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
- --   int_qpll1lock_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
- --   int_qpll1outrefclk_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
- --   int_qpll1outclk_out : out STD_LOGIC_VECTOR ( 1 downto 0 )
+    sys_clk                    : in    STD_LOGIC;
+    sys_clk_gt                 : in    STD_LOGIC;
+    sys_reset                  : in    STD_LOGIC;
+    phy_rdy_out                : out   STD_LOGIC
 
   );
 
 end Component pcie4_uscale_plus_0;
-
 
 -- IBUFDS_GTE4: Gigabit Transceiver Buffer
 -- UltraScale
@@ -420,35 +373,33 @@ Component IBUFDS_GTE4
 -- REFCLK_ICNTL_RX  : in std_logic_vector(0 to 1)
 -- );
   PORT (
-    O                                              : out std_logic;
-    ODIV2                                          : out std_logic;
-    I                                              : in  std_logic;
-    CEB                                            : in  std_logic;
-    IB                                             : in  std_logic
+    O            : out std_logic;
+    ODIV2        : out std_logic;
+    I            : in  std_logic;
+    CEB          : in  std_logic;
+    IB           : in  std_logic
   );
 end Component IBUFDS_GTE4;
 
 Component IBUF
   PORT (
-    O                                              : out std_logic;
-    I                                              : in  std_logic
+    O            : out std_logic;
+    I            : in  std_logic
   );
 end Component IBUF;
 
-
 Component uscale_plus_clk_wiz
   PORT (
-    clk_in1                                        : in  std_logic;
-    clk_out1                                       : out std_logic;
-    clk_out2                                       : out std_logic;
-    clk_out3                                       : out std_logic;
-    clk_out3_ce                                    : in  std_logic;
-    reset                                          : in  std_logic;
-    locked                                         : out std_logic
+    clk_in1      : in  std_logic;
+    clk_out1     : out std_logic;
+    clk_out2     : out std_logic;
+    clk_out3     : out std_logic;
+    clk_out3_ce  : in  std_logic;
+    reset        : in  std_logic;
+    locked       : out std_logic
   );
 end Component uscale_plus_clk_wiz;
 
--- Component psl
 Component PSL9_WRAP_0
   PORT (
 ------        psl_clk: in std_logic;
@@ -637,8 +588,6 @@ END Component capi_board_infrastructure;
 
 
 
---attribute mark_debug : string;
---Signal psl_rst: std_logic;     -- AM. TBD
 Signal ha0_reoa: std_logic_vector(0 to 185);      -- New PSL signal - unknown usage
 
 Signal hip_npor0: std_logic;  -- bool
@@ -646,9 +595,6 @@ Signal i_cpld_sda: std_logic;  -- bool
 Signal crc_error: std_logic;  -- bool
 Signal i_therm_sda: std_logic;  -- bool
 Signal i_ucd_sda: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_app_int_ack: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_app_msi_ack: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_cfg_par_err: std_logic;  -- bool
 Signal pcihip0_psl_coreclkout_hip: std_logic;  -- bool
 Signal pcihip0_psl_cseb_addr: std_logic_vector(0 to 32);  -- v33bit
 Signal pcihip0_psl_cseb_addr_parity: std_logic_vector(0 to 4);  -- v5bit
@@ -658,18 +604,8 @@ Signal pcihip0_psl_cseb_wrdata: std_logic_vector(0 to 31);  -- v32bit
 Signal pcihip0_psl_cseb_wrdata_parity: std_logic_vector(0 to 3);  -- v4bit
 Signal pcihip0_psl_cseb_wren: std_logic;  -- bool
 Signal pcihip0_psl_cseb_wrresp_req: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_derr_cor_ext_rcv: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_derr_cor_ext_rpl: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_derr_rpl: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_hip_reconfig_readdata: std_logic_vector(0 to 15);  -- v16bit
--- Apr13 Signal pcihip0_psl_ko_cpl_spc_data: std_logic_vector(0 to 11);  -- v12bit
--- Apr13 Signal pcihip0_psl_ko_cpl_spc_header: std_logic_vector(0 to 7);  -- v8bit
--- Apr13 Signal pcihip0_psl_lmi_ack: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_lmi_dout: std_logic_vector(0 to 31);  -- v32bit
 Signal pcihip0_psl_pld_clk_inuse: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_pme_to_sr: std_logic;  -- bool
 Signal pcihip0_psl_reset_status: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_rx_par_err: std_logic;  -- bool
 Signal pcihip0_psl_rx_st_bar: std_logic_vector(0 to 7);  -- v8bit
 Signal pcihip0_psl_rx_st_data: std_logic_vector(0 to 255);  -- v256bit
 Signal pcihip0_psl_rx_st_empty: std_logic_vector(0 to 1);  -- v2bit
@@ -678,10 +614,8 @@ Signal pcihip0_psl_rx_st_err: std_logic;  -- bool
 Signal pcihip0_psl_rx_st_parity: std_logic_vector(0 to 31);  -- v32bit
 Signal pcihip0_psl_rx_st_sop: std_logic;  -- bool
 Signal pcihip0_psl_rx_st_valid: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_testin_zero: std_logic;  -- bool
 Signal pcihip0_psl_tl_cfg_add: std_logic_vector(0 to 3);  -- v4bit
 Signal pcihip0_psl_tl_cfg_ctl: std_logic_vector(0 to 31);  -- v32bit
--- Apr13 Signal pcihip0_psl_tl_cfg_sts: std_logic_vector(0 to 52);  -- v53bit
 Signal pcihip0_psl_tx_cred_datafccp: std_logic_vector(0 to 11);  -- v12bit
 Signal pcihip0_psl_tx_cred_datafcnp: std_logic_vector(0 to 11);  -- v12bit
 Signal pcihip0_psl_tx_cred_datafcp: std_logic_vector(0 to 11);  -- v12bit
@@ -690,7 +624,6 @@ Signal pcihip0_psl_tx_cred_fcinfinite: std_logic_vector(0 to 5);  -- v6bit
 Signal pcihip0_psl_tx_cred_hdrfccp: std_logic_vector(0 to 7);  -- v8bit
 Signal pcihip0_psl_tx_cred_hdrfcnp: std_logic_vector(0 to 7);  -- v8bit
 Signal pcihip0_psl_tx_cred_hdrfcp: std_logic_vector(0 to 7);  -- v8bit
--- Apr13 Signal pcihip0_psl_tx_par_err: std_logic_vector(0 to 1);  -- v2bit
 Signal pcihip0_psl_tx_st_ready: std_logic;  -- bool
 Signal pfl_flash_grant: std_logic;  -- bool
 Signal pfl_flash_reqn: std_logic;  -- bool
@@ -705,7 +638,7 @@ Signal pci_exp_txp : std_logic_vector(7 downto 0);
 Signal pci_exp_rxn : std_logic_vector(7 downto 0);
 Signal pci_exp_rxp : std_logic_vector(7 downto 0);
 
-signal       psl_reset_sig: std_logic;
+signal        psl_reset_sig  : std_logic;
 signal        axis_cq_tvalid : std_logic;
 signal        axis_cq_tdata  : std_logic_vector(511 downto 0);
 signal        axis_cq_tready : std_logic;
@@ -774,7 +707,6 @@ Signal cfg_ext_read_data_valid : STD_LOGIC;
 Signal led_red : std_logic_vector(1 downto 0);
 Signal led_green : std_logic_vector(1 downto 0);
 Signal led_blue : std_logic_vector(1 downto 0);
-
 
 begin
 
@@ -895,14 +827,14 @@ PORT MAP (
 --   //XLX IP RQ Interface
   AXIS_RQ_TVALID      => axis_rq_tvalid,
   AXIS_RQ_TDATA       => axis_rq_tdata,
-  AXIS_RQ_TREADY      => axis_rq_tready(0),  -- AM. TDB
+  AXIS_RQ_TREADY      => axis_rq_tready(0),  -- TDB
   AXIS_RQ_TLAST       => axis_rq_tlast,
   AXIS_RQ_TUSER       => axis_rq_tuser,
   AXIS_RQ_TKEEP       => axis_rq_tkeep,
 --   //XLX IP CC Interface
   AXIS_CC_TVALID      => axis_cc_tvalid,
   AXIS_CC_TDATA       => axis_cc_tdata,
-  AXIS_CC_TREADY      => axis_cc_tready(0),  -- AM. TDB
+  AXIS_CC_TREADY      => axis_cc_tready(0),  -- TDB
   AXIS_CC_TLAST       => axis_cc_tlast,
   AXIS_CC_TUSER       => axis_cc_tuser,
   AXIS_CC_TKEEP       => axis_cc_tkeep,
@@ -916,7 +848,7 @@ PORT MAP (
 
   psl_kill_link       => open,
   psl_build_ver       => psl_build_ver,
-  afu_clk             => psl_clk,            -- TBD AM.
+  afu_clk             => psl_clk,            -- TBD.
 
   -- PSL_RST and PCIHIP_PSL_RST must both be asserted if one is asserted
   -- If only 1 is asserted, async fifo gets into invalid state
@@ -935,42 +867,14 @@ two2   <= one1 & one1;
 sys_clk_p         <= pci_pi_refclk_p0 ;
 sys_clk_n         <= pci_pi_refclk_n0;
 sys_rst_n         <= pci_pi_nperst0;
-pci0_o_txn_out0   <= pci_exp_txn(0);
-pci0_o_txp_out0   <= pci_exp_txp(0);
-pci_exp_rxn(0)    <= pci0_i_rxp_in0;
-pci_exp_rxp(0)    <= pci0_i_rxn_in0;
-pci0_o_txn_out1   <= pci_exp_txn(1);
-pci0_o_txp_out1   <= pci_exp_txp(1);
-pci_exp_rxn(1)    <= pci0_i_rxp_in1;
-pci_exp_rxp(1)    <= pci0_i_rxn_in1;
-pci0_o_txn_out2   <= pci_exp_txn(2);
-pci0_o_txp_out2   <= pci_exp_txp(2);
-pci_exp_rxn(2)    <= pci0_i_rxp_in2;
-pci_exp_rxp(2)    <= pci0_i_rxn_in2;
-pci0_o_txn_out3   <= pci_exp_txn(3);
-pci0_o_txp_out3   <= pci_exp_txp(3);
-pci_exp_rxn(3)    <= pci0_i_rxp_in3;
-pci_exp_rxp(3)    <= pci0_i_rxn_in3;
-pci0_o_txn_out4   <= pci_exp_txn(4);
-pci0_o_txp_out4   <= pci_exp_txp(4);
-pci_exp_rxn(4)    <= pci0_i_rxp_in4;
-pci_exp_rxp(4)    <= pci0_i_rxn_in4;
-pci0_o_txn_out5   <= pci_exp_txn(5);
-pci0_o_txp_out5   <= pci_exp_txp(5);
-pci_exp_rxn(5)    <= pci0_i_rxp_in5;
-pci_exp_rxp(5)    <= pci0_i_rxn_in5;
-pci0_o_txn_out6   <= pci_exp_txn(6);
-pci0_o_txp_out6   <= pci_exp_txp(6);
-pci_exp_rxn(6)    <= pci0_i_rxp_in6;
-pci_exp_rxp(6)    <= pci0_i_rxn_in6;
-pci0_o_txn_out7   <= pci_exp_txn(7);
-pci0_o_txp_out7   <= pci_exp_txp(7);
-pci_exp_rxn(7)    <= pci0_i_rxp_in7;
-pci_exp_rxp(7)    <= pci0_i_rxn_in7;
 
--- pci_user_reset    <= pcihip0_psl_rst;
--- pci_clock_125MHz  <= psl_clk_div2;
+pcie_txn(7 downto 0)    <= pci_exp_txn(7 downto 0);
+pcie_txp(7 downto 0)    <= pci_exp_txp(7 downto 0);
+pci_exp_rxn(7 downto 0) <= pcie_rxn(7 downto 0);
+pci_exp_rxp(7 downto 0) <= pcie_rxp(7 downto 0);
 
+pci_user_reset    <= pcihip0_psl_rst;  -- FIXME really needed above?
+pci_clock_125MHz  <= psl_clk_div2;     -- FIXME really needed above?
 
 pcihip0:      pcie4_uscale_plus_0
   PORT MAP (
@@ -1160,13 +1064,6 @@ pcihip0:      pcie4_uscale_plus_0
 
     phy_rdy_out => open
 
---    int_qpll0lock_out  => open,
---    int_qpll0outrefclk_out  => open,
---    int_qpll0outclk_out  => open,
---    int_qpll1lock_out  => open,
---    int_qpll1outrefclk_out  => open,
---    int_qpll1outclk_out => open
-
   );
 
     -- led controls
@@ -1243,39 +1140,6 @@ capi_bis : capi_board_infrastructure
     -- i_fpga_smbus_en_n           => i_fpga_smbus_en_n
   );
 
-
---  E2E PRF Vectors
---    e2e_prf: AFU_E2E_PRF
---  PORT MAP (
---         A0H_CVALID                  =>  a0h_cvalid,
---         A0H_CTAG                    =>  a0h_ctag,
---         A0H_COM                     =>  a0h_com,
---    A0H_CEA          =>  efes64,
---    A0H_CCH          =>  efes16,
---         HA0_BRVALID                 =>  ha0_brvalid,  -- NEW
---         HA0_BWVALID                 =>  ha0_bwvalid,  -- NEW
---         HA0_RVALID                  =>  ha0_rvalid,
---           HA0_RTAG                    =>  ha0_rtag,
---           WR_CALC_DONE          =>  open,                                                                                 --
---           RD_CALC_DONE           =>  open,                                                                                 --
---           PRF_WR_OVERALL_TICKS_DATA   =>  prf_wr_overall_ticks_data,
---           PRF_RD_OVERALL_TICKS_DATA   =>  prf_rd_overall_ticks_data,
---           PRF_WR_OVERALL_SAMPLES_DATA =>  prf_wr_overall_samples_data,
---           PRF_RD_OVERALL_SAMPLES_DATA =>  prf_rd_overall_samples_data,
---           PRF_RD_MAX_LAT_DYNAMIC_AVG  =>  prf_rd_max_lat_dynamic_avg,
---           PRF_RD_MAX_LAT              =>  prf_rd_max_lat,
---           PRF_RD_MAX_LAT_CTAG         =>  open,
---           PRF_RD_MAX_LAT_EA           =>  open,
---           PRF_RD_MAX_LAT_PE           =>  open,
---           PRF_RD_MAX_LAT_COM          =>  open,
---           PRF_RD_DYNAMIC_BW           =>  prf_rd_dynamic_bw, -- NEW
---           PRF_WR_DYNAMIC_BW           =>  prf_wr_dynamic_bw, -- NEW
---           PSL_CLK                     =>  psl_clk,
---           PSL_RST                =>  psl_reset_sig
---      );
-
-
-
 -- Xilinx component which is required to generate correct clocks towards PCIHIP
 refclk_ibuf : IBUFDS_GTE4
 -- generic map (
@@ -1296,8 +1160,9 @@ refclk_ibuf : IBUFDS_GTE4
 IBUF_inst : IBUF
   port map (
     O => sys_rst_n_c,  -- 1-bit output: Buffer output
-    I => sys_rst_n   -- 1-bit input: Buffer input
+    I => sys_rst_n     -- 1-bit input: Buffer input
   );
+-- End of IBUF_inst instantiation
 
 
 --        gate icap_clk until clocks are stable after link up

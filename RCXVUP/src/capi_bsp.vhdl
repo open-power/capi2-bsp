@@ -155,8 +155,10 @@ ARCHITECTURE capi_bsp OF capi_bsp IS
 -- UltraScale
 -- Xilinx HDL Libraries Guide, version 2015.4
 Component OBUF
-    PORT (O : out std_logic;
-          I : in std_logic);
+  PORT (
+    O : out std_logic;
+    I : in  std_logic
+  );
 End Component OBUF;
 
 -- Component pcie4_uscale_plus_0
@@ -336,14 +338,6 @@ Component pcie4_uscale_plus_0
               sys_reset                                      : in    STD_LOGIC;
               phy_rdy_out                                    : out   STD_LOGIC
 
- -- New for 2016.4
-    --int_qpll0lock_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
-    --int_qpll0outrefclk_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
-    --int_qpll0outclk_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
-    --int_qpll1lock_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
-    --int_qpll1outrefclk_out : out STD_LOGIC_VECTOR ( 1 downto 0 );
-    --int_qpll1outclk_out : out STD_LOGIC_VECTOR ( 1 downto 0 )
-
   );
 
 end Component pcie4_uscale_plus_0;
@@ -358,31 +352,31 @@ Component IBUFDS_GTE4
 -- REFCLK_HROW_CK_SEL : in std_logic_vector(0 to 1);
 -- REFCLK_ICNTL_RX  : in std_logic_vector(0 to 1)
 -- );
-PORT
-    (O : out STD_LOGIC;
-              ODIV2                                          : out   STD_LOGIC;
-              I                                              : in    STD_LOGIC;
-              CEB                                            : in    STD_LOGIC;
-     IB : in STD_LOGIC
-);
+  PORT (
+    O                                              : out std_logic;
+    ODIV2                                          : out std_logic;
+    I                                              : in  std_logic;
+    CEB                                            : in  std_logic;
+    IB                                             : in  std_logic
+  );
 end Component IBUFDS_GTE4;
 
 Component IBUF
-PORT (
-              O                                              : out   STD_LOGIC;
-I : in  STD_LOGIC
-);
+  PORT (
+    O                                              : out std_logic;
+    I                                              : in  std_logic
+  );
 end Component IBUF;
 
 Component uscale_plus_clk_wiz
-PORT (
-              clk_in1                                        : in    STD_LOGIC;
-              clk_out1                                       : out   STD_LOGIC;
-              clk_out2                                       : out   STD_LOGIC;
-              clk_out3                                       : out   STD_LOGIC;
-              clk_out3_ce                                    : in    STD_LOGIC;
-              reset                                          : in    STD_LOGIC;
-    locked : out STD_LOGIC
+  PORT (
+    clk_in1                                        : in  std_logic;
+    clk_out1                                       : out std_logic;
+    clk_out2                                       : out std_logic;
+    clk_out3                                       : out std_logic;
+    clk_out3_ce                                    : in  std_logic;
+    reset                                          : in  std_logic;
+    locked                                         : out std_logic
   );
 end Component uscale_plus_clk_wiz;
 
@@ -550,33 +544,32 @@ Component PSL9_WRAP_0
               PCIHIP_PSL_RST                                 : in    std_logic;
         PCIHIP_PSL_CLK : in std_logic
 
-);
--- End Component psl;
+  );
 End Component PSL9_WRAP_0;
---End Component PSL9_WRAP;
+
 
 -- CAPI board infrastructure
 Component capi_board_infrastructure
   PORT(
-              cfg_ext_read_received                          : IN    STD_LOGIC;
-              cfg_ext_write_received                         : IN    STD_LOGIC;
-              cfg_ext_register_number                        : IN    STD_LOGIC_VECTOR(9 DOWNTO 0);
-              cfg_ext_function_number                        : IN    STD_LOGIC_VECTOR(7 DOWNTO 0);
-              cfg_ext_write_data                             : IN    STD_LOGIC_VECTOR(31 DOWNTO 0);
-              cfg_ext_write_byte_enable                      : IN    STD_LOGIC_VECTOR(3 DOWNTO 0);
-              cfg_ext_read_data                              : OUT   STD_LOGIC_VECTOR(31 DOWNTO 0);
-              cfg_ext_read_data_valid                        : OUT   STD_LOGIC;
+    cfg_ext_read_received                          : in    std_logic;
+    cfg_ext_write_received                         : in    std_logic;
+    cfg_ext_register_number                        : in    std_logic_vector( 9 downto 0);
+    cfg_ext_function_number                        : in    std_logic_vector( 7 downto 0);
+    cfg_ext_write_data                             : in    std_logic_vector(31 downto 0);
+    cfg_ext_write_byte_enable                      : in    std_logic_vector( 3 downto 0);
+    cfg_ext_read_data                              : out   std_logic_vector(31 downto 0);
+    cfg_ext_read_data_valid                        : out   std_logic;
 
-         spi_miso_secondary            : in    std_logic;
-         spi_mosi_secondary            : out   std_logic;
-         spi_cen_secondary             : out   std_logic;
+    spi_miso_secondary                             : in    std_logic;
+    spi_mosi_secondary                             : out   std_logic;
+    spi_cen_secondary                              : out   std_logic;
 
-              pci_pi_nperst0                                 : in    std_logic;
-              pcihip0_psl_clk                                : in    std_logic;
-              icap_clk                                       : in    std_logic;
-              cpld_usergolden                                : in    std_logic                     ;  -- bool
-              crc_error                                      : out   std_logic
-               );
+    pci_pi_nperst0                                 : in    std_logic;
+    pcihip0_psl_clk                                : in    std_logic;
+    icap_clk                                       : in    std_logic;
+    cpld_usergolden                                : in    std_logic;  -- bool
+    crc_error                                      : out   std_logic
+  );
 END Component capi_board_infrastructure;
 
 Component capi_rise_dff
@@ -585,7 +578,6 @@ Component capi_rise_dff
         din   : in std_logic);
 End Component capi_rise_dff;
 
-attribute mark_debug : string;
 Signal ha0_reoa: std_logic_vector(0 to 185);
 
 Signal hip_npor0: std_logic;  -- bool
@@ -642,15 +634,14 @@ Signal pcihip0_psl_tx_st_ready: std_logic;  -- bool
 Signal psl_clk: std_logic;  -- bool
 Signal psl_clk_div2: std_logic;  -- bool
 
-Signal sys_clk_p   :  std_logic ;
-Signal sys_clk_n   : std_logic ;
-Signal sys_rst_n   : std_logic ;
-Signal pci_exp_txn : STD_LOGIC_VECTOR (15 downto 0);
-Signal pci_exp_txp : STD_LOGIC_VECTOR (15 downto 0);
-Signal pci_exp_rxn : STD_LOGIC_VECTOR (15 downto 0);
-Signal pci_exp_rxp : STD_LOGIC_VECTOR (15 downto 0);
+Signal sys_clk_p   : std_logic;
+Signal sys_clk_n   : std_logic;
+Signal sys_rst_n   : std_logic;
+Signal pci_exp_txn : std_logic_vector(15 downto 0);
+Signal pci_exp_txp : std_logic_vector(15 downto 0);
+Signal pci_exp_rxn : std_logic_vector(15 downto 0);
+Signal pci_exp_rxp : std_logic_vector(15 downto 0);
 
-signal       psl_reset_sig: std_logic;
 signal        axis_cq_tvalid : std_logic;
 signal        axis_cq_tdata  : std_logic_vector(511 downto 0);
 signal        axis_cq_tready : std_logic;
@@ -680,19 +671,19 @@ signal        axis_cc_tlast   : std_logic;
 signal        axis_cc_tuser   : std_logic_vector(80 downto 0);
 signal        axis_cc_tkeep   : std_logic_vector(15 downto 0);
 
-Signal pcihip0_psl_clk  : std_logic;
-Signal pcihip0_psl_rst  : std_logic;
-Signal user_lnk_up  : std_logic;
+Signal pcihip0_psl_clk        : std_logic;
+Signal pcihip0_psl_rst        : std_logic;
+Signal user_lnk_up            : std_logic;
 
-Signal xip_cfg_fc_sel_sig   : std_logic_vector(2 downto 0);
-Signal xip_cfg_fc_ph_sig    : std_logic_vector(7 downto 0);
-Signal xip_cfg_fc_pd_sig    : std_logic_vector(11 downto 0);
-Signal xip_cfg_fc_np_sig    : std_logic_vector(7 downto 0);
-Signal cfg_dsn_sig  : std_logic_vector(63 downto 0);
+Signal xip_cfg_fc_sel_sig     : std_logic_vector(2 downto 0);
+Signal xip_cfg_fc_ph_sig      : std_logic_vector(7 downto 0);
+Signal xip_cfg_fc_pd_sig      : std_logic_vector(11 downto 0);
+Signal xip_cfg_fc_np_sig      : std_logic_vector(7 downto 0);
+Signal cfg_dsn_sig            : std_logic_vector(63 downto 0);
 
-Signal sys_clk    : std_logic;
-Signal sys_clk_gt   : std_logic;
-Signal sys_rst_n_c   : std_logic;
+Signal sys_clk                : std_logic;
+Signal sys_clk_gt             : std_logic;
+Signal sys_rst_n_c            : std_logic;
 
 Signal stp_counter_msb_sig : std_logic;
 Signal stp_counter_1sec_sig : std_logic;
@@ -702,7 +693,6 @@ Signal user_clock_sig  : std_logic;
 signal clk_wiz_2_locked : std_logic;
 
 signal efes32             : std_logic_vector(31 downto 0);
---signal efes1024           : std_logic_vector(1023 downto 0);
 signal one1             : std_logic;
 signal two2             : std_logic_vector(1 downto 0);
 
@@ -710,7 +700,7 @@ signal psl_build_ver: std_logic_vector(0 to 31);
 
 Signal icap_clk: std_logic;  -- 125Mhz clock from PCIe refclk
 Signal icap_clk_ce: std_logic;  -- bool
-Signal icap_clk_ce_d: std_logic;
+Signal icap_clk_ce_din: std_logic;  -- bool
 
 Signal cfg_ext_read_received : STD_LOGIC;
 Signal cfg_ext_write_received : STD_LOGIC;
@@ -738,148 +728,147 @@ psl_build_ver   <= x"00006900";    -- March 22, 2017 With fixes and With Subsyst
 p:  PSL9_WRAP_0
       PORT MAP (
 -- Apr13         crc_error => crc_errorinternal,
-         a0h_cvalid => a0h_cvalid,
-         a0h_ctag => a0h_ctag,
-         a0h_com => a0h_com,
--- Apr13         a0h_cpad => a0h_cpad,
-         a0h_cabt => a0h_cabt,
-         a0h_cea => a0h_cea,
-         a0h_cch => a0h_cch,
-         a0h_csize => a0h_csize,
-         a0h_cpagesize => a0h_cpagesize,
-         ha0_croom => ha0_croom,
-         a0h_ctagpar => a0h_ctagpar,
-         a0h_compar => a0h_compar,
-         a0h_ceapar => a0h_ceapar,
-         ha0_brvalid => ha0_brvalid,
-         ha0_brtag => ha0_brtag,
-         ha0_brad => ha0_brad,
-         a0h_brlat => a0h_brlat,
-         a0h_brdata => a0h_brdata,
-         a0h_brpar => a0h_brpar,
-         ha0_bwvalid => ha0_bwvalid,
-         ha0_bwtag => ha0_bwtag,
-         ha0_bwad => ha0_bwad,
-         ha0_bwdata => ha0_bwdata,
-         ha0_bwpar => ha0_bwpar,
-         ha0_brtagpar => ha0_brtagpar,
-         ha0_bwtagpar => ha0_bwtagpar,
-         ha0_rcredits => ha0_rcredits,
+  a0h_cvalid          => a0h_cvalid,
+  a0h_ctag            => a0h_ctag,
+  a0h_com             => a0h_com,
+-- Apr13  a0h_cpad      => a0h_cpad,
+  a0h_cabt            => a0h_cabt,
+  a0h_cea             => a0h_cea,
+  a0h_cch             => a0h_cch,
+  a0h_csize           => a0h_csize,
+  a0h_cpagesize       => a0h_cpagesize,
+  ha0_croom           => ha0_croom,
+  a0h_ctagpar         => a0h_ctagpar,
+  a0h_compar          => a0h_compar,
+  a0h_ceapar          => a0h_ceapar,
+  ha0_brvalid         => ha0_brvalid,
+  ha0_brtag           => ha0_brtag,
+  ha0_brad            => ha0_brad,
+  a0h_brlat           => a0h_brlat,
+  a0h_brdata          => a0h_brdata,
+  a0h_brpar           => a0h_brpar,
+  ha0_bwvalid         => ha0_bwvalid,
+  ha0_bwtag           => ha0_bwtag,
+  ha0_bwad            => ha0_bwad,
+  ha0_bwdata          => ha0_bwdata,
+  ha0_bwpar           => ha0_bwpar,
+  ha0_brtagpar        => ha0_brtagpar,
+  ha0_bwtagpar        => ha0_bwtagpar,
+  ha0_rcredits        => ha0_rcredits,
 
-         ha0_response_ext => ha0_response_ext,
-         ha0_rditag => ha0_rditag,
-         ha0_rditagpar => ha0_rditagpar,
-         ha0_rpagesize => ha0_rpagesize,
+  ha0_response_ext    => ha0_response_ext,
+  ha0_rditag          => ha0_rditag,
+  ha0_rditagpar       => ha0_rditagpar,
+  ha0_rpagesize       => ha0_rpagesize,
 
-         ha0_rvalid => ha0_rvalid,
-         ha0_rtag => ha0_rtag,
-         ha0_response => ha0_response,
-         ha0_rcachestate => ha0_rcachestate,
-         ha0_rcachepos => ha0_rcachepos,
-         ha0_rtagpar => ha0_rtagpar,
-         ha0_reoa => ha0_reoa,
+  ha0_rvalid          => ha0_rvalid,
+  ha0_rtag            => ha0_rtag,
+  ha0_response        => ha0_response,
+  ha0_rcachestate     => ha0_rcachestate,
+  ha0_rcachepos       => ha0_rcachepos,
+  ha0_rtagpar         => ha0_rtagpar,
 
-         ha0_mmval => ha0_mmval,
-         ha0_mmrnw => ha0_mmrnw,
-         ha0_mmdw => ha0_mmdw,
-         ha0_mmad => ha0_mmad,
-         ha0_mmdata => ha0_mmdata,
-         ha0_mmcfg => ha0_mmcfg,
-         a0h_mmack => a0h_mmack,
-         a0h_mmdata => a0h_mmdata,
-         ha0_mmadpar => ha0_mmadpar,
-         ha0_mmdatapar => ha0_mmdatapar,
-         a0h_mmdatapar => a0h_mmdatapar,
+  ha0_reoa            => ha0_reoa,
 
-         ha0_jval => ha0_jval,
-         ha0_jcom => ha0_jcom,
-         ha0_jea => ha0_jea,
-         a0h_jrunning => a0h_jrunning,
-         a0h_jdone => a0h_jdone,
-         a0h_jcack => a0h_jcack,
-         a0h_jerror => a0h_jerror,
-         a0h_tbreq => a0h_tbreq,
---          a0h_jyield => a0h_jyield,
-         ha0_jeapar => ha0_jeapar,
-         ha0_jcompar => ha0_jcompar,
-         a0h_paren => a0h_paren,
-         ha0_pclock => ha0_pclock,
+  ha0_mmval           => ha0_mmval,
+  ha0_mmrnw           => ha0_mmrnw,
+  ha0_mmdw            => ha0_mmdw,
+  ha0_mmad            => ha0_mmad,
+  ha0_mmdata          => ha0_mmdata,
+  ha0_mmcfg           => ha0_mmcfg,
+  a0h_mmack           => a0h_mmack,
+  a0h_mmdata          => a0h_mmdata,
+  ha0_mmadpar         => ha0_mmadpar,
+  ha0_mmdatapar       => ha0_mmdatapar,
+  a0h_mmdatapar       => a0h_mmdatapar,
 
-        D0H_DVALID => d0h_dvalid,
-        D0H_REQ_UTAG => d0h_req_utag,
-        D0H_REQ_ITAG => d0h_req_itag,
-        D0H_DTYPE => d0h_dtype,
-        D0H_DATOMIC_OP => d0h_datomic_op,
-        D0H_DATOMIC_LE => d0h_datomic_le,
---        DH_DRELAXED => d0h_drelaxed,
-        D0H_DSIZE => d0h_dsize,
-        D0H_DDATA => d0h_ddata,
---         D0H_DPAR => d0h_dpar,
+  ha0_jval            => ha0_jval,
+  ha0_jcom            => ha0_jcom,
+  ha0_jea             => ha0_jea,
+  a0h_jrunning        => a0h_jrunning,
+  a0h_jdone           => a0h_jdone,
+  a0h_jcack           => a0h_jcack,
+  a0h_jerror          => a0h_jerror,
+  a0h_tbreq           => a0h_tbreq,
+--  a0h_jyield          => a0h_jyield,
+  ha0_jeapar          => ha0_jeapar,
+  ha0_jcompar         => ha0_jcompar,
+  a0h_paren           => a0h_paren,
+  ha0_pclock          => ha0_pclock,
 
-        HD0_CPL_VALID => hd0_cpl_valid,
-        HD0_CPL_UTAG => hd0_cpl_utag,
-        HD0_CPL_TYPE => hd0_cpl_type,
-        HD0_CPL_LADDR => hd0_cpl_laddr,
-        HD0_CPL_BYTE_COUNT => hd0_cpl_byte_count,
-        HD0_CPL_SIZE => hd0_cpl_size,
-        HD0_CPL_DATA => hd0_cpl_data,
---         HD0_CPL_DPAR => hd0_cpl_dpar,
+  D0H_DVALID          => d0h_dvalid,
+  D0H_REQ_UTAG        => d0h_req_utag,
+  D0H_REQ_ITAG        => d0h_req_itag,
+  D0H_DTYPE           => d0h_dtype,
+  D0H_DATOMIC_OP      => d0h_datomic_op,
+  D0H_DATOMIC_LE      => d0h_datomic_le,
+--  DH_DRELAXED         => d0h_drelaxed,
+  D0H_DSIZE           => d0h_dsize,
+  D0H_DDATA           => d0h_ddata,
+--  D0H_DPAR            => d0h_dpar,
+
+  HD0_CPL_VALID       => hd0_cpl_valid,
+  HD0_CPL_UTAG        => hd0_cpl_utag,
+  HD0_CPL_TYPE        => hd0_cpl_type,
+  HD0_CPL_LADDR       => hd0_cpl_laddr,
+  HD0_CPL_BYTE_COUNT  => hd0_cpl_byte_count,
+  HD0_CPL_SIZE        => hd0_cpl_size,
+  HD0_CPL_DATA        => hd0_cpl_data,
+--  HD0_CPL_DPAR        => hd0_cpl_dpar,
 --
-        HD0_SENT_UTAG_VALID => hd0_sent_utag_valid,
-        HD0_SENT_UTAG => hd0_sent_utag,
-        HD0_SENT_UTAG_STS => hd0_sent_utag_sts,
+  HD0_SENT_UTAG_VALID => hd0_sent_utag_valid,
+  HD0_SENT_UTAG       => hd0_sent_utag,
+  HD0_SENT_UTAG_STS   => hd0_sent_utag_sts,
 
 
+  AXIS_CQ_TVALID      => axis_cq_tvalid,
+  AXIS_CQ_TDATA       => axis_cq_tdata,
+  AXIS_CQ_TREADY      => axis_cq_tready,
+  AXIS_CQ_TUSER       => axis_cq_tuser,
+  AXIS_CQ_NP_REQ      => axis_cq_np_req,
+--   //XLX IP RC Interface
+  AXIS_RC_TVALID      => axis_rc_tvalid,
+  AXIS_RC_TDATA       => axis_rc_tdata,
+  AXIS_RC_TREADY      => axis_rc_tready,
+  AXIS_RC_TUSER       => axis_rc_tuser,
+--   //-----------------------------------------------------------------------------------------------------------------------
+--   //XLX IP RQ Interface
+  AXIS_RQ_TVALID      => axis_rq_tvalid,
+  AXIS_RQ_TDATA       => axis_rq_tdata,
+  AXIS_RQ_TREADY      => axis_rq_tready(0),  -- TDB
+  AXIS_RQ_TLAST       => axis_rq_tlast,
+  AXIS_RQ_TUSER       => axis_rq_tuser,
+  AXIS_RQ_TKEEP       => axis_rq_tkeep,
+--   //XLX IP CC Interface
+  AXIS_CC_TVALID      => axis_cc_tvalid,
+  AXIS_CC_TDATA       => axis_cc_tdata,
+  AXIS_CC_TREADY      => axis_cc_tready(0),  -- TDB
+  AXIS_CC_TLAST       => axis_cc_tlast,
+  AXIS_CC_TUSER       => axis_cc_tuser,
+  AXIS_CC_TKEEP       => axis_cc_tkeep,
+--   //----------------------------------------------------------------------------------------------------------------------
+--   // Configuration Interface
+--   // cfg_fc_sel[2:0] = 101b, cfg_fc_ph[7:0], cfg_fc_pd[11:0] cfg_fc_nph[7:0]
+  XIP_CFG_FC_SEL      => xip_cfg_fc_sel_sig,
+  XIP_CFG_FC_PH       => xip_cfg_fc_ph_sig,
+  XIP_CFG_FC_PD       => xip_cfg_fc_pd_sig,
+  XIP_CFG_FC_NP       => xip_cfg_fc_np_sig,
 
+  psl_kill_link       => open,
+  psl_build_ver       => psl_build_ver,
+  afu_clk             => psl_clk,            -- TBD.
 
-        AXIS_CQ_TVALID  => axis_cq_tvalid,
-        AXIS_CQ_TDATA   => axis_cq_tdata,
-        AXIS_CQ_TREADY  => axis_cq_tready,
-        AXIS_CQ_TUSER   => axis_cq_tuser,
-        AXIS_CQ_NP_REQ  => axis_cq_np_req,
---         //XLX IP RC Interface
-        AXIS_RC_TVALID  => axis_rc_tvalid,
-        AXIS_RC_TDATA   => axis_rc_tdata,
-        AXIS_RC_TREADY  => axis_rc_tready,
-        AXIS_RC_TUSER   => axis_rc_tuser,
---         //-----------------------------------------------------------------------------------------------------------------------
---         //XLX IP RQ Interface
-        AXIS_RQ_TVALID  => axis_rq_tvalid,
-        AXIS_RQ_TDATA   => axis_rq_tdata,
-        AXIS_RQ_TREADY  => axis_rq_tready(0),  -- AM. TDB
-        AXIS_RQ_TLAST   => axis_rq_tlast,
-        AXIS_RQ_TUSER   => axis_rq_tuser,
-        AXIS_RQ_TKEEP   => axis_rq_tkeep,
---         //XLX IP CC Interface
-        AXIS_CC_TVALID  => axis_cc_tvalid,
-        AXIS_CC_TDATA   => axis_cc_tdata,
-        AXIS_CC_TREADY  => axis_cc_tready(0),  -- AM. TDB
-        AXIS_CC_TLAST   => axis_cc_tlast,
-        AXIS_CC_TUSER   => axis_cc_tuser,
-        AXIS_CC_TKEEP   => axis_cc_tkeep,
---         //----------------------------------------------------------------------------------------------------------------------
---         // Configuration Interface
---         // cfg_fc_sel[2:0] = 101b, cfg_fc_ph[7:0], cfg_fc_pd[11:0] cfg_fc_nph[7:0]
-        XIP_CFG_FC_SEL  => xip_cfg_fc_sel_sig,
-        XIP_CFG_FC_PH   => xip_cfg_fc_ph_sig,
-        XIP_CFG_FC_PD   => xip_cfg_fc_pd_sig,
-        XIP_CFG_FC_NP   => xip_cfg_fc_np_sig,
-
-        psl_kill_link  => open,
-        psl_build_ver   => psl_build_ver,
-        afu_clk         => psl_clk,            -- TBD AM.
-
-        PSL_RST         => psl_reset_sig,
-        PSL_CLK         => psl_clk,
-        PCIHIP_PSL_RST  => pcihip0_psl_rst,
-        PCIHIP_PSL_CLK  => pcihip0_psl_clk
-
-    );
+  -- PSL_RST and PCIHIP_PSL_RST must both be asserted if one is asserted
+  -- If only 1 is asserted, async fifo gets into invalid state
+  PSL_RST             => pcihip0_psl_rst,    -- hardware fix for perst
+  PSL_CLK             => psl_clk,
+  PCIHIP_PSL_RST      => pcihip0_psl_rst,
+  PCIHIP_PSL_CLK      => pcihip0_psl_clk
+);
 
 cfg_dsn_sig <= x"00000001" & x"01" & x"000A35";
 
 efes32   <= x"00000000";
---efes1024 <= x"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 one1   <= '1';
 two2   <= one1 & one1;
 
@@ -891,45 +880,12 @@ pcie_txn(15 downto 0)    <= pci_exp_txn(15 downto 0);
 pcie_txp(15 downto 0)    <= pci_exp_txp(15 downto 0);
 pci_exp_rxn(15 downto 0) <= pcie_rxn(15 downto 0);
 pci_exp_rxp(15 downto 0) <= pcie_rxp(15 downto 0);
---pci0_o_txn_out0 <= pci_exp_txn(0);
---pci0_o_txp_out0 <= pci_exp_txp(0);
---pci_exp_rxn(0) <= pci0_i_rxp_in0;
---pci_exp_rxp(0) <= pci0_i_rxn_in0;
---pci0_o_txn_out1 <= pci_exp_txn(1);
---pci0_o_txp_out1 <= pci_exp_txp(1);
---pci_exp_rxn(1) <= pci0_i_rxp_in1;
---pci_exp_rxp(1) <= pci0_i_rxn_in1;
---pci0_o_txn_out2 <= pci_exp_txn(2);
---pci0_o_txp_out2 <= pci_exp_txp(2);
---pci_exp_rxn(2) <= pci0_i_rxp_in2;
---pci_exp_rxp(2) <= pci0_i_rxn_in2;
---pci0_o_txn_out3 <= pci_exp_txn(3);
---pci0_o_txp_out3 <= pci_exp_txp(3);
---pci_exp_rxn(3) <= pci0_i_rxp_in3;
---pci_exp_rxp(3) <= pci0_i_rxn_in3;
---pci0_o_txn_out4 <= pci_exp_txn(4);
---pci0_o_txp_out4 <= pci_exp_txp(4);
---pci_exp_rxn(4) <= pci0_i_rxp_in4;
---pci_exp_rxp(4) <= pci0_i_rxn_in4;
---pci0_o_txn_out5 <= pci_exp_txn(5);
---pci0_o_txp_out5 <= pci_exp_txp(5);
---pci_exp_rxn(5) <= pci0_i_rxp_in5;
---pci_exp_rxp(5) <= pci0_i_rxn_in5;
---pci0_o_txn_out6 <= pci_exp_txn(6);
---pci0_o_txp_out6 <= pci_exp_txp(6);
---pci_exp_rxn(6) <= pci0_i_rxp_in6;
---pci_exp_rxp(6) <= pci0_i_rxn_in6;
---pci0_o_txn_out7 <= pci_exp_txn(7);
---pci0_o_txp_out7 <= pci_exp_txp(7);
---pci_exp_rxn(7) <= pci0_i_rxp_in7;
---pci_exp_rxp(7) <= pci0_i_rxn_in7;
 
-pci_user_reset <= pcihip0_psl_rst;
-pci_clock_125MHz <= psl_clk_div2;
-
+pci_user_reset    <= pcihip0_psl_rst;
+pci_clock_125MHz  <= psl_clk_div2;
 
 pcihip0:      pcie4_uscale_plus_0
-PORT MAP (
+  PORT MAP (
     pci_exp_txn =>  pci_exp_txn ,   -- out STD_LOGIC_VECTOR ( 15 downto 0 );
     pci_exp_txp =>  pci_exp_txp ,   -- out STD_LOGIC_VECTOR ( 15 downto 0 );
     pci_exp_rxn =>  pci_exp_rxn ,   -- in STD_LOGIC_VECTOR ( 15 downto 0 );
@@ -1112,17 +1068,9 @@ PORT MAP (
 --     sys_clk => sys_clk_p,        -- in  STD_LOGIC;
     sys_clk => sys_clk,         -- in  STD_LOGIC;
     sys_clk_gt => sys_clk_gt,        -- in  STD_LOGIC;
---     sys_reset =>  PCIE_PERST_LS   -- sys_rst_n  -- in  STD_LOGIC
     sys_reset =>  sys_rst_n_c,  -- in  STD_LOGIC
 
     phy_rdy_out => open
-
-    --int_qpll0lock_out  => open,
-    --int_qpll0outrefclk_out  => open,
-    --int_qpll0outclk_out  => open,
-    --int_qpll1lock_out  => open,
-    --int_qpll1outrefclk_out  => open,
-    --int_qpll1outclk_out => open
 
   );
 
@@ -1147,7 +1095,7 @@ capi_bis : capi_board_infrastructure
     icap_clk                    => icap_clk,
     cpld_usergolden             => gold_factory,
     crc_error                   => crc_error
-    );
+  );
 
 -- Xilinx component which is required to generate correct clocks towards PCIHIP
 refclk_ibuf : IBUFDS_GTE4
@@ -1156,84 +1104,46 @@ refclk_ibuf : IBUFDS_GTE4
 -- REFCLK_HROW_CK_SEL  => "00",  -- Refer to Transceiver User Guide
 -- REFCLK_ICNTL_RX  => "00"  -- Refer to Transceiver User Guide
 -- )
-port map (
-    O   => sys_clk_gt,   -- 1-bit output: Refer to Transceiver User Guide
-    ODIV2  => sys_clk,   -- 1-bit output: Refer to Transceiver User Guide
-    CEB  => '0',   -- 1'b0,   -- 1-bit input: Refer to Transceiver User Guide
-    I   => sys_clk_p,   -- 1-bit input: Refer to Transceiver User Guide
-    IB   => sys_clk_n   -- 1-bit input: Refer to Transceiver User Guide
-);
+  port map (
+    O   => sys_clk_gt,  -- 1-bit output: Refer to Transceiver User Guide
+    ODIV2  => sys_clk,  -- 1-bit output: Refer to Transceiver User Guide
+    CEB  => '0',        -- 1-bit input:  Refer to Transceiver User Guide
+    I   => sys_clk_p,   -- 1-bit input:  Refer to Transceiver User Guide
+    IB   => sys_clk_n   -- 1-bit input:  Refer to Transceiver User Guide
+  );
 -- End of IBUFDS_GTE4_inst instantiation
 
 
 IBUF_inst : IBUF
-port map (
-O => sys_rst_n_c,  -- 1-bit output: Buffer output
-I => sys_rst_n   -- 1-bit input: Buffer input
-);
+  port map (
+    O => sys_rst_n_c,  -- 1-bit output: Buffer output
+    I => sys_rst_n     -- 1-bit input: Buffer input
+  );
 -- End of IBUF_inst instantiation
 
 
---        gate clock_lite until clocks are stable after link up
+--        gate icap_clk until clocks are stable after link up
 --        avoid glitches to sem core to prevent false errors or worse
 --        also used to clock multiboot logic so keep enabled when link goes down
--- clock_lite_ce <= clock_gen_locked and not(user_reset);
-dff_icap_clk_ce: capi_rise_dff PORT MAP (
-     dout => icap_clk_ce,
-     din => icap_clk_ce_d,
-     clk   => pcihip0_psl_clk
-);
+icap_clk_ce_din <= icap_clk_ce or (not(pcihip0_psl_rst) and user_lnk_up and clk_wiz_2_locked);
+process (pcihip0_psl_clk)
+begin
+  if pcihip0_psl_clk'event and pcihip0_psl_clk = '1' then
+    icap_clk_ce  <= icap_clk_ce_din;
+  end if;
+end process;
 
-icap_clk_ce_d <= icap_clk_ce or (clk_wiz_2_locked and not(pcihip0_psl_rst));
 -- MMCM to generate PSL clock (100...250MHz)
 pll0:         uscale_plus_clk_wiz
-PORT MAP  (
-    clk_in1  => pcihip0_psl_clk, -- Driven by PCIHIP
-    clk_out1  => psl_clk,   -- Goes to PSL logic
-    clk_out2    => psl_clk_div2, -- 125MHz out to psl_accel if required (went to PSL logic)
-    clk_out3  => icap_clk,     -- Goes to SEM, multiboot
+  PORT MAP  (
+    clk_in1     => pcihip0_psl_clk, -- Driven by PCIHIP
+    clk_out1    => psl_clk,         -- Goes to PSL logic
+    clk_out2    => psl_clk_div2,    -- 125MHz out to psl_accel if required (went to PSL logic)
+    clk_out3    => icap_clk,        -- Goes to SEM, multiboot
     clk_out3_ce => icap_clk_ce,     -- gate off while unstable to prevent SEM errors
-    reset   => '0', -- Driven by PCIHIP
-    locked   => clk_wiz_2_locked
+    -- reset was pcihip0_psl_rst.  this killed the clock to icap before a reconfig could complete
+    reset       => '0',             -- hardware fix for perst
+    locked      => clk_wiz_2_locked
   );
-
-
-
-
---Component capi_fpga_reset
-capi_fpga_reset:CAPI_FPGA_RESET_GEN
- PORT MAP (
-   PLL_LOCKED  => clk_wiz_2_locked,
-   CLK   => psl_clk,
-   RESET  => psl_reset_sig
-   );
-
--- Component capi_stp_counter
-csc:          CAPI_STP_COUNTER
- PORT MAP (
-   CLK   => psl_clk,
-   RESET  => psl_reset_sig,
-   STP_COUNTER_1sec => stp_counter_1sec_sig,
-   STP_COUNTER_MSB => stp_counter_msb_sig
-   );
-
-
------- sys_clk_p_out: CAPI_STP_COUNTER
-------  PORT MAP (
-------    CLK   => sys_clk,
-------    RESET  => pcihip0_psl_rst,
-------    STP_COUNTER_1sec => sys_clk_counter_1sec_sig,
-------    STP_COUNTER_MSB => open
-------    );
-
-user_clock:   CAPI_STP_COUNTER
- PORT MAP (
-   CLK   => pcihip0_psl_clk,
-   RESET  => pcihip0_psl_rst,
-   STP_COUNTER_1sec => user_clock_sig,
-   STP_COUNTER_MSB => open
-   );
-
-fan_cde <= '1';
 
 END capi_bsp;

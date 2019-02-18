@@ -329,78 +329,6 @@ Signal eeprom_wdelay_count_q: std_logic_vector(0 to 20);
 attribute dont_touch : string;
 attribute dont_touch of vpd_hardcoded_q : signal is "true";
 
-attribute mark_debug : string;
-
-attribute mark_debug of vsec_addr : signal is "false";
-attribute mark_debug of vsec_base : signal is "false";
-attribute mark_debug of vsec_fadr : signal is "false";
-attribute mark_debug of vsec_fsize : signal is "false";
-attribute mark_debug of vsec_rddata : signal is "false";
-attribute mark_debug of vsec_wrdata : signal is "false";
-attribute mark_debug of vfadr_en : signal is "false";
-attribute mark_debug of vfctl_en : signal is "false";
-attribute mark_debug of vfppc_en : signal is "false";
-attribute mark_debug of vfppp_en : signal is "false";
-attribute mark_debug of vfrddp_en : signal is "false";
-attribute mark_debug of vfrddp_read : signal is "false";
-attribute mark_debug of vfrddp_val : signal is "false";
-attribute mark_debug of vfrddp_val_d : signal is "false";
-attribute mark_debug of vsec58data : signal is "false";
-attribute mark_debug of vsec5C_reg_en : signal is "false";
-attribute mark_debug of vsec5Cdata : signal is "false";
-attribute mark_debug of vsec5Cdata_d : signal is "false";
-attribute mark_debug of vvpdadr_en : signal is "false";
-attribute mark_debug of vvpdadr_en_q1 : signal is "false";
-attribute mark_debug of vvpdadr_en_q2 : signal is "false";
-attribute mark_debug of vvpdadr_en_q3 : signal is "false";
-attribute mark_debug of vvpdadr_en_q4 : signal is "false";
-attribute mark_debug of vvpdadr_en_q5 : signal is "false";
-attribute mark_debug of vvpdwrdat_en : signal is "false";
-attribute mark_debug of vsec_0x58 : signal is "false";
-attribute mark_debug of vsec_0x5C : signal is "false";
-attribute mark_debug of vpd40data : signal is "false";
-attribute mark_debug of vpd44data : signal is "false";
-attribute mark_debug of vpd44data_d : signal is "false";
-attribute mark_debug of vpd44data_q : signal is "false";
-attribute mark_debug of vpd44_update : signal is "false";
-attribute mark_debug of vpd44data_be : signal is "false";
-attribute mark_debug of vpd_0x40 : signal is "false";
-attribute mark_debug of vpd_0x44 : signal is "false";
-attribute mark_debug of vpd_base : signal is "false";
-attribute mark_debug of vpd_rdy_flag : signal is "false";
-attribute mark_debug of vpd_rdy_flag_d : signal is "false";
-attribute mark_debug of vpd_rdy_flag_q : signal is "false";
-attribute mark_debug of update_vpd_rdy_flag : signal is "false";
-attribute mark_debug of vpd_read_done_d : signal is "false";
-attribute mark_debug of vpd_read_done_q : signal is "false";
-attribute mark_debug of vpd_write_done_d : signal is "false";
-attribute mark_debug of vpd_write_done_q : signal is "false";
-attribute mark_debug of vpdadr : signal is "false";
-
-attribute mark_debug of hi2c_cmdval_d : signal is "false";
-attribute mark_debug of hi2c_dataval_d : signal is "false";
-attribute mark_debug of hi2c_rd_d : signal is "false";
-attribute mark_debug of hi2c_cmdin_d : signal is "false";
-attribute mark_debug of hi2c_datain_d : signal is "false";
-attribute mark_debug of i2ch_ready_d : signal is "false";
-attribute mark_debug of hi2c_cmdval_q : signal is "false";
-attribute mark_debug of hi2c_cmdval_q1 : signal is "false";
-attribute mark_debug of hi2c_cmdval_q2 : signal is "false";
-attribute mark_debug of hi2c_cmdval_q3 : signal is "false";
-attribute mark_debug of hi2c_cmdval_q4 : signal is "false";
-attribute mark_debug of hi2c_cmdval_q5 : signal is "false";
-attribute mark_debug of hi2c_dataval_q : signal is "false";
-attribute mark_debug of hi2c_rd_q : signal is "false";
-attribute mark_debug of hi2c_cmdin_q : signal is "false";
-attribute mark_debug of hi2c_datain_q : signal is "false";
-attribute mark_debug of i2ch_ready_q : signal is "false";
-attribute mark_debug of i2c_byteop_d : signal is "false";
-attribute mark_debug of i2c_byteop_q : signal is "false";
-attribute mark_debug of i2c_monitor_ready_d : signal is "false";
-attribute mark_debug of i2c_monitor_ready_q : signal is "false";
-attribute mark_debug of vpdwrdat : signal is "false";
-attribute mark_debug of eeprom_wdelay_count_d : signal is "false";
-
 -- signals for reserved registers
 Signal vsec_0x14: std_logic;  -- bool
 Signal vsec_0x18: std_logic;  -- bool
@@ -597,9 +525,8 @@ begin
  -- -------------------------------------- --
  -- CAIA/PSL Version  --
  -- -------------------------------------- --
- -- xilinxvsecCdata <= "00000001000000000011000000000001" ;
-    xilinxvsecCdata <= "00000010000000000011000000000001" ;
-
+ -- xilinxvsecCdata <= "00000001000000000011000000000001" ; -- old CAPI1 : Version Maj 0x1 minor 0x0  revision level of PSL design 0x3001
+    xilinxvsecCdata <= "00000010000000000011000000000001" ; -- new CAPI2 : Version Maj 0x2 minor 0x0  revision level of PSL design 0x3001
 
     vsecCdata <= xilinxvsecCdata ;
  -- -------------------------------------- --
@@ -713,7 +640,6 @@ begin
          clk   => psl_clk
     );
 
-
  -- -- End Section -- --
 
 
@@ -803,7 +729,7 @@ begin
          clk   => psl_clk
     );
 
-    update_vpd_rdy_flag <= vvpdadr_en or (vpd_read_done_d and not vpd_read_done_q) or (vpd_write_done_d and not vpd_write_done_q) or vpd_usehardcoded;
+    update_vpd_rdy_flag <= '1' when ((vvpdadr_en = '1') or (vpd_read_done_d = '1' and vpd_read_done_q = '0') or (vpd_write_done_d = '1' and vpd_write_done_q = '0') or vpd_usehardcoded='1') else '0';
     vpd_rdy_flag_d <= vsec_wrdata(0) when  (vvpdadr_en = '1') else
                       '1' when ((vpd_read_done_d = '1' and vpd_read_done_q = '0')) else
                       '0' when ((vpd_write_done_d = '1' and vpd_write_done_q = '0')) else
