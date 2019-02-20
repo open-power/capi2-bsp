@@ -50,7 +50,7 @@ $(CARD_LOGS):
 
 
 $(CARD_CAPI_BSP_GEN): $(CARD_LOGS)
-	@echo "Creating the PSL for the $(FPGACARD) card."
+	@echo "Creating the PSL for the $(FPGA_CARD) card."
 	@echo "[PREPARE DIRECTORIES.] start "`date +"%T %a %b %d %Y"`
 	@mkdir -p $(CARD_CAPI_BSP_GEN)
 	@echo "[PREPARE DIRECTORIES.] done  "`date +"%T %a %b %d %Y"`
