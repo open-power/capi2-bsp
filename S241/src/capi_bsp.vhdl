@@ -678,11 +678,6 @@ Signal sys_clk    : std_logic;
 Signal sys_clk_gt   : std_logic;
 Signal sys_rst_n_c   : std_logic;
 
-Signal stp_counter_msb_sig : std_logic;
-Signal stp_counter_1sec_sig : std_logic;
-Signal sys_clk_counter_1sec_sig : std_logic;
-Signal user_clock_sig  : std_logic;
-
 signal clk_wiz_2_locked : std_logic;
 
 signal efes32             : std_logic_vector(31 downto 0);

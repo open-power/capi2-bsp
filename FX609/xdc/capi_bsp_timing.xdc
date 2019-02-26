@@ -29,7 +29,7 @@
 
 
 # from PSL9_WRAP.xdc
-set_false_path -from [get_pins {*/*/capi_fpga_reset/pll_locked_counter_l_reg[*]/C}]
+#set_false_path -from [get_pins {*/*/capi_fpga_reset/pll_locked_counter_l_reg[*]/C}]
 
 #
 #set_max_delay -datapath_only -from [get_clocks -of_objects [get_nets pcihip0_psl_clk]] -to [get_clocks -of_objects [get_nets psl_clk]]         4.000
