@@ -24,6 +24,7 @@ set psl_version      $::env(PSL_VERSION)
 set capi_bsp_gen_dir $::env(CARD_CAPI_BSP_GEN)
 set capi_bsp_version $::env(CAPI_BSP_VERSION)
 set fpga_part        $::env(FPGA_PART)
+set board_part       $::env(BOARD_PART)
 set proj_dir         $::env(CARD_BUILD)/viv_project
 set card_tcl         $::env(CARD_TCL)
 set common_tcl       $::env(COMMON_TCL)
@@ -39,7 +40,13 @@ source $common_tcl/create_ip.tcl
 set log_file $::env(CARD_LOGS)/create_capi_bsp.log
 ## Create a new Vivado IP Project
 puts "\[CREATE CAPI BSP.....\] start [clock format [clock seconds] -format {%T %a %b %d %Y}]"
+
 create_project $proj_name $proj_dir -part $fpga_part -force >> $log_file
+if {$board_part ne ""} {
+  puts "Set board_part to $board_part..."
+  set_property board_part $board_part [current_project]
+  set_property coreContainer.enable 1 [current_project]
+}
 
 #Add source files
 puts "Adding design sources to capi_bsp project"
@@ -93,10 +100,13 @@ generate_target all [get_files capi_bsp_wrap.xci] >> $log_file
 
 set capi_bsp_ip_dir $ip_dir/capi_bsp_wrap
 
+## For a Xilinx board, the pcie IP is locked and cannot be changed. The patching would fail.
+if {$board_part eq ""} {
 ## Apply patches (if required) before creating container
-if [file exists $card_tcl/patch_ip.tcl] {
-  puts "Applying patches"
-  source $card_tcl/patch_ip.tcl >> $log_file
+  if [file exists $card_tcl/patch_ip.tcl] {
+    puts "Applying patches"
+    source $card_tcl/patch_ip.tcl >> $log_file
+  }
 }
 
 puts "Creating capi_bsp IP container"
