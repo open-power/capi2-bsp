@@ -24,7 +24,6 @@ set psl_version      $::env(PSL_VERSION)
 set capi_bsp_gen_dir $::env(CARD_CAPI_BSP_GEN)
 set capi_bsp_version $::env(CAPI_BSP_VERSION)
 set fpga_part        $::env(FPGA_PART)
-set board_part       $::env(BOARD_PART)
 set proj_dir         $::env(CARD_BUILD)/viv_project
 set card_tcl         $::env(CARD_TCL)
 set common_tcl       $::env(COMMON_TCL)
@@ -43,11 +42,6 @@ set log_file $::env(CARD_LOGS)/create_capi_bsp.log
 puts "\[CREATE CAPI BSP.....\] start [clock format [clock seconds] -format {%T %a %b %d %Y}]"
 
 create_project $proj_name $proj_dir -part $fpga_part -force >> $log_file
-#if {$board_part ne ""} {
-#  puts "Set board_part to $board_part..."
-#  set_property board_part $board_part [current_project]
-# set_property coreContainer.enable 1 [current_project]
-#}
 
 #Add source files
 puts "Adding design sources to capi_bsp project"
