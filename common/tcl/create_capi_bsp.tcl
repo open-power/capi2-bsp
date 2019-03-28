@@ -32,6 +32,7 @@ set card_src         $::env(CARD_SRC)
 set common_src       $::env(COMMON_SRC)
 set fpga_src         $::env(FPGA_SRC)
 set card_xdc         $::env(CARD_XDC)
+set vivado           $::env(XILINX_VIVADO)
 set top_level        capi_bsp
 set proj_name        capi_board_support
 
@@ -42,11 +43,11 @@ set log_file $::env(CARD_LOGS)/create_capi_bsp.log
 puts "\[CREATE CAPI BSP.....\] start [clock format [clock seconds] -format {%T %a %b %d %Y}]"
 
 create_project $proj_name $proj_dir -part $fpga_part -force >> $log_file
-if {$board_part ne ""} {
-  puts "Set board_part to $board_part..."
-  set_property board_part $board_part [current_project]
-  set_property coreContainer.enable 1 [current_project]
-}
+#if {$board_part ne ""} {
+#  puts "Set board_part to $board_part..."
+#  set_property board_part $board_part [current_project]
+# set_property coreContainer.enable 1 [current_project]
+#}
 
 #Add source files
 puts "Adding design sources to capi_bsp project"
@@ -100,23 +101,27 @@ generate_target all [get_files capi_bsp_wrap.xci] >> $log_file
 
 set capi_bsp_ip_dir $ip_dir/capi_bsp_wrap
 
-## For a Xilinx board, the pcie IP is locked and cannot be changed. The patching would fail.
-if {$board_part eq ""} {
 ## Apply patches (if required) before creating container
-  if [file exists $card_tcl/patch_ip.tcl] {
-    puts "Applying patches"
-    source $card_tcl/patch_ip.tcl >> $log_file
-  }
+if [file exists $card_tcl/patch_ip.tcl] {
+  puts "Applying patches"
+  source $card_tcl/patch_ip.tcl >> $log_file
 }
 
-puts "Creating capi_bsp IP container"
-convert_ips -to_core_container [get_files $capi_bsp_ip_dir/capi_bsp_wrap.xci] >> $log_file
 
-close_project >> $log_file
-
-if [file exists $ip_dir/capi_bsp_wrap.xcix] {
-  puts "Created $ip_dir/capi_bsp_wrap.xcix"
+if [string match "*2018.3" $vivado] {
+## Not create container in 2018.3
+  close_project >> $log_file
 } else {
+  puts "Creating capi_bsp IP container"
+  convert_ips -to_core_container [get_files $capi_bsp_ip_dir/capi_bsp_wrap.xci] >> $log_file
+  
+  close_project >> $log_file
+  if [file exists $ip_dir/capi_bsp_wrap.xcix] {
+    puts "Created $ip_dir/capi_bsp_wrap.xcix"
+  } else {
     puts "ERROR: no capi_bsp_wrap.xcix file created!!!"
+}
+
+
 }
 puts "\[CREATE CAPI BSP.....\] done  [clock format [clock seconds] -format {%T %a %b %d %Y}]"
