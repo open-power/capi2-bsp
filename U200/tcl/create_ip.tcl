@@ -18,10 +18,10 @@
 ############################################################################
 ############################################################################
 
-# Flyslice FX609 has changed following:
+# Xilinx U200 has changed following:
 # Max LINK SPEED: 8GT/s
 # Max LINK WIDTH: X16
-# SUBSYSTEM_ID: 0x0661
+# SUBSYSTEM_ID: 0x0665
 # PCIE_ID_IF = flase
 # PCIE BANK 227/226/225/224 (SLR1 X1Y2)
 
