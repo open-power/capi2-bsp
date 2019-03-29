@@ -44,7 +44,7 @@ set_property -dict [list                                               \
                     CONFIG.PF0_CLASS_CODE {1200ff}                     \
                     CONFIG.PF0_DEVICE_ID {0477}                        \
                     CONFIG.PF0_REVISION_ID {02}                        \
-                    CONFIG.PF0_SUBSYSTEM_ID {0660}                     \
+                    CONFIG.PF0_SUBSYSTEM_ID {0665}                     \
                     CONFIG.PF0_SUBSYSTEM_VENDOR_ID {1014}              \
                     CONFIG.PCIE_ID_IF {false}                          \
                     CONFIG.ins_loss_profile {Add-in_card}              \
