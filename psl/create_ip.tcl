@@ -19,6 +19,7 @@
 ############################################################################
 
 set fpga_part $::env(FPGA_PART)
+set fpga_card $::env(FPGA_CARD)
 
 set psl_version $::env(PSL_VERSION)
 set ver_major [string range $psl_version 0 [string first "." $psl_version]-1]
@@ -66,6 +67,11 @@ set log_file   $logs_dir/create_ip.log
 
 # Create project
 create_project psl9d $build_dir/viv_project -part $fpga_part -force >> $log_file
+
+if {$fpga_card eq "U200"} {
+  set_property board_part xilinx.com:au200:part0:1.0 [current_project]
+}
+
 
 if { ! [file exists $ip_repo_dir] } {
   puts "Creating PSL9 IP core from encrypted sources"
