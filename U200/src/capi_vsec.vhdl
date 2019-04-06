@@ -1015,39 +1015,37 @@ begin
     -- use hardcoded data generated with this:
     process (vpdadr) begin
                        case vpdadr is
-                         when "000000" => vpd44data_be <= X"82200053";
-                         when "000001" => vpd44data_be <= X"656d7074";
-                         when "000010" => vpd44data_be <= X"69616e20";
-                         when "000011" => vpd44data_be <= X"53323431";
-                         when "000100" => vpd44data_be <= X"20504349";
-                         when "000101" => vpd44data_be <= X"65204341";
-                         when "000110" => vpd44data_be <= X"50493220";
-                         when "000111" => vpd44data_be <= X"41646170";
-                         when "001000" => vpd44data_be <= X"74657290";
-                         when "001001" => vpd44data_be <= X"5d00504e";
-                         when "001010" => vpd44data_be <= X"074e5341";
-                         when "001011" => vpd44data_be <= X"2e323431";
-                         when "001100" => vpd44data_be <= X"56311030";
+                         when "000000" => vpd44data_be <= X"82170055";
+                         when "000001" => vpd44data_be <= X"32303020";
+                         when "000010" => vpd44data_be <= X"50434965";
+                         when "000011" => vpd44data_be <= X"20434150";
+                         when "000100" => vpd44data_be <= X"49322041";
+                         when "000101" => vpd44data_be <= X"64617074";
+                         when "000110" => vpd44data_be <= X"6572905e";
+                         when "000111" => vpd44data_be <= X"00504e0b";
+                         when "001000" => vpd44data_be <= X"58696c69";
+                         when "001001" => vpd44data_be <= X"6e782e55";
+                         when "001010" => vpd44data_be <= X"32303056";
+                         when "001011" => vpd44data_be <= X"31103030";
+                         when "001100" => vpd44data_be <= X"30303030";
                          when "001101" => vpd44data_be <= X"30303030";
                          when "001110" => vpd44data_be <= X"30303030";
-                         when "001111" => vpd44data_be <= X"30303030";
-                         when "010000" => vpd44data_be <= X"30303056";
-                         when "010001" => vpd44data_be <= X"32103030";
+                         when "001111" => vpd44data_be <= X"30305631";
+                         when "010000" => vpd44data_be <= X"10303030";
+                         when "010001" => vpd44data_be <= X"30303030";
                          when "010010" => vpd44data_be <= X"30303030";
                          when "010011" => vpd44data_be <= X"30303030";
-                         when "010100" => vpd44data_be <= X"30303030";
-                         when "010101" => vpd44data_be <= X"30305633";
-                         when "010110" => vpd44data_be <= X"10303030";
+                         when "010100" => vpd44data_be <= X"30563110";
+                         when "010101" => vpd44data_be <= X"30303030";
+                         when "010110" => vpd44data_be <= X"30303030";
                          when "010111" => vpd44data_be <= X"30303030";
                          when "011000" => vpd44data_be <= X"30303030";
-                         when "011001" => vpd44data_be <= X"30303030";
-                         when "011010" => vpd44data_be <= X"30563410";
+                         when "011001" => vpd44data_be <= X"56311030";
+                         when "011010" => vpd44data_be <= X"30303030";
                          when "011011" => vpd44data_be <= X"30303030";
                          when "011100" => vpd44data_be <= X"30303030";
-                         when "011101" => vpd44data_be <= X"30303030";
-                         when "011110" => vpd44data_be <= X"30303030";
-                         when "011111" => vpd44data_be <= X"5256041b";
-                         when "100000" => vpd44data_be <= X"00000078";
+                         when "011101" => vpd44data_be <= X"30303052";
+                         when "011110" => vpd44data_be <= X"5601a278";
                          when others => vpd44data_be <= X"00000000";
                        end case;
                      end process;
@@ -1326,50 +1324,49 @@ begin
     vpd_0x40 <= '1' when (vpd_base = '1'   and  (vsec_addr(25 to 32)  =  "10110000")) else '0';  -- 0x0B0 -- VPD Capability Structure--
     vpd_0x44 <= '1' when (vpd_base = '1'   and  (vsec_addr(25 to 32)  =  "10110100")) else '0';  -- 0x0B4 -- VPD Data Port--
 
-    -- change from 0x400 to 0x480 as the base.
-    vsec_0x00 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "10000000")) else '0' ; -- 0x00 -- Next Capability, Version, ID--
-    vsec_0x04 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "10000100")) else '0' ; -- 0x04 -- VSEC Length, Rev, ID--
-    vsec_0x08 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "10001000")) else '0' ; -- 0x08 -- Mode Control, Num AFUs--
-    vsec_0x0C <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "10001100")) else '0' ; -- 0x0C -- CAIA Version, PSL Version--
+    vsec_0x00 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00000000")) else '0' ; -- 0x00 -- Next Capability, Version, ID--
+    vsec_0x04 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00000100")) else '0' ; -- 0x04 -- VSEC Length, Rev, ID--
+    vsec_0x08 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00001000")) else '0' ; -- 0x08 -- Mode Control, Num AFUs--
+    vsec_0x0C <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00001100")) else '0' ; -- 0x0C -- CAIA Version, PSL Version--
 
-    vsec_0x10 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "10010000")) else '0' ; -- 0x10 -- Base Image Revision --
+    vsec_0x10 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00010000")) else '0' ; -- 0x10 -- Base Image Revision --
   --bool vsec_0x14 = vsec_base & (vsec_addr.[25..32] == 0b00010100); /* 0x14 -- Reserved --
   --bool vsec_0x18 = vsec_base & (vsec_addr.[25..32] == 0b00011000); /* 0x18 -- Reserved --
   --bool vsec_0x1C = vsec_base & (vsec_addr.[25..32] == 0b00011100); /* 0x1C -- Reserved --
 
-    vsec_0x14 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32) = "10010100")) else '0'; -- /* 0x14 -- Reserved --
-    vsec_0x18 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "10011000")) else '0'; -- /* 0x18 -- Reserved --
-    vsec_0x1C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "10011100")) else '0'; -- /* 0x1C -- Reserved --
+    vsec_0x14 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32) = "00010100")) else '0'; -- /* 0x14 -- Reserved --
+    vsec_0x18 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00011000")) else '0'; -- /* 0x18 -- Reserved --
+    vsec_0x1C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00011100")) else '0'; -- /* 0x1C -- Reserved --
 
-    vsec_0x20 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "10100000")) else '0' ; -- 0x20 -- AFU Descriptor Offset --
-    vsec_0x24 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "10100100")) else '0' ; -- 0x24 -- AFU Descriptor Size --
-    vsec_0x28 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "10101000")) else '0' ; -- 0x28 -- Problem State Offset --
-    vsec_0x2C <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "10101100")) else '0' ; -- 0x2C -- Problem State Size --
+    vsec_0x20 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00100000")) else '0' ; -- 0x20 -- AFU Descriptor Offset --
+    vsec_0x24 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00100100")) else '0' ; -- 0x24 -- AFU Descriptor Size --
+    vsec_0x28 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00101000")) else '0' ; -- 0x28 -- Problem State Offset --
+    vsec_0x2C <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00101100")) else '0' ; -- 0x2C -- Problem State Size --
 
-    vsec_0x30 <= '1' when (vsec_base = '1'  and  (vsec_addr(25 to 32)  =  "10110000")) else '0'; -- /* 0x30 -- Reserved --
-    vsec_0x34 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "10110100")) else '0'; -- /* 0x34 -- Reserved --
-    vsec_0x38 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "10111000")) else '0'; -- /* 0x38 -- Reserved --
-    vsec_0x3C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "10111100")) else '0'; -- /* 0x3C -- Reserved --
+    vsec_0x30 <= '1' when (vsec_base = '1'  and  (vsec_addr(25 to 32)  =  "00110000")) else '0'; -- /* 0x30 -- Reserved --
+    vsec_0x34 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00110100")) else '0'; -- /* 0x34 -- Reserved --
+    vsec_0x38 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00111000")) else '0'; -- /* 0x38 -- Reserved --
+    vsec_0x3C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00111100")) else '0'; -- /* 0x3C -- Reserved --
 
-    vsec_0x40 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "11000000")) else '0' ; -- 0x40 -- PSL Programming Port--
-    vsec_0x44 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "11000100")) else '0' ; -- 0x44 -- PSL Programming Control--
-    vsec_0x48 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "11001000")) else '0'; -- /* 0x48 -- Reserved --
-    vsec_0x4C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "11001100")) else '0'; -- /* 0x4C -- Reserved --
+    vsec_0x40 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01000000")) else '0' ; -- 0x40 -- PSL Programming Port--
+    vsec_0x44 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01000100")) else '0' ; -- 0x44 -- PSL Programming Control--
+    vsec_0x48 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01001000")) else '0'; -- /* 0x48 -- Reserved --
+    vsec_0x4C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01001100")) else '0'; -- /* 0x4C -- Reserved --
 
-    vsec_0x50 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "11010000")) else '0' ; -- 0x50 -- Flash Address Register--
-    vsec_0x54 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "11010100")) else '0' ; -- 0x54 -- Flash Size Register--
-    vsec_0x58 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "11011000")) else '0' ; -- 0x58 -- Flash Status / Control --
-    vsec_0x5C <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "11011100")) else '0' ; -- 0x5C -- Flash Data Port --
+    vsec_0x50 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01010000")) else '0' ; -- 0x50 -- Flash Address Register--
+    vsec_0x54 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01010100")) else '0' ; -- 0x54 -- Flash Size Register--
+    vsec_0x58 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01011000")) else '0' ; -- 0x58 -- Flash Status / Control --
+    vsec_0x5C <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01011100")) else '0' ; -- 0x5C -- Flash Data Port --
 
-    vsec_0x60 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "11100000")) else '0'; -- /* 0x60 -- Reserved --
-    vsec_0x64 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "11100100")) else '0'; -- /* 0x64 -- Reserved --
-    vsec_0x68 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "11101000")) else '0'; -- /* 0x68 -- Reserved --
-    vsec_0x6C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "11101100")) else '0'; -- /* 0x6C -- Reserved --
+    vsec_0x60 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01100000")) else '0'; -- /* 0x60 -- Reserved --
+    vsec_0x64 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01100100")) else '0'; -- /* 0x64 -- Reserved --
+    vsec_0x68 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01101000")) else '0'; -- /* 0x68 -- Reserved --
+    vsec_0x6C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01101100")) else '0'; -- /* 0x6C -- Reserved --
 
-    vsec_0x70 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "11110000")) else '0'; -- /* 0x70 -- Reserved --
-    vsec_0x74 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "11110100")) else '0'; -- /* 0x74 -- Reserved --
-    vsec_0x78 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "11111000")) else '0'; -- /* 0x78 -- Reserved --
---     vsec_0x7C <= vsec_base and (vsec_addr(25 to 32)  =  "11111100"); -- /* 0x7C -- Reserved --
+    vsec_0x70 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01110000")) else '0'; -- /* 0x70 -- Reserved --
+    vsec_0x74 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01110100")) else '0'; -- /* 0x74 -- Reserved --
+    vsec_0x78 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01111000")) else '0'; -- /* 0x78 -- Reserved --
+--     vsec_0x7C <= vsec_base and (vsec_addr(25 to 32)  =  "01111100"); -- /* 0x7C -- Reserved --
 
   --bool vsec_0x70 = vsec_base & (vsec_addr.[25..32] == 0b01110000); /* 0x70 -- Reserved --
   --bool vsec_0x74 = vsec_base & (vsec_addr.[25..32] == 0b01110100); /* 0x74 -- Reserved --
