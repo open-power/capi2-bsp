@@ -57,6 +57,9 @@ $(CARD_CAPI_BSP_GEN): $(CARD_LOGS)
 
 
 $(PSL_CREATE_IP_DONE):
+	@echo -e "======================================================="
+	@echo -e "== Creating the Board Service Layer (BSP)            =="
+	@echo -e "======================================================="
 	@echo "[CREATE PSL IP.......] start "`date +"%T %a %b %d %Y"`
 	@$(MAKE) -sC $(PSL_DIR) create_ip
 	@echo "[CREATE PSL IP.......] done  "`date +"%T %a %b %d %Y"`

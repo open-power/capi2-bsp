@@ -386,21 +386,6 @@ PORT (
   );
 end Component uscale_plus_clk_wiz;
 
--- Component capi_fpga_reset
-Component CAPI_FPGA_RESET_GEN
-  PORT(PLL_LOCKED    : in  std_logic;
-              CLK                                            : in    std_logic;
-       RESET     : out std_logic);
-End Component CAPI_FPGA_RESET_GEN;
-
--- Component capi_stp_counter
-Component CAPI_STP_COUNTER
-  PORT(CLK     : in  std_logic;
-              RESET                                          : in    std_logic;
-              STP_COUNTER_1sec                               : out   std_logic;
-       STP_COUNTER_MSB  : out std_logic);
-End Component CAPI_STP_COUNTER;
-
 -- Component psl
 Component PSL9_WRAP_0
 --Component PSL9_WRAP
@@ -694,15 +679,9 @@ Signal sys_clk    : std_logic;
 Signal sys_clk_gt   : std_logic;
 Signal sys_rst_n_c   : std_logic;
 
-Signal stp_counter_msb_sig : std_logic;
-Signal stp_counter_1sec_sig : std_logic;
-Signal sys_clk_counter_1sec_sig : std_logic;
-Signal user_clock_sig  : std_logic;
-
 signal clk_wiz_2_locked : std_logic;
 
 signal efes32             : std_logic_vector(31 downto 0);
---signal efes1024           : std_logic_vector(1023 downto 0);
 signal one1             : std_logic;
 signal two2             : std_logic_vector(1 downto 0);
 
@@ -879,7 +858,6 @@ p:  PSL9_WRAP_0
 cfg_dsn_sig <= x"00000001" & x"01" & x"000A35";
 
 efes32   <= x"00000000";
---efes1024 <= x"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 one1   <= '1';
 two2   <= one1 & one1;
 
@@ -924,8 +902,8 @@ pci_exp_rxp(15 downto 0) <= pcie_rxp(15 downto 0);
 --pci_exp_rxn(7) <= pci0_i_rxp_in7;
 --pci_exp_rxp(7) <= pci0_i_rxn_in7;
 
-pci_user_reset <= pcihip0_psl_rst;
-pci_clock_125MHz <= psl_clk_div2;
+--pci_user_reset <= pcihip0_psl_rst;
+--pci_clock_125MHz <= psl_clk_div2;
 
 
 pcihip0:      pcie4_uscale_plus_0
@@ -1159,7 +1137,7 @@ refclk_ibuf : IBUFDS_GTE4
 port map (
     O   => sys_clk_gt,   -- 1-bit output: Refer to Transceiver User Guide
     ODIV2  => sys_clk,   -- 1-bit output: Refer to Transceiver User Guide
-    CEB  => '0',   -- 1'b0,   -- 1-bit input: Refer to Transceiver User Guide
+    CEB  => '0',         -- 1-bit input: Refer to Transceiver User Guide
     I   => sys_clk_p,   -- 1-bit input: Refer to Transceiver User Guide
     IB   => sys_clk_n   -- 1-bit input: Refer to Transceiver User Guide
 );
@@ -1171,7 +1149,6 @@ port map (
 O => sys_rst_n_c,  -- 1-bit output: Buffer output
 I => sys_rst_n   -- 1-bit input: Buffer input
 );
--- End of IBUF_inst instantiation
 
 
 --        gate clock_lite until clocks are stable after link up
@@ -1196,43 +1173,6 @@ PORT MAP  (
     reset   => '0', -- Driven by PCIHIP
     locked   => clk_wiz_2_locked
   );
-
-
-
-
---Component capi_fpga_reset
-capi_fpga_reset:CAPI_FPGA_RESET_GEN
- PORT MAP (
-   PLL_LOCKED  => clk_wiz_2_locked,
-   CLK   => psl_clk,
-   RESET  => psl_reset_sig
-   );
-
--- Component capi_stp_counter
-csc:          CAPI_STP_COUNTER
- PORT MAP (
-   CLK   => psl_clk,
-   RESET  => psl_reset_sig,
-   STP_COUNTER_1sec => stp_counter_1sec_sig,
-   STP_COUNTER_MSB => stp_counter_msb_sig
-   );
-
-
------- sys_clk_p_out: CAPI_STP_COUNTER
-------  PORT MAP (
-------    CLK   => sys_clk,
-------    RESET  => pcihip0_psl_rst,
-------    STP_COUNTER_1sec => sys_clk_counter_1sec_sig,
-------    STP_COUNTER_MSB => open
-------    );
-
-user_clock:   CAPI_STP_COUNTER
- PORT MAP (
-   CLK   => pcihip0_psl_clk,
-   RESET  => pcihip0_psl_rst,
-   STP_COUNTER_1sec => user_clock_sig,
-   STP_COUNTER_MSB => open
-   );
 
 fan_cde <= '1';
 

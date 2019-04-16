@@ -385,323 +385,9 @@ PORT (
   );
 end Component uscale_plus_clk_wiz;
 
--- Component capi_fpga_reset
-Component CAPI_FPGA_RESET_GEN
-  PORT(PLL_LOCKED    : in  std_logic;
-              CLK                                            : in    std_logic;
-       RESET     : out std_logic);
-End Component CAPI_FPGA_RESET_GEN;
-
--- Component capi_stp_counter
-Component CAPI_STP_COUNTER
-  PORT(CLK     : in  std_logic;
-              RESET                                          : in    std_logic;
-              STP_COUNTER_1sec                               : out   std_logic;
-       STP_COUNTER_MSB  : out std_logic);
-End Component CAPI_STP_COUNTER;
-
--- Component psl
-Component PSL9_WRAP_0
---Component PSL9_WRAP
-  PORT(
-------        psl_clk: in std_logic;
-------        psl_rst: in std_logic;
-------        pcihip0_psl_clk: in std_logic;
-------        pcihip0_psl_rst: in std_logic;
-------        crc_error: in std_logic;
-              a0h_cvalid                                     : in    std_logic;
-              a0h_ctag                                       : in    std_logic_vector(0 to 7);
-              a0h_com                                        : in    std_logic_vector(0 to 12);
-------        a0h_cpad: in std_logic_vector(0 to 2);
-              a0h_cabt                                       : in    std_logic_vector(0 to 2);
-              a0h_cea                                        : in    std_logic_vector(0 to 63);
-              a0h_cch                                        : in    std_logic_vector(0 to 15);
-              a0h_csize                                      : in    std_logic_vector(0 to 11);
-              a0h_cpagesize                                  : in    std_logic_vector(0 to 3);
-              ha0_croom                                      : out   std_logic_vector(0 to 7);
-              a0h_ctagpar                                    : in    std_logic;
-              a0h_compar                                     : in    std_logic;
-              a0h_ceapar                                     : in    std_logic;
-              ha0_brvalid                                    : out   std_logic;
-              ha0_brtag                                      : out   std_logic_vector(0 to 7);
-              ha0_brad                                       : out   std_logic_vector(0 to 5);
-              a0h_brlat                                      : in    std_logic_vector(0 to 3);
-              a0h_brdata                                     : in    std_logic_vector(0 to 1023);
-              a0h_brpar                                      : in    std_logic_vector(0 to 15);
-              ha0_bwvalid                                    : out   std_logic;
-              ha0_bwtag                                      : out   std_logic_vector(0 to 7);
-              ha0_bwad                                       : out   std_logic_vector(0 to 5);
-              ha0_bwdata                                     : out   std_logic_vector(0 to 1023);
-              ha0_bwpar                                      : out   std_logic_vector(0 to 15);
-              ha0_brtagpar                                   : out   std_logic;
-              ha0_bwtagpar                                   : out   std_logic;
-              ha0_rvalid                                     : out   std_logic;
-              ha0_rtag                                       : out   std_logic_vector(0 to 7);
-              ha0_rtagpar                                    : out   std_logic;
-              ha0_rditag                                     : out   std_logic_vector(0 to 8);
-              ha0_rditagpar                                  : out   std_logic;
-              ha0_response                                   : out   std_logic_vector(0 to 7);
-              ha0_response_ext                               : out   std_logic_vector(0 to 7);
-              ha0_rpagesize                                  : out   std_logic_vector(0 to 3);
-              ha0_rcredits                                   : out   std_logic_vector(0 to 8);
-              ha0_rcachestate                                : out   std_logic_vector(0 to 1);
-              ha0_rcachepos                                  : out   std_logic_vector(0 to 12);
-              ha0_reoa                                       : out   std_logic_vector(0 to 185);
-
-              ha0_mmval                                      : out   std_logic;
-              ha0_mmcfg                                      : out   std_logic;
-              ha0_mmrnw                                      : out   std_logic;
-              ha0_mmdw                                       : out   std_logic;
-              ha0_mmad                                       : out   std_logic_vector(0 to 23);
-              ha0_mmadpar                                    : out   std_logic;
-              ha0_mmdata                                     : out   std_logic_vector(0 to 63);
-              ha0_mmdatapar                                  : out   std_logic;
-              a0h_mmack                                      : in    std_logic;
-              a0h_mmdata                                     : in    std_logic_vector(0 to 63);
-              a0h_mmdatapar                                  : in    std_logic;
-
-              ha0_jval                                       : out   std_logic;
-              ha0_jcom                                       : out   std_logic_vector(0 to 7);
-              ha0_jcompar                                    : out   std_logic;
-              ha0_jea                                        : out   std_logic_vector(0 to 63);
-              ha0_jeapar                                     : out   std_logic;
-              a0h_jrunning                                   : in    std_logic;
-              a0h_jdone                                      : in    std_logic;
-              a0h_jcack                                      : in    std_logic;
-              a0h_jerror                                     : in    std_logic_vector(0 to 63);
---        a0h_jyield: in std_logic;
-              a0h_tbreq                                      : in    std_logic;
-              a0h_paren                                      : in    std_logic;
-              ha0_pclock                                     : out   std_logic;
-
-
-              D0H_DVALID                                     : in    std_logic;
-              D0H_REQ_UTAG                                   : in    std_logic_vector(0 to 9);
-              D0H_REQ_ITAG                                   : in    std_logic_vector(0 to 8);
-              D0H_DTYPE                                      : in    std_logic_vector(0 to 2);
---         DH_DRELAXED:in  std_logic;
-              D0H_DATOMIC_OP                                 : in    std_logic_vector(0 to 5);
-              D0H_DATOMIC_LE                                 : in    std_logic                    ;-- New PSL/AFU interface
-              D0H_DSIZE                                      : in    std_logic_vector(0 to 9);
-              D0H_DDATA                                      : in    std_logic_vector(0 to 1023);
---         D0H_DPAR: in std_logic_vector(0 to 15);
---         // ----------------------------------------------------------------------------------------------------------------------
---         // ----------------------------
---         // PSL DMA Completion Interface
---         // ----------------------------
-              HD0_CPL_VALID                                  : out   std_logic;
-              HD0_CPL_UTAG                                   : out   std_logic_vector(0 to 9);
-              HD0_CPL_TYPE                                   : out   std_logic_vector(0 to 2);
-              HD0_CPL_LADDR                                  : out   std_logic_vector(0 to 6);
-              HD0_CPL_BYTE_COUNT                             : out   std_logic_vector(0 to 9);
-              HD0_CPL_SIZE                                   : out   std_logic_vector(0 to 9);
-              HD0_CPL_DATA                                   : out   std_logic_vector(0 to 1023);
---         HD0_CPL_DPAR : out std_logic_vector(0 to 15);
---         // ----------------------------------------------------------------------------------------------------------------------
---         // ----------------------
---         // PSL DMA Sent Interface
---         // ----------------------
-              HD0_SENT_UTAG_VALID                            : out   std_logic;
-              HD0_SENT_UTAG                                  : out   std_logic_vector(0 to 9);
-              HD0_SENT_UTAG_STS                              : out   std_logic_vector(0 to 2);
-
-
-
-              AXIS_CQ_TVALID                                 : in    std_logic;
-              AXIS_CQ_TDATA                                  : in    std_logic_vector(511 downto 0);
-              AXIS_CQ_TREADY                                 : out   std_logic;
-              AXIS_CQ_TUSER                                  : in    std_logic_vector(182 downto 0);
-              AXIS_CQ_NP_REQ                                 : out   std_logic_vector(1 downto 0);
---         //XLX IP RC Interface
-              AXIS_RC_TVALID                                 : in    std_logic;
-              AXIS_RC_TDATA                                  : in    std_logic_vector(511 downto 0);
-              AXIS_RC_TREADY                                 : out   std_logic;
-              AXIS_RC_TUSER                                  : in    std_logic_vector(160 downto 0);
---         //-----------------------------------------------------------------------------------------------------------------------
---         //XLX IP RQ Interface
-              AXIS_RQ_TVALID                                 : out   std_logic;
-              AXIS_RQ_TDATA                                  : out   std_logic_vector(511 downto 0);
-              AXIS_RQ_TREADY                                 : in    std_logic;
-              AXIS_RQ_TLAST                                  : out   std_logic;
-              AXIS_RQ_TUSER                                  : out   std_logic_vector(136 downto 0);
-              AXIS_RQ_TKEEP                                  : out   std_logic_vector(15 downto 0);
---         //XLX IP CC Interface
-              AXIS_CC_TVALID                                 : out   std_logic;
-              AXIS_CC_TDATA                                  : out   std_logic_vector(511 downto 0);
-              AXIS_CC_TREADY                                 : in    std_logic;
-              AXIS_CC_TLAST                                  : out   std_logic;
-              AXIS_CC_TUSER                                  : out   std_logic_vector(80 downto 0);
-              AXIS_CC_TKEEP                                  : out   std_logic_vector(15 downto 0);
---         //----------------------------------------------------------------------------------------------------------------------
---         // Configuration Interface
---         // cfg_fc_sel[2:0] = 101b, cfg_fc_ph[7:0], cfg_fc_pd[11:0] cfg_fc_nph[7:0]
-              XIP_CFG_FC_SEL                                 : out   std_logic_vector(2 downto 0);
-              XIP_CFG_FC_PH                                  : in    std_logic_vector(7 downto 0);
-              XIP_CFG_FC_PD                                  : in    std_logic_vector(11 downto 0);
-              XIP_CFG_FC_NP                                  : in    std_logic_vector(7 downto 0);
-
-              psl_kill_link                                  : out   std_logic;
-              psl_build_ver                                  : in    std_logic_vector(0 to 31);
-              afu_clk                                        : in    std_logic;
-
-              PSL_RST                                        : in    std_logic;
-              PSL_CLK                                        : in    std_logic;
-              PCIHIP_PSL_RST                                 : in    std_logic;
-        PCIHIP_PSL_CLK : in std_logic
-
-);
--- End Component psl;
-End Component PSL9_WRAP_0;
---End Component PSL9_WRAP;
-
--- CAPI board infrastructure
-Component capi_board_infrastructure
-  PORT(
-              cfg_ext_read_received                          : IN    STD_LOGIC;
-              cfg_ext_write_received                         : IN    STD_LOGIC;
-              cfg_ext_register_number                        : IN    STD_LOGIC_VECTOR(9 DOWNTO 0);
-              cfg_ext_function_number                        : IN    STD_LOGIC_VECTOR(7 DOWNTO 0);
-              cfg_ext_write_data                             : IN    STD_LOGIC_VECTOR(31 DOWNTO 0);
-              cfg_ext_write_byte_enable                      : IN    STD_LOGIC_VECTOR(3 DOWNTO 0);
-              cfg_ext_read_data                              : OUT   STD_LOGIC_VECTOR(31 DOWNTO 0);
-              cfg_ext_read_data_valid                        : OUT   STD_LOGIC;
-
-     --    spi_miso_secondary            : in    std_logic;
-     --    spi_mosi_secondary            : out   std_logic;
-     --    spi_cen_secondary             : out   std_logic;
-
-              pci_pi_nperst0                                 : in    std_logic;
-              pcihip0_psl_clk                                : in    std_logic;
-              icap_clk                                       : in    std_logic;
-              cpld_usergolden                                : in    std_logic                     ;  -- bool
-              crc_error                                      : out   std_logic
-               );
-END Component capi_board_infrastructure;
-
-Component capi_rise_dff
-  PORT (clk   : in std_logic;
-        dout  : out std_logic;
-        din   : in std_logic);
-End Component capi_rise_dff;
-
-attribute mark_debug : string;
-Signal ha0_reoa: std_logic_vector(0 to 185);
-
-Signal hip_npor0: std_logic;  -- bool
-Signal i_cpld_sda: std_logic;  -- bool
-Signal crc_error: std_logic;  -- bool
-Signal i_therm_sda: std_logic;  -- bool
-Signal i_ucd_sda: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_app_int_ack: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_app_msi_ack: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_cfg_par_err: std_logic;  -- bool
-Signal pcihip0_psl_coreclkout_hip: std_logic;  -- bool
-Signal pcihip0_psl_cseb_addr: std_logic_vector(0 to 32);  -- v33bit
-Signal pcihip0_psl_cseb_addr_parity: std_logic_vector(0 to 4);  -- v5bit
-Signal pcihip0_psl_cseb_be: std_logic_vector(0 to 3);  -- v4bit
-Signal pcihip0_psl_cseb_rden: std_logic;  -- bool
-Signal pcihip0_psl_cseb_wrdata: std_logic_vector(0 to 31);  -- v32bit
-Signal pcihip0_psl_cseb_wrdata_parity: std_logic_vector(0 to 3);  -- v4bit
-Signal pcihip0_psl_cseb_wren: std_logic;  -- bool
-Signal pcihip0_psl_cseb_wrresp_req: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_derr_cor_ext_rcv: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_derr_cor_ext_rpl: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_derr_rpl: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_hip_reconfig_readdata: std_logic_vector(0 to 15);  -- v16bit
--- Apr13 Signal pcihip0_psl_ko_cpl_spc_data: std_logic_vector(0 to 11);  -- v12bit
--- Apr13 Signal pcihip0_psl_ko_cpl_spc_header: std_logic_vector(0 to 7);  -- v8bit
--- Apr13 Signal pcihip0_psl_lmi_ack: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_lmi_dout: std_logic_vector(0 to 31);  -- v32bit
-Signal pcihip0_psl_pld_clk_inuse: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_pme_to_sr: std_logic;  -- bool
-Signal pcihip0_psl_reset_status: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_rx_par_err: std_logic;  -- bool
-Signal pcihip0_psl_rx_st_bar: std_logic_vector(0 to 7);  -- v8bit
-Signal pcihip0_psl_rx_st_data: std_logic_vector(0 to 255);  -- v256bit
-Signal pcihip0_psl_rx_st_empty: std_logic_vector(0 to 1);  -- v2bit
-Signal pcihip0_psl_rx_st_eop: std_logic;  -- bool
-Signal pcihip0_psl_rx_st_err: std_logic;  -- bool
-Signal pcihip0_psl_rx_st_parity: std_logic_vector(0 to 31);  -- v32bit
-Signal pcihip0_psl_rx_st_sop: std_logic;  -- bool
-Signal pcihip0_psl_rx_st_valid: std_logic;  -- bool
--- Apr13 Signal pcihip0_psl_testin_zero: std_logic;  -- bool
-Signal pcihip0_psl_tl_cfg_add: std_logic_vector(0 to 3);  -- v4bit
-Signal pcihip0_psl_tl_cfg_ctl: std_logic_vector(0 to 31);  -- v32bit
--- Apr13 Signal pcihip0_psl_tl_cfg_sts: std_logic_vector(0 to 52);  -- v53bit
-Signal pcihip0_psl_tx_cred_datafccp: std_logic_vector(0 to 11);  -- v12bit
-Signal pcihip0_psl_tx_cred_datafcnp: std_logic_vector(0 to 11);  -- v12bit
-Signal pcihip0_psl_tx_cred_datafcp: std_logic_vector(0 to 11);  -- v12bit
-Signal pcihip0_psl_tx_cred_fchipcons: std_logic_vector(0 to 5);  -- v6bit
-Signal pcihip0_psl_tx_cred_fcinfinite: std_logic_vector(0 to 5);  -- v6bit
-Signal pcihip0_psl_tx_cred_hdrfccp: std_logic_vector(0 to 7);  -- v8bit
-Signal pcihip0_psl_tx_cred_hdrfcnp: std_logic_vector(0 to 7);  -- v8bit
-Signal pcihip0_psl_tx_cred_hdrfcp: std_logic_vector(0 to 7);  -- v8bit
--- Apr13 Signal pcihip0_psl_tx_par_err: std_logic_vector(0 to 1);  -- v2bit
-Signal pcihip0_psl_tx_st_ready: std_logic;  -- bool
-Signal psl_clk: std_logic;  -- bool
-Signal psl_clk_div2: std_logic;  -- bool
-
-Signal sys_clk_p   : std_logic ;
-Signal sys_clk_n   : std_logic ;
-Signal sys_rst_n   : std_logic ;
-Signal pci_exp_txn : STD_LOGIC_VECTOR (15 downto 0);
-Signal pci_exp_txp : STD_LOGIC_VECTOR (15 downto 0);
-Signal pci_exp_rxn : STD_LOGIC_VECTOR (15 downto 0);
-Signal pci_exp_rxp : STD_LOGIC_VECTOR (15 downto 0);
-
-signal        psl_reset_sig : std_logic;
-signal        axis_cq_tvalid : std_logic;
-signal        axis_cq_tdata  : std_logic_vector(511 downto 0);
-signal        axis_cq_tready : std_logic;
-signal        axis_cq_tready_22 : std_logic_vector(0 downto 0);
-signal        axis_cq_tuser  : std_logic_vector(182 downto 0);
-signal        axis_cq_np_req : std_logic_vector(1 downto 0);
---         //XLX IP RC Interface
-signal        axis_rc_tvalid  : std_logic;
-signal        axis_rc_tdata   : std_logic_vector(511 downto 0);
-signal        axis_rc_tready  : std_logic;
--- signal        axis_rc_tready_22  : std_logic_vector(0 downto 0);
-signal        axis_rc_tready_22  : std_logic;
-signal        axis_rc_tuser   : std_logic_vector(160 downto 0);
---         //-----------------------------------------------------------------------------------------------------------------------
---         //XLX IP RQ Interface
-signal        axis_rq_tvalid  : std_logic;
-signal        axis_rq_tdata   : std_logic_vector(511 downto 0);
-signal        axis_rq_tready  : std_logic_vector(3 downto 0);
-signal        axis_rq_tlast   : std_logic;
-signal        axis_rq_tuser   : std_logic_vector(136 downto 0);
-signal        axis_rq_tkeep   : std_logic_vector(15 downto 0);
---         //XLX IP CC Interface
-signal        axis_cc_tvalid  : std_logic;
-signal        axis_cc_tdata   : std_logic_vector(511 downto 0);
-signal        axis_cc_tready  : std_logic_vector(3 downto 0);
-signal        axis_cc_tlast   : std_logic;
-signal        axis_cc_tuser   : std_logic_vector(80 downto 0);
-signal        axis_cc_tkeep   : std_logic_vector(15 downto 0);
-
-Signal pcihip0_psl_clk  : std_logic;
-Signal pcihip0_psl_rst  : std_logic;
-Signal user_lnk_up  : std_logic;
-
-Signal xip_cfg_fc_sel_sig   : std_logic_vector(2 downto 0);
-Signal xip_cfg_fc_ph_sig    : std_logic_vector(7 downto 0);
-Signal xip_cfg_fc_pd_sig    : std_logic_vector(11 downto 0);
-Signal xip_cfg_fc_np_sig    : std_logic_vector(7 downto 0);
-Signal cfg_dsn_sig  : std_logic_vector(63 downto 0);
-
-Signal sys_clk    : std_logic;
-Signal sys_clk_gt   : std_logic;
-Signal sys_rst_n_c   : std_logic;
-
-Signal stp_counter_msb_sig : std_logic;
-Signal stp_counter_1sec_sig : std_logic;
-Signal sys_clk_counter_1sec_sig : std_logic;
-Signal user_clock_sig  : std_logic;
-
 signal clk_wiz_2_locked : std_logic;
 
 signal efes32             : std_logic_vector(31 downto 0);
---signal efes1024           : std_logic_vector(1023 downto 0);
 signal one1             : std_logic;
 signal two2             : std_logic_vector(1 downto 0);
 
@@ -878,7 +564,6 @@ p:  PSL9_WRAP_0
 cfg_dsn_sig <= x"00000001" & x"01" & x"000A35";
 
 efes32   <= x"00000000";
---efes1024 <= x"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 one1   <= '1';
 two2   <= one1 & one1;
 
@@ -956,8 +641,8 @@ pci_exp_rxp(15 downto 0) <= pcie_rxp(15 downto 0);
 --pci_exp_rxn(15) <= pci0_i_rxp_in15;
 --pci_exp_rxp(15) <= pci0_i_rxn_in15;
 
-pci_user_reset <= pcihip0_psl_rst;
-pci_clock_125MHz <= psl_clk_div2;
+--pci_user_reset <= pcihip0_psl_rst;
+--pci_clock_125MHz <= psl_clk_div2;
 
 
 pcihip0:      pcie4_uscale_plus_0
@@ -1191,7 +876,7 @@ refclk_ibuf : IBUFDS_GTE4
 port map (
     O   => sys_clk_gt,   -- 1-bit output: Refer to Transceiver User Guide
     ODIV2  => sys_clk,   -- 1-bit output: Refer to Transceiver User Guide
-    CEB  => '0',   -- 1'b0,   -- 1-bit input: Refer to Transceiver User Guide
+    CEB  => '0',         -- 1-bit input: Refer to Transceiver User Guide
     I   => sys_clk_p,   -- 1-bit input: Refer to Transceiver User Guide
     IB   => sys_clk_n   -- 1-bit input: Refer to Transceiver User Guide
 );
@@ -1203,7 +888,6 @@ port map (
 O => sys_rst_n_c,  -- 1-bit output: Buffer output
 I => sys_rst_n   -- 1-bit input: Buffer input
 );
--- End of IBUF_inst instantiation
 
 
 --        gate clock_lite until clocks are stable after link up
@@ -1228,43 +912,5 @@ PORT MAP  (
     reset   => '0', -- Driven by PCIHIP
     locked   => clk_wiz_2_locked
   );
-
-
-
-
---Component capi_fpga_reset
-capi_fpga_reset:CAPI_FPGA_RESET_GEN
- PORT MAP (
-   PLL_LOCKED  => clk_wiz_2_locked,
-   CLK   => psl_clk,
-   RESET  => psl_reset_sig
-   );
-
--- Component capi_stp_counter
-csc:          CAPI_STP_COUNTER
- PORT MAP (
-   CLK   => psl_clk,
-   RESET  => psl_reset_sig,
-   STP_COUNTER_1sec => stp_counter_1sec_sig,
-   STP_COUNTER_MSB => stp_counter_msb_sig
-   );
-
-
------- sys_clk_p_out: CAPI_STP_COUNTER
-------  PORT MAP (
-------    CLK   => sys_clk,
-------    RESET  => pcihip0_psl_rst,
-------    STP_COUNTER_1sec => sys_clk_counter_1sec_sig,
-------    STP_COUNTER_MSB => open
-------    );
-
-user_clock:   CAPI_STP_COUNTER
- PORT MAP (
-   CLK   => pcihip0_psl_clk,
-   RESET  => pcihip0_psl_rst,
-   STP_COUNTER_1sec => user_clock_sig,
-   STP_COUNTER_MSB => open
-   );
-
 
 END capi_bsp;
