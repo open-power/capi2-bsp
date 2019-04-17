@@ -870,7 +870,7 @@ pci_exp_rxn(15 downto 0) <= pcie_rxn(15 downto 0);
 pci_exp_rxp(15 downto 0) <= pcie_rxp(15 downto 0);
 
 --pci_user_reset <= pcihip0_psl_rst;
---pci_clock_125MHz <= psl_clk_div2;
+pci_clock_125MHz <= psl_clk_div2;
 
 
 pcihip0:      pcie4_uscale_plus_0
