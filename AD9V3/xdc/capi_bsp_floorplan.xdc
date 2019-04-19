@@ -23,6 +23,6 @@
 #create_pblock pci
 #add_cells_to_pblock [get_pblocks pci] [get_cells -quiet [list pcihip0 hdk_inst]]
 #resize_pblock  [get_pblocks pci] -add {CLOCKREGION_X5Y0:CLOCKREGION_X5Y3}
-#create_pblock psl
-#add_cells_to_pblock [get_pblocks psl] [get_cells -quiet [list p]]
-#resize_pblock  [get_pblocks psl] -add {CLOCKREGION_X3Y0:CLOCKREGION_X4Y3}
+create_pblock psl
+resize_pblock capi_bsp -add CLOCKREGION_X3Y0:CLOCKREGION_X5Y2
+add_cells_to_pblock capi_bsp [get_cells [list c0/U0/p]]
