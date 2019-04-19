@@ -129,6 +129,8 @@ set_property PACKAGE_PIN AG9 [get_ports b_smbus_scl]
 set_property PACKAGE_PIN AE8 [get_ports b_smbus_sda]
 set_property IOSTANDARD LVCMOS33 [get_ports  b_smbus_scl]
 set_property IOSTANDARD LVCMOS33 [get_ports  b_smbus_sda]
+# set_property PACKAGE_PIN E25 [get_ports i_fpga_smbus_en_n]
+# set_property IOSTANDARD LVCMOS18 [get_ports i_fpga_smbus_en_n]
 
 # drive pin to UCD high to allow smbus access from host
 #set_property PACKAGE_PIN AJ10 [get_ports o_ucd_gpio21]
