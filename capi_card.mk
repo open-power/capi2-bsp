@@ -25,13 +25,14 @@ include $(ROOT_DIR)/capi_bsp_env.mk
 export PSL_IP             ?= $(PSL_DIR)/build_$(FPGA_PART)/output
 export PSL_CREATE_IP_DONE ?= $(PSL_DIR)/.psl_$(FPGA_PART)
 
-.PHONY: help create_ip psl clean
+.PHONY: help create_ip psl build_ooc clean
 
 
 help:
 	@echo "Main targets for the $(FPGA_CARD) capi_board_support project make process:";
 	@echo "====================================================================";
 	@echo "* create_ip      Create capi_bsp ip for $(FPGA_DISPLAY) card";
+	@echo "* build_ooc      Create capi_bsp pre-routed checkpoint for $(FPGA_DISPLAY) card";
 	@echo "* psl            Create encrypted PSL IP";
 	@echo "* clean          Remove all files generated in make process";
 	@echo "* help           Print this message";
@@ -50,9 +51,16 @@ $(CARD_LOGS):
 
 
 $(CARD_CAPI_BSP_GEN): $(CARD_LOGS)
-	@echo "Creating the PSL for the $(FPGA_CARD) card."
 	@echo "[PREPARE DIRECTORIES.] start "`date +"%T %a %b %d %Y"`
 	@mkdir -p $(CARD_CAPI_BSP_GEN)
+	@echo "[PREPARE DIRECTORIES.] done  "`date +"%T %a %b %d %Y"`
+
+
+$(CARD_BUILD_OOC): $(CARD_LOGS)
+	@echo "[PREPARE DIRECTORIES.] start "`date +"%T %a %b %d %Y"`
+	@mkdir -p $(CARD_BUILD_OOC)/Synth
+	@mkdir -p $(CARD_BUILD_OOC)/Implement
+	@mkdir -p $(CARD_BUILD_OOC)/Checkpoint
 	@echo "[PREPARE DIRECTORIES.] done  "`date +"%T %a %b %d %Y"`
 
 
@@ -77,7 +85,7 @@ psl: $(PSL_CREATE_IP_DONE)
 
 $(CARD_DIR)/.create_ip_done: $(PSL_IP)
 	@$(MAKE) -s $(CARD_CAPI_BSP_GEN)
-	@echo "Starting vivado in $(VIVADO_MODE) mode ..."
+	@echo "Starting vivado in $(VIVADO_MODE) mode to generate capi_bsp_wrap IP"
 	@vivado -quiet -mode $(VIVADO_MODE) -source $(COMMON_TCL)/create_capi_bsp.tcl -notrace -log $(CARD_LOGS)/vivado_create_project.log  -journal $(CARD_LOGS)/vivado_create_project.jou
 	@touch $(CARD_DIR)/.create_ip_done
 	@if [ $(FPGA_ACTION_CLK) == "225MHZ" ]; then		\
@@ -87,13 +95,21 @@ $(CARD_DIR)/.create_ip_done: $(PSL_IP)
             touch .action_clk_250MHZ;                           \
 	fi
 
+$(CARD_DIR)/.create_ooc_done: $(PSL_IP)
+	@$(MAKE) -s $(CARD_BUILD_OOC)
+	@echo "Starting vivado in $(VIVADO_MODE) mode to generate pre-routed checkpoint (OOC)"
+	@echo "It places and routes capi_bsp_wrap. It may take several hours"
+	@vivado -quiet -mode $(VIVADO_MODE) -source $(COMMON_TCL)/build_ooc_chkpt.tcl -notrace -log $(CARD_LOGS)/vivado_build_ooc.log  -journal $(CARD_LOGS)/vivado_build_ooc.jou
+	@touch $(CARD_DIR)/.create_ooc_done
 
 create_ip: $(CARD_DIR)/.create_ip_done
 
+build_ooc: $(CARD_DIR)/.create_ooc_done
 
 clean:
 	@$(RM) *~
 	@$(RM) .create_ip_done
+	@$(RM) .create_ooc_done
 	@$(RM) .action_clk_*
 	@$(RM) -r vivado.*
 	@$(RM) -r build

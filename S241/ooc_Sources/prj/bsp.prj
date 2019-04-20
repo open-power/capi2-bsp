@@ -1,0 +1,30 @@
+verilog work "../../common/src/CAPI_FPGA_RESET_GEN.v
+verilog work "../../common/src/CAPI_STP_COUNTER.v
+vhdl work "../../common/src/capi_en_rise_dff.vhdl"
+vhdl work "../../common/src/capi_en_rise_vdff.vhdl"
+vhdl work "../../common/src/capi_fifo.vhdl"
+vhdl work "../../common/src/capi_gpio1.vhdl"
+vhdl work "../../common/src/capi_gpio12.vhdl"
+vhdl work "../../common/src/capi_gpo1.vhdl"
+vhdl work "../../common/src/capi_gpo26.vhdl"
+vhdl work "../../common/src/capi_i2c.vhdl"
+vhdl work "../../common/src/capi_i2cacc.vhdl"
+vhdl work "../../common/src/capi_ram.vhdl"
+vhdl work "../../common/src/capi_ram32x8.vhdl"
+vhdl work "../../common/src/capi_reversebus16.vhdl"
+vhdl work "../../common/src/capi_rise_dff.vhdl"
+vhdl work "../../common/src/capi_rise_dff_init1.vhdl"
+vhdl work "../../common/src/capi_rise_vdff.vhdl"
+vhdl work "../../common/src/capi_sreconfig.vhdl"
+vhdl work "../../common/src/capi_xilstrte3.vhdl"
+
+vhdl work "../../ultrascale_plus/src/capi_gpio.vhdl
+vhdl work "../../ultrascale_plus/src/capi_gpo.vhdl
+vhdl work "../../ultrascale_plus/src/capi_svcrc3srl.vhdl
+
+
+vhdl work "../src/capi_board_infrastructure.vhdl"
+vhdl work "../src/capi_bsp.vhdl"
+vhdl work "../src/capi_flash_spi_mt25qt.vhdl"
+vhdl work "../src/capi_vsec.vhdl"
+vhdl work "../src/capi_xilmltbt.vhdl"

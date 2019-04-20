@@ -26,6 +26,7 @@ export CARD_DIR                ?= $(ROOT_DIR)/$(FPGA_CARD)
 export CARD_BUILD              ?= $(CARD_DIR)/build
 export CARD_IP                 ?= $(CARD_BUILD)/ip
 export CARD_CAPI_BSP_GEN       ?= $(CARD_BUILD)/capi_bsp_gen
+export CARD_BUILD_OOC          ?= $(CARD_BUILD)/ooc
 export CARD_LOGS               ?= $(CARD_BUILD)/logs
 export CARD_SRC                ?= $(CARD_DIR)/src
 export CARD_TCL                ?= $(CARD_DIR)/tcl
