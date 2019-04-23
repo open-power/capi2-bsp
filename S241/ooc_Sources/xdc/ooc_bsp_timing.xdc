@@ -10,7 +10,6 @@ set_max_delay -from [get_ports {a0h_c*}] -to $memory_elements -datapath_only 2.0
 set_max_delay -from [get_ports {a0h_j*}] -to $memory_elements -datapath_only 2.0
 set_max_delay -from [get_ports {a0h_paren*}] -to $memory_elements -datapath_only 2.0
 set_max_delay -from [get_ports {a0h_tbreq*}] -to $memory_elements -datapath_only 2.0
-set_max_delay -from [get_ports {d0h_dvalid*}] -to $memory_elements -datapath_only 2.0
 set_max_delay -from [get_ports {a0h_br*}] -to $memory_elements -datapath_only 2.0
 
 ############ d0h ################
@@ -19,6 +18,7 @@ set_max_delay -from [get_ports {d0h_dtype*}] -to $memory_elements -datapath_only
 set_max_delay -from [get_ports {d0h_datomic*}] -to $memory_elements -datapath_only 2.0
 set_max_delay -from [get_ports {d0h_dsize*}] -to $memory_elements -datapath_only 2.0
 set_max_delay -from [get_ports {d0h_ddata*}] -to $memory_elements -datapath_only 2.0
+set_max_delay -from [get_ports {d0h_dvalid*}] -to $memory_elements -datapath_only 2.0
 
 ############ ha0 ################
 set_max_delay -from $memory_elements -to [get_ports {ha0_r*}] -datapath_only 2.0

@@ -106,6 +106,11 @@ create_ip: $(CARD_DIR)/.create_ip_done
 
 build_ooc: $(CARD_DIR)/.create_ooc_done
 
+create_ip_ooc:
+	@echo "Starting vivado in $(VIVADO_MODE) mode to create capi_bsp_wrap with the OOC checkpoint"
+	@vivado -quiet -mode $(VIVADO_MODE) -source $(COMMON_TCL)/create_capi_bsp_ooc.tcl -notrace -log $(CARD_LOGS)/vivado_create_bsp_ooc.log  -journal $(CARD_LOGS)/vivado_create_bsp_ooc.jou
+
+
 clean:
 	@$(RM) *~
 	@$(RM) .create_ip_done
