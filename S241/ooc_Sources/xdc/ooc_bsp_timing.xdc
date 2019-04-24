@@ -1,4 +1,5 @@
 
+create_clock -period 10.000 -name pci_refclk [get_ports pcie_clkp]
 
 
 #May have to use more strict delay values in the future, especially for delays marked as 2.5 by default
