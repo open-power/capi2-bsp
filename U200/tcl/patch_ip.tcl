@@ -1,3 +1,4 @@
+#!/bin/sh
 ############################################################################
 ############################################################################
 ##
@@ -17,23 +18,11 @@
 ##
 ############################################################################
 ############################################################################
-set fpga_card        $::env(FPGA_CARD)
 
-## Create a new Vivado IP Project
-set log_file $::env(CARD_LOGS)/create_required_ip.log
-puts "\[CREATE REQUIRED IP..\] start [clock format [clock seconds] -format {%T %a %b %d %Y}]"
-exec rm -rf $ip_dir
-create_project managed_ip_project $ip_dir/managed_ip_project -part $fpga_part -ip >> $log_file
-if {$fpga_card eq "U200"} {
-  set_property board_part xilinx.com:au200:part0:1.0 [current_project]
-}
+set pcie_source $capi_bsp_ip_dir/src/pcie4_uscale_plus_0/synth/pcie4_uscale_plus_0.v
 
-# Project IP Settings
-# General
-set_property target_language VHDL [current_project]
-
-# Create card specific IPs
-source $card_tcl/create_ip.tcl
-
-close_project >> $log_file
-puts "\[CREATE REQUIRED IP..\] done  [clock format [clock seconds] -format {%T %a %b %d %Y}]"
+# Adding PF0_PCIE_CAP_NEXTPTR and setting PF0_SECONDARY_PCIE_CAP_NEXTPTR to 0x400
+exec /bin/bash -c "sed -i \"s/PF0_DEVICE_ID=0x0477/PF0_DEVICE_ID=0x0477,PF0_PCIE_CAP_NEXTPTR=0xb0/\" $pcie_source"
+exec /bin/bash -c "sed -i \"s/PF0_SECONDARY_PCIE_CAP_NEXTPTR=0x480/PF0_SECONDARY_PCIE_CAP_NEXTPTR=0x400/\" $pcie_source"
+exec /bin/bash -c "sed -i \"s/PF0_SECONDARY_PCIE_CAP_NEXTPTR('H480)/PF0_SECONDARY_PCIE_CAP_NEXTPTR('H400)/\" $pcie_source"
+exec /bin/bash -c "sed -i \"/PF0_DEVICE_ID(/ a\\\n\\    .PF0_PCIE_CAP_NEXTPTR('HB0),\" $pcie_source"

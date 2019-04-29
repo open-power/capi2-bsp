@@ -31,15 +31,23 @@ set card_src         $::env(CARD_SRC)
 set common_src       $::env(COMMON_SRC)
 set fpga_src         $::env(FPGA_SRC)
 set card_xdc         $::env(CARD_XDC)
+set vivado           $::env(XILINX_VIVADO)
 set top_level        capi_bsp
 set proj_name        capi_board_support
+set fpga_card        $::env(FPGA_CARD)
 
 source $common_tcl/create_ip.tcl
 
 set log_file $::env(CARD_LOGS)/create_capi_bsp.log
 ## Create a new Vivado IP Project
 puts "\[CREATE CAPI BSP.....\] start [clock format [clock seconds] -format {%T %a %b %d %Y}]"
+
 create_project $proj_name $proj_dir -part $fpga_part -force >> $log_file
+if {$fpga_card eq "U200"} {
+  set_property board_part xilinx.com:au200:part0:1.0 [current_project]
+#  set_property coreContainer.enable 1 [current_project]
+}
+
 
 #Add source files
 puts "Adding design sources to capi_bsp project"
@@ -99,14 +107,19 @@ if [file exists $card_tcl/patch_ip.tcl] {
   source $card_tcl/patch_ip.tcl >> $log_file
 }
 
-puts "Creating capi_bsp IP container"
-convert_ips -to_core_container [get_files $capi_bsp_ip_dir/capi_bsp_wrap.xci] >> $log_file
 
-close_project >> $log_file
-
-if [file exists $ip_dir/capi_bsp_wrap.xcix] {
-  puts "Created $ip_dir/capi_bsp_wrap.xcix"
+if [string match "*2018.3" $vivado] {
+## Not create container in 2018.3
+  close_project >> $log_file
 } else {
+  puts "Creating capi_bsp IP container"
+  convert_ips -to_core_container [get_files $capi_bsp_ip_dir/capi_bsp_wrap.xci] >> $log_file
+  
+  close_project >> $log_file
+  if [file exists $ip_dir/capi_bsp_wrap.xcix] {
+    puts "Created $ip_dir/capi_bsp_wrap.xcix"
+  } else {
     puts "ERROR: no capi_bsp_wrap.xcix file created!!!"
+  }
 }
 puts "\[CREATE CAPI BSP.....\] done  [clock format [clock seconds] -format {%T %a %b %d %Y}]"
