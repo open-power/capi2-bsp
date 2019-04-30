@@ -17,7 +17,7 @@
 SHELL=/bin/bash
 export ROOT_DIR ?= $(abspath .)
 
-export CARDS += AD9V3 N250SP RCXVUP FX609 S241
+export CARDS += AD9V3 N250SP RCXVUP FX609 S241 U200
 
 include $(ROOT_DIR)/capi_bsp_env.mk
 
@@ -32,6 +32,7 @@ help:
 	@echo "* RCXVUP         Creates capi_bsp ip for XpressVUP-LP9PT card";
 	@echo "* FX609          Creates capi_bsp ip for Flyslice-FX609QL card";
 	@echo "* S241           Creates capi_bsp ip for Semptian S241 card";
+	@echo "* U200           Creates capi_bsp ip for Xilinx U200 card";
 	@echo "* clean          Removes all files generated in make process";
 	@echo "* help           Prints this message";
 	@echo "* Example : make AD9V3";
