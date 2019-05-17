@@ -969,7 +969,7 @@ pci_exp_rxn(7)    <= pci0_i_rxp_in7;
 pci_exp_rxp(7)    <= pci0_i_rxn_in7;
 
 -- pci_user_reset    <= pcihip0_psl_rst;
--- pci_clock_125MHz  <= psl_clk_div2;
+pci_clock_125MHz  <= psl_clk_div2;
 
 
 pcihip0:      pcie4_uscale_plus_0
