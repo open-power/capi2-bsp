@@ -26,5 +26,6 @@
 create_pblock capi_bsp
 #resize_pblock capi_bsp -add CLOCKREGION_X2Y0:CLOCKREGION_X3Y4
 resize_pblock capi_bsp -add CLOCKREGION_X1Y0:CLOCKREGION_X3Y3
-#add_cells_to_pblock capi_bsp [get_cells [list c0/U0/p]]
+add_cells_to_pblock capi_bsp [get_cells [list c0/U0/p]]
+#force location of the BUFGCE in the middle of the capi_bsp area
 set_property LOC BUFGCE_X0Y96 [get_cells c0/U0/pcihip0/inst/user_reset_BUFG_inst]
