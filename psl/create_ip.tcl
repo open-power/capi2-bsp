@@ -105,7 +105,7 @@ if { ! [file exists $ip_repo_dir] } {
   set_property version $ver_major.$ver_minor [ipx::current_core] >> $log_file
   set_property display_name PSL9_WRAP_v${ver_major}_$ver_minor [ipx::current_core] >> $log_file
   set_property description PSL9_WRAP_v${ver_major}_$ver_minor [ipx::current_core] >> $log_file
-  set_property supported_families {virtexu Production zynquplus Production virtexuplus Production kintexuplus Production kintexu Production} [ipx::current_core] >> $log_file
+  set_property supported_families {virtexu Production zynquplus Production virtexuplus Production kintexuplus Production kintexu Production virtexuplushbm Production} [ipx::current_core] >> $log_file
   set_property core_revision 1 [ipx::current_core] >> $log_file
   update_compile_order -fileset sources_1 >> $log_file
   ipx::create_xgui_files [ipx::current_core] >> $log_file
