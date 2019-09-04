@@ -130,7 +130,11 @@ begin
     --  wbstart_addr <= ( "000" & "00" & cpld_user_bs_req & "00" & "000000000000000000000000" );
 
     -- setting 0x100_0000 as User space address (default for AD9V3 card)
-    wbstart_addr <= ( "000" & "0000" & cpld_user_bs_req & "000000000000000000000000" );
+    -- wbstart_addr <= ( "000" & "0000" & cpld_user_bs_req & "000000000000000000000000" );
+
+   -- setting 0x400_0000 as User space address (default for AD9H3 card)
+    wbstart_addr <= ( "000" & "00" & cpld_user_bs_req & "00000000000000000000000000" );
+
 
 
     dff_wbstart_addrl1: capi_rise_vdff GENERIC MAP ( width => 32 ) PORT MAP (

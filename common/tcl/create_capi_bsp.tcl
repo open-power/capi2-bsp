@@ -48,7 +48,7 @@ if {$fpga_card eq "U200"} {
 #  set_property coreContainer.enable 1 [current_project]
 }
 
-
+puts "card_src is :.$card_src"
 #Add source files
 puts "Adding design sources to capi_bsp project"
 add_files -scan_for_includes $card_src >> $log_file

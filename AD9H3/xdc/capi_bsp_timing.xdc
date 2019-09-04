@@ -1,7 +1,7 @@
 ############################################################################
 ############################################################################
 ##
-## Copyright 2018 International Business Machines
+## Copyright 2019 International Business Machines
 ##
 ## Licensed under the Apache License, Version 2.0 (the "License");
 ## you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 ############################################################################
 ############################################################################
 
-#Alpha Data 9V3 timing constraints
+#Alpha Data 9H3 timing constraints
 
 create_clock -period 10.000 -name sys_clk -waveform {0.000 5.000} [get_ports pci_pi_refclk_p0]
 set_input_jitter [get_clocks -of_objects [get_ports pci_pi_refclk_p0]] 0.200

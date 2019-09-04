@@ -23,82 +23,103 @@ set action_clock_freq "250MHz"
 #overide default value if variable exist                                                
 set action_clock_freq $::env(FPGA_ACTION_CLK)
 
-# Create PCIe4 IP
-create_ip -name pcie4c_uscale_plus -vendor xilinx.com -library ip -module_name pcie4c_uscale_plus_0 -dir $ip_dir >> $log_file
-set_property -dict [list                                               \
-                    CONFIG.enable_gen4 {true}                          \
-                    CONFIG.gen4_eieos_0s7 {true}                       \
-                    CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {8.0_GT/s}       \
-                    CONFIG.PL_LINK_CAP_MAX_LINK_WIDTH {X16}            \
-                    CONFIG.AXISTEN_IF_EXT_512_CQ_STRADDLE {true}       \
-                    CONFIG.AXISTEN_IF_EXT_512_RC_4TLP_STRADDLE {false} \
-                    CONFIG.axisten_if_enable_client_tag {true}         \
-                    CONFIG.PF0_CLASS_CODE {1200ff}                     \
-                    CONFIG.PF0_DEVICE_ID {0477}                        \
-                    CONFIG.PF0_REVISION_ID {02}                        \
-                    CONFIG.PF0_SUBSYSTEM_ID {060f}                     \
-                    CONFIG.PF0_SUBSYSTEM_VENDOR_ID {1014}              \
-                    CONFIG.PCIE_ID_IF {true}                           \
-                    CONFIG.ins_loss_profile {Add-in_card}              \
-                    CONFIG.pf0_bar0_64bit {true}                       \
-                    CONFIG.pf0_bar0_prefetchable {true}                \
-                    CONFIG.pf0_bar0_scale {Megabytes}                  \
-                    CONFIG.pf0_bar0_size {256}                         \
-                    CONFIG.pf0_bar2_enabled {true}                     \
-                    CONFIG.pf0_bar2_64bit {true}                       \
-                    CONFIG.pf0_bar2_prefetchable {true}                \
-                    CONFIG.pf0_bar4_enabled {true}                     \
-                    CONFIG.pf0_bar4_64bit {true}                       \
-                    CONFIG.pf0_bar4_prefetchable {true}                \
-                    CONFIG.pf0_bar4_scale {Gigabytes}                  \
-                    CONFIG.pf0_bar4_size {256}                         \
-                    CONFIG.pf0_dev_cap_max_payload {512_bytes}         \
-                    CONFIG.vendor_id {1014}                            \
-                    CONFIG.ext_pcie_cfg_space_enabled {true}           \
-                    CONFIG.legacy_ext_pcie_cfg_space_enabled {true}    \
-                    CONFIG.mode_selection {Advanced}                   \
-                    CONFIG.en_gt_selection {true}                      \
-                    CONFIG.AXISTEN_IF_EXT_512_RQ_STRADDLE {true}       \
-                    CONFIG.PF0_MSIX_CAP_PBA_BIR {BAR_1:0}              \
-                    CONFIG.PF0_MSIX_CAP_TABLE_BIR {BAR_1:0}            \
-                    CONFIG.PF2_DEVICE_ID {9048}                        \
-                    CONFIG.PF3_DEVICE_ID {9048}                        \
-                    CONFIG.pf2_bar2_enabled {true}                     \
-                    CONFIG.pf3_bar2_enabled {true}                     \
-                    CONFIG.pf1_bar2_enabled {true}                     \
-                    CONFIG.pf1_bar2_type {Memory}                      \
-                    CONFIG.pf1_bar4_type {Memory}                      \
-                    CONFIG.pf2_bar2_type {Memory}                      \
-                    CONFIG.pf2_bar4_type {Memory}                      \
-                    CONFIG.pf3_bar2_type {Memory}                      \
-                    CONFIG.pf3_bar4_type {Memory}                      \
-                    CONFIG.pf0_bar2_type {Memory}                      \
-                    CONFIG.pf0_bar4_type {Memory}                      \
-                    CONFIG.pf1_bar4_enabled {true}                     \
-                    CONFIG.pf1_bar4_scale {Gigabytes}                  \
-                    CONFIG.pf1_vendor_id {1014}                        \
-                    CONFIG.pf2_vendor_id {1014}                        \
-                    CONFIG.pf3_vendor_id {1014}                        \
-                    CONFIG.pf1_bar0_scale {Megabytes}                  \
-                    CONFIG.pf1_bar0_size {256}                         \
-                    CONFIG.axisten_if_width {512_bit}                  \
-                    CONFIG.pf1_bar4_size {256}                         \
-                    CONFIG.pf2_bar4_enabled {true}                     \
-                    CONFIG.pf2_bar4_scale {Gigabytes}                  \
-                    CONFIG.pf2_bar0_scale {Megabytes}                  \
-                    CONFIG.pf2_bar0_size {256}                         \
-                    CONFIG.pf2_bar4_size {256}                         \
-                    CONFIG.pf3_bar4_enabled {true}                     \
-                    CONFIG.pf3_bar4_scale {Gigabytes}                  \
-                    CONFIG.pf3_bar0_scale {Megabytes}                  \
-                    CONFIG.pf3_bar0_size {256}                         \
-                    CONFIG.pf3_bar4_size {256}                         \
-                    CONFIG.coreclk_freq {500}                          \
-                    CONFIG.plltype {QPLL0}                             \
-                    CONFIG.axisten_freq {250}                          \
-                    CONFIG.pcie_blk_locn {X1Y0}                        \
-                    CONFIG.select_quad {GTY_Quad_227}                  \
-                   ] [get_ips pcie4c_uscale_plus_0] >> $log_file
+# Create PCIe4c IP
+create_ip -name pcie4c_uscale_plus -vendor xilinx.com -library ip -version 1.0 -module_name pcie4c_uscale_plus_0 -dir $ip_dir >> $log_file
+set_property -dict [list                                     \
+CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {8.0_GT/s} \
+CONFIG.PL_LINK_CAP_MAX_LINK_WIDTH {X16} \
+CONFIG.AXISTEN_IF_EXT_512_CQ_STRADDLE {true} \
+CONFIG.AXISTEN_IF_EXT_512_RQ_STRADDLE {true} \
+CONFIG.AXISTEN_IF_EXT_512_RC_4TLP_STRADDLE {false} \
+CONFIG.axisten_if_enable_client_tag {true} \
+CONFIG.PF0_CLASS_CODE {1200ff} \
+CONFIG.PF0_DEVICE_ID {0477} \
+CONFIG.PF0_MSIX_CAP_PBA_BIR {BAR_1:0} \
+CONFIG.PF0_MSIX_CAP_TABLE_BIR {BAR_1:0} \
+CONFIG.PF0_REVISION_ID {02} \
+CONFIG.PF1_MSIX_CAP_PBA_BIR {BAR_1:0} \
+CONFIG.PF1_MSIX_CAP_TABLE_BIR {BAR_1:0} \
+CONFIG.PF2_DEVICE_ID {943F} \
+CONFIG.PF2_MSIX_CAP_PBA_BIR {BAR_1:0} \
+CONFIG.PF2_MSIX_CAP_TABLE_BIR {BAR_1:0} \
+CONFIG.PF3_DEVICE_ID {963F} \
+CONFIG.PF3_MSIX_CAP_PBA_BIR {BAR_1:0} \
+CONFIG.PF3_MSIX_CAP_TABLE_BIR {BAR_1:0} \
+CONFIG.PF0_SUBSYSTEM_VENDOR_ID {0667} \
+CONFIG.PF1_SUBSYSTEM_VENDOR_ID {0667} \
+CONFIG.PF2_SUBSYSTEM_VENDOR_ID {0667} \
+CONFIG.PF3_SUBSYSTEM_VENDOR_ID {0667} \
+CONFIG.pf0_vc_cap_enabled {false} \
+CONFIG.pf2_bar2_enabled {true} \
+CONFIG.pf3_bar2_enabled {true} \
+CONFIG.pf1_bar2_enabled {true} \
+CONFIG.pf1_bar2_type {Memory} \
+CONFIG.pf1_bar2_64bit {true} \
+CONFIG.pf1_bar2_prefetchable {true} \
+CONFIG.pf1_bar4_type {Memory} \
+CONFIG.pf2_bar2_type {Memory} \
+CONFIG.pf2_bar2_64bit {true} \
+CONFIG.pf2_bar2_prefetchable {true} \
+CONFIG.pf2_bar4_type {Memory} \
+CONFIG.pf3_bar2_type {Memory} \
+CONFIG.pf3_bar2_64bit {true} \
+CONFIG.pf3_bar2_prefetchable {true} \
+CONFIG.pf3_bar4_type {Memory} \
+CONFIG.pf1_bar4_64bit {true} \
+CONFIG.pf0_bar0_64bit {true} \
+CONFIG.pf0_bar0_prefetchable {true} \
+CONFIG.pf0_bar0_scale {Megabytes} \
+CONFIG.pf0_bar0_size {256} \
+CONFIG.pf0_bar2_enabled {true} \
+CONFIG.pf0_bar2_type {Memory} \
+CONFIG.pf0_bar2_64bit {true} \
+CONFIG.pf0_bar2_prefetchable {true} \
+CONFIG.pf0_bar4_enabled {true} \
+CONFIG.pf0_bar4_type {Memory} \
+CONFIG.pf0_bar4_64bit {true} \
+CONFIG.pf0_bar4_prefetchable {true} \
+CONFIG.pf0_bar4_scale {Gigabytes} \
+CONFIG.pf0_bar4_size {256} \
+CONFIG.pf1_bar4_enabled {true} \
+CONFIG.pf1_bar4_scale {Gigabytes} \
+CONFIG.pf0_dev_cap_max_payload {512_bytes} \
+CONFIG.vendor_id {1014} \
+CONFIG.pf1_vendor_id {1014} \
+CONFIG.pf2_vendor_id {1014} \
+CONFIG.pf3_vendor_id {1014} \
+CONFIG.pf1_bar0_64bit {true} \
+CONFIG.pf1_bar0_prefetchable {true} \
+CONFIG.pf1_bar0_scale {Megabytes} \
+CONFIG.pf1_bar0_size {256} \
+CONFIG.ext_pcie_cfg_space_enabled {true} \
+CONFIG.legacy_ext_pcie_cfg_space_enabled {true} \
+CONFIG.axisten_if_width {512_bit} \
+CONFIG.pf1_bar4_size {256} \
+CONFIG.pf1_bar4_prefetchable {true} \
+CONFIG.pf2_bar4_64bit {true} \
+CONFIG.pf2_bar4_enabled {true} \
+CONFIG.pf2_bar4_scale {Gigabytes} \
+CONFIG.pf2_bar0_64bit {true} \
+CONFIG.pf2_bar0_prefetchable {true} \
+CONFIG.pf2_bar0_scale {Megabytes} \
+CONFIG.pf2_bar0_size {256} \
+CONFIG.pf2_bar4_size {256} \
+CONFIG.pf2_bar4_prefetchable {true} \
+CONFIG.pf3_bar4_64bit {true} \
+CONFIG.pf3_bar4_enabled {true} \
+CONFIG.pf3_bar4_scale {Gigabytes} \
+CONFIG.pf3_bar0_64bit {true} \
+CONFIG.pf3_bar0_prefetchable {true} \
+CONFIG.pf3_bar0_scale {Megabytes} \
+CONFIG.pf3_bar0_size {256} \
+CONFIG.pf3_bar4_size {256} \
+CONFIG.pf3_bar4_prefetchable {true} \
+CONFIG.mode_selection {Advanced} \
+CONFIG.coreclk_freq {500} \
+CONFIG.plltype {QPLL1} \
+CONFIG.axisten_freq {250} \
+CONFIG.AXISTEN_IF_EXT_512_RC_4TLP_STRADDLE {true} CONFIG.type1_membase_memlimit_enable {Disabled} CONFIG.type1_prefetchable_membase_memlimit {Disabled} CONFIG.PF0_CLASS_CODE {058000} CONFIG.PF0_DEVICE_ID {903F} CONFIG.PF0_MSIX_CAP_PBA_OFFSET {00000000} CONFIG.PF0_MSIX_CAP_TABLE_OFFSET {00000000} CONFIG.PF0_MSIX_CAP_TABLE_SIZE {000} CONFIG.PF0_SRIOV_CAP_INITIAL_VF {0} CONFIG.SRIOV_FIRST_VF_OFFSET {1} CONFIG.PF0_SRIOV_FIRST_VF_OFFSET {0} CONFIG.SRIOV_CAP_ENABLE {false} CONFIG.pf0_ari_enabled {false} CONFIG.pf0_msi_enabled {true} CONFIG.pf0_msix_enabled {false} CONFIG.PL_DISABLE_LANE_REVERSAL {TRUE} CONFIG.MSI_X_OPTIONS {None} \
+CONFIG.pcie_id_if {true}] [get_ips pcie4c_uscale_plus_0] >> $log_file
 
 #Create Clock IP
 # Possible values for different action frequencies
@@ -139,7 +160,7 @@ if { $action_clock_freq == "225MHZ" } {
                     CONFIG.FEEDBACK_SOURCE {FDBK_AUTO}          \
                     CONFIG.MMCM_CLKFBOUT_MULT_F {5.000}         \
                     CONFIG.MMCM_CLKIN1_PERIOD {4.000}           \
-                    CONFIG.MMCM_CLKIN2_PERIOD {10.000}          \
+                    CONFIG.MMCM_CLKIN2_PERIOD {10.0}          \
                     CONFIG.MMCM_CLKOUT0_DIVIDE_F {5.000}        \
                     CONFIG.MMCM_CLKOUT1_DIVIDE {10}             \
                     CONFIG.MMCM_CLKOUT2_DIVIDE {10}             \
@@ -170,7 +191,7 @@ if { $action_clock_freq == "225MHZ" } {
                     CONFIG.FEEDBACK_SOURCE {FDBK_AUTO}      \
                     CONFIG.MMCM_CLKFBOUT_MULT_F {5.000}     \
                     CONFIG.MMCM_CLKIN1_PERIOD {4.000}       \
-                    CONFIG.MMCM_CLKIN2_PERIOD {10.000}      \
+                    CONFIG.MMCM_CLKIN2_PERIOD {10.0}      \
                     CONFIG.MMCM_CLKOUT0_DIVIDE_F {5.000}    \
                     CONFIG.MMCM_CLKOUT1_DIVIDE {10}         \
                     CONFIG.MMCM_CLKOUT2_DIVIDE {10}         \

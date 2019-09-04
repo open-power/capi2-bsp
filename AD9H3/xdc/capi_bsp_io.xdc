@@ -1,7 +1,7 @@
 ############################################################################
 ############################################################################
 ##
-## Copyright 2018 International Business Machines
+## Copyright 2019 International Business Machines
 ##
 ## Licensed under the Apache License, Version 2.0 (the "License");
 ## you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 ############################################################################
 ############################################################################
 
-#Alpha Data 9V3 I/O constraints
+#Alpha Data 9H3 I/O constraints
 
 ## PCIe #########################################################
 
@@ -37,21 +37,9 @@ set_property PACKAGE_PIN AA7 [get_ports pci_pi_refclk_p0]
 # package_pin for pcie lanes are specified by the location of the IP
 
 #Flash Interface
-set_property PACKAGE_PIN AG30 [get_ports {spi_miso_secondary}]
-set_property PACKAGE_PIN AF30 [get_ports {spi_mosi_secondary}]
-set_property PACKAGE_PIN AV30 [get_ports {spi_cen_secondary}]
+set_property PACKAGE_PIN AW28 [get_ports {spi_miso_secondary}]
+set_property PACKAGE_PIN AV28 [get_ports {spi_mosi_secondary}]
+set_property PACKAGE_PIN AW24 [get_ports {spi_cen_secondary}]
 set_property IOSTANDARD LVCMOS18 [get_ports {spi_miso_secondary}]
 set_property IOSTANDARD LVCMOS18 [get_ports {spi_mosi_secondary}]
 set_property IOSTANDARD LVCMOS18 [get_ports {spi_cen_secondary}]
-
-#set_property PACKAGE_PIN AJ28 [get_ports {refclk100M}]
-#set_property PACKAGE_PIN AE8 [get_ports {fpga_flash_ce1_l}]
-#set_property PACKAGE_PIN AV30 [get_ports {fpga_flash_ce2_l}]
-#set_property PACKAGE_PIN AB8 [get_ports {fpga_flash_dq0}]
-#set_property PACKAGE_PIN AD8 [get_ports {fpga_flash_dq1}]
-#set_property PACKAGE_PIN Y8  [get_ports {fpga_flash_dq2}]
-#set_property PACKAGE_PIN AC8 [get_ports {fpga_flash_dq3}]
-#set_property PACKAGE_PIN AF30 [get_ports {fpga_flash_dq4}]
-#set_property PACKAGE_PIN AG30 [get_ports {fpga_flash_dq5}]
-#set_property PACKAGE_PIN AF28 [get_ports {fpga_flash_dq6}]
-#set_property PACKAGE_PIN AG28 [get_ports {fpga_flash_dq7}]

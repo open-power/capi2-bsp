@@ -1,7 +1,7 @@
 ############################################################################
 ############################################################################
 ##
-## Copyright 2018 International Business Machines
+## Copyright 2019 International Business Machines
 ##
 ## Licensed under the Apache License, Version 2.0 (the "License");
 ## you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@
 ############################################################################
 ############################################################################
 
-#Alpha Data 9V3 floorplan constraints
+#Alpha Data 9H3 floorplan constraints
 
 #create_pblock pci
 #add_cells_to_pblock [get_pblocks pci] [get_cells -quiet [list pcihip0 hdk_inst]]
 #resize_pblock  [get_pblocks pci] -add {CLOCKREGION_X5Y0:CLOCKREGION_X5Y3}
 create_pblock capi_bsp
-resize_pblock capi_bsp -add CLOCKREGION_X3Y0:CLOCKREGION_X5Y2
+resize_pblock capi_bsp -add CLOCKREGION_X4Y0:CLOCKREGION_X6Y1
 add_cells_to_pblock capi_bsp [get_cells [list c0/U0/p]]
