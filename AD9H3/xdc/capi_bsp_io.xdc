@@ -24,12 +24,12 @@
 
 ## RST ###########################
 set_property IOSTANDARD LVCMOS18 [get_ports pci_pi_nperst0]
-set_property PACKAGE_PIN AJ31 [get_ports pci_pi_nperst0]
+set_property PACKAGE_PIN AW27 [get_ports pci_pi_nperst0]
 set_property PULLUP true [get_ports *pci_pi_nperst0]
 
 ## CLK ###########################
-set_property PACKAGE_PIN AA6 [get_ports pci_pi_refclk_n0]
-set_property PACKAGE_PIN AA7 [get_ports pci_pi_refclk_p0]
+set_property PACKAGE_PIN AF8 [get_ports pci_pi_refclk_n0]
+set_property PACKAGE_PIN AF9 [get_ports pci_pi_refclk_p0]
 #set_property PACKAGE_PIN AJ6 [get_ports pci_pi_refclk_n1]
 #set_property PACKAGE_PIN AJ7 [get_ports pci_pi_refclk_p1]
 
