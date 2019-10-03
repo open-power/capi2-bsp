@@ -23,6 +23,6 @@ set pcie_source $capi_bsp_ip_dir/src/pcie4c_uscale_plus_0/synth/pcie4c_uscale_pl
 
 # Adding PF0_PCIE_CAP_NEXTPTR and setting PF0_SECONDARY_PCIE_CAP_NEXTPTR to 0x400
 exec /bin/bash -c "sed -i \"s/PF0_DEVICE_ID=0x0477/PF0_DEVICE_ID=0x0477,PF0_PCIE_CAP_NEXTPTR=0xb0/\" $pcie_source"
-exec /bin/bash -c "sed -i \"s/PF0_SECONDARY_PCIE_CAP_NEXTPTR=0x480/PF0_SECONDARY_PCIE_CAP_NEXTPTR=0x400/\" $pcie_source"
-exec /bin/bash -c "sed -i \"s/PF0_SECONDARY_PCIE_CAP_NEXTPTR('H480)/PF0_SECONDARY_PCIE_CAP_NEXTPTR('H400)/\" $pcie_source"
+#exec /bin/bash -c "sed -i \"s/PF0_SECONDARY_PCIE_CAP_NEXTPTR=0x480/PF0_SECONDARY_PCIE_CAP_NEXTPTR=0x400/\" $pcie_source"
+#exec /bin/bash -c "sed -i \"s/PF0_SECONDARY_PCIE_CAP_NEXTPTR('H480)/PF0_SECONDARY_PCIE_CAP_NEXTPTR('H400)/\" $pcie_source"
 exec /bin/bash -c "sed -i \"/PF0_DEVICE_ID(/ a\\\n\\    .PF0_PCIE_CAP_NEXTPTR('HB0),\" $pcie_source"

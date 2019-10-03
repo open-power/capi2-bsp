@@ -1334,7 +1334,8 @@ begin
 --==============================================================================================--
     vsec_addr <= cseb_addr_l ;
 
-    vsec_base <= '1' when (vsec_addr(21 to 24)  =  "0100") else '0';  -- 0x4xx Base for Xilinx --
+    vsec_base <= '1' when (vsec_addr(21 to 24)  =  "1110") else '0';  -- 0xE8x Base for Xilinx pcie4c 2019/7/22--
+--  vsec_base <= '1' when (vsec_addr(21 to 24)  =  "0100") else '0';  -- 0x4xx Base for Xilinx --
     vpd_base <= '1' when (vsec_addr(21 to 24)  =  "0000") else '0';
 
     -- 5/1/2017 UltraScale+ - change from 0x40 to 0xB0

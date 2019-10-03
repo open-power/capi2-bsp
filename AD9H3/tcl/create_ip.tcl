@@ -118,8 +118,40 @@ CONFIG.mode_selection {Advanced} \
 CONFIG.coreclk_freq {500} \
 CONFIG.plltype {QPLL1} \
 CONFIG.axisten_freq {250} \
-CONFIG.AXISTEN_IF_EXT_512_RC_4TLP_STRADDLE {true} CONFIG.type1_membase_memlimit_enable {Disabled} CONFIG.type1_prefetchable_membase_memlimit {Disabled} CONFIG.PF0_CLASS_CODE {058000} CONFIG.PF0_DEVICE_ID {903F} CONFIG.PF0_MSIX_CAP_PBA_OFFSET {00000000} CONFIG.PF0_MSIX_CAP_TABLE_OFFSET {00000000} CONFIG.PF0_MSIX_CAP_TABLE_SIZE {000} CONFIG.PF0_SRIOV_CAP_INITIAL_VF {0} CONFIG.SRIOV_FIRST_VF_OFFSET {1} CONFIG.PF0_SRIOV_FIRST_VF_OFFSET {0} CONFIG.SRIOV_CAP_ENABLE {false} CONFIG.pf0_ari_enabled {false} CONFIG.pf0_msi_enabled {true} CONFIG.pf0_msix_enabled {false} CONFIG.PL_DISABLE_LANE_REVERSAL {TRUE} CONFIG.MSI_X_OPTIONS {None} \
-CONFIG.pcie_id_if {true}] [get_ips pcie4c_uscale_plus_0] >> $log_file
+CONFIG.type1_membase_memlimit_enable {Disabled} \
+CONFIG.type1_prefetchable_membase_memlimit {Disabled} \
+CONFIG.PF0_MSIX_CAP_PBA_OFFSET {00000000} \
+CONFIG.PF0_MSIX_CAP_TABLE_OFFSET {00000000} \
+CONFIG.PF0_MSIX_CAP_TABLE_SIZE {000} \
+CONFIG.PF0_SRIOV_CAP_INITIAL_VF {0} \
+CONFIG.SRIOV_FIRST_VF_OFFSET {1} \
+CONFIG.PF0_SRIOV_FIRST_VF_OFFSET {0} \
+CONFIG.SRIOV_CAP_ENABLE {false} \
+CONFIG.pf0_ari_enabled {false} \
+CONFIG.pf0_msi_enabled {true} \
+CONFIG.pf0_msix_enabled {false} \
+CONFIG.PL_DISABLE_LANE_REVERSAL {TRUE} \
+CONFIG.MSI_X_OPTIONS {None} \
+CONFIG.pcie_id_if {true}\
+CONFIG.type1_membase_memlimit_enable {Disabled}             \
+CONFIG.type1_prefetchable_membase_memlimit {Disabled}       \
+CONFIG.PF0_MSIX_CAP_PBA_OFFSET {00000000}                   \
+CONFIG.PF0_MSIX_CAP_TABLE_OFFSET {00000000}                 \
+CONFIG.PF0_MSIX_CAP_TABLE_SIZE {000}                        \
+CONFIG.PF0_SRIOV_CAP_INITIAL_VF {0}                         \
+CONFIG.SRIOV_FIRST_VF_OFFSET {1}                            \
+CONFIG.PF0_SRIOV_FIRST_VF_OFFSET {0}                        \
+CONFIG.SRIOV_CAP_ENABLE {false}                             \
+CONFIG.pf0_ari_enabled {false}                              \
+CONFIG.pf0_msi_enabled {true}                               \
+CONFIG.pf0_msix_enabled {false}                             \
+CONFIG.PL_DISABLE_LANE_REVERSAL {TRUE}                      \
+CONFIG.MSI_X_OPTIONS {None}                                 \
+] [get_ips pcie4c_uscale_plus_0] >> $log_file
+
+#CONFIG.AXISTEN_IF_EXT_512_RC_4TLP_STRADDLE {true} \
+#CONFIG.PF0_CLASS_CODE {058000} CONFIG.PF0_DEVICE_ID {903F}\
+#
 
 #Create Clock IP
 # Possible values for different action frequencies
