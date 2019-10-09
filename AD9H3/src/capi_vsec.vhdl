@@ -1339,51 +1339,51 @@ begin
     vpd_base <= '1' when (vsec_addr(21 to 24)  =  "0000") else '0';
 
     -- 5/1/2017 UltraScale+ - change from 0x40 to 0xB0
-    vpd_0x40 <= '1' when (vpd_base = '1'   and  (vsec_addr(25 to 32)  =  "10110000")) else '0';  -- 0x0B0 -- VPD Capability Structure--
-    vpd_0x44 <= '1' when (vpd_base = '1'   and  (vsec_addr(25 to 32)  =  "10110100")) else '0';  -- 0x0B4 -- VPD Data Port--
+    vpd_0x40  <= '1' when (vpd_base  = '1'   and (vsec_addr(25 to 32)  =  "10110000")) else '0';  -- 0x0B0 -- VPD Capability Structure--
+    vpd_0x44  <= '1' when (vpd_base  = '1'   and (vsec_addr(25 to 32)  =  "10110100")) else '0';  -- 0x0B4 -- VPD Data Port--
 
-    vsec_0x00 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00000000")) else '0' ; -- 0x00 -- Next Capability, Version, ID--
-    vsec_0x04 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00000100")) else '0' ; -- 0x04 -- VSEC Length, Rev, ID--
-    vsec_0x08 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00001000")) else '0' ; -- 0x08 -- Mode Control, Num AFUs--
-    vsec_0x0C <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00001100")) else '0' ; -- 0x0C -- CAIA Version, PSL Version--
+    vsec_0x00 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10000000")) else '0' ; -- 0x00 -- Next Capability, Version, ID--
+    vsec_0x04 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10000100")) else '0' ; -- 0x04 -- VSEC Length, Rev, ID--
+    vsec_0x08 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10001000")) else '0' ; -- 0x08 -- Mode Control, Num AFUs--
+    vsec_0x0C <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10001100")) else '0' ; -- 0x0C -- CAIA Version, PSL Version--
 
-    vsec_0x10 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00010000")) else '0' ; -- 0x10 -- Base Image Revision --
+    vsec_0x10 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10010000")) else '0' ; -- 0x10 -- Base Image Revision --
   --bool vsec_0x14 = vsec_base & (vsec_addr.[25..32] == 0b00010100); /* 0x14 -- Reserved --
   --bool vsec_0x18 = vsec_base & (vsec_addr.[25..32] == 0b00011000); /* 0x18 -- Reserved --
   --bool vsec_0x1C = vsec_base & (vsec_addr.[25..32] == 0b00011100); /* 0x1C -- Reserved --
 
-    vsec_0x14 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32) = "00010100")) else '0'; -- /* 0x14 -- Reserved --
-    vsec_0x18 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00011000")) else '0'; -- /* 0x18 -- Reserved --
-    vsec_0x1C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00011100")) else '0'; -- /* 0x1C -- Reserved --
+    vsec_0x14 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10010100")) else '0'; -- /* 0x14 -- Reserved --
+    vsec_0x18 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10011000")) else '0'; -- /* 0x18 -- Reserved --
+    vsec_0x1C <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10011100")) else '0'; -- /* 0x1C -- Reserved --
 
-    vsec_0x20 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00100000")) else '0' ; -- 0x20 -- AFU Descriptor Offset --
-    vsec_0x24 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00100100")) else '0' ; -- 0x24 -- AFU Descriptor Size --
-    vsec_0x28 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00101000")) else '0' ; -- 0x28 -- Problem State Offset --
-    vsec_0x2C <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "00101100")) else '0' ; -- 0x2C -- Problem State Size --
+    vsec_0x20 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10100000")) else '0'; -- 0x20 -- AFU Descriptor Offset --
+    vsec_0x24 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10100100")) else '0'; -- 0x24 -- AFU Descriptor Size --
+    vsec_0x28 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10101000")) else '0'; -- 0x28 -- Problem State Offset --
+    vsec_0x2C <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10101100")) else '0'; -- 0x2C -- Problem State Size --
 
-    vsec_0x30 <= '1' when (vsec_base = '1'  and  (vsec_addr(25 to 32)  =  "00110000")) else '0'; -- /* 0x30 -- Reserved --
-    vsec_0x34 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00110100")) else '0'; -- /* 0x34 -- Reserved --
-    vsec_0x38 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00111000")) else '0'; -- /* 0x38 -- Reserved --
-    vsec_0x3C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "00111100")) else '0'; -- /* 0x3C -- Reserved --
+    vsec_0x30 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10110000")) else '0'; -- /* 0x30 -- Reserved --
+    vsec_0x34 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10110100")) else '0'; -- /* 0x34 -- Reserved --
+    vsec_0x38 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10111000")) else '0'; -- /* 0x38 -- Reserved --
+    vsec_0x3C <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "10111100")) else '0'; -- /* 0x3C -- Reserved --
 
-    vsec_0x40 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01000000")) else '0' ; -- 0x40 -- PSL Programming Port--
-    vsec_0x44 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01000100")) else '0' ; -- 0x44 -- PSL Programming Control--
-    vsec_0x48 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01001000")) else '0'; -- /* 0x48 -- Reserved --
-    vsec_0x4C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01001100")) else '0'; -- /* 0x4C -- Reserved --
+    vsec_0x40 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11000000")) else '0' ; -- 0x40 -- PSL Programming Port--
+    vsec_0x44 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11000100")) else '0' ; -- 0x44 -- PSL Programming Control--
+    vsec_0x48 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11001000")) else '0'; -- /* 0x48 -- Reserved --
+    vsec_0x4C <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11001100")) else '0'; -- /* 0x4C -- Reserved --
 
-    vsec_0x50 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01010000")) else '0' ; -- 0x50 -- Flash Address Register--
-    vsec_0x54 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01010100")) else '0' ; -- 0x54 -- Flash Size Register--
-    vsec_0x58 <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01011000")) else '0' ; -- 0x58 -- Flash Status / Control --
-    vsec_0x5C <= '1' when (vsec_base = '1'   and  (vsec_addr(25 to 32)  =  "01011100")) else '0' ; -- 0x5C -- Flash Data Port --
+    vsec_0x50 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11010000")) else '0' ; -- 0x50 -- Flash Address Register--
+    vsec_0x54 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11010100")) else '0' ; -- 0x54 -- Flash Size Register--
+    vsec_0x58 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11011000")) else '0' ; -- 0x58 -- Flash Status / Control --
+    vsec_0x5C <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11011100")) else '0' ; -- 0x5C -- Flash Data Port --
 
-    vsec_0x60 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01100000")) else '0'; -- /* 0x60 -- Reserved --
-    vsec_0x64 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01100100")) else '0'; -- /* 0x64 -- Reserved --
-    vsec_0x68 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01101000")) else '0'; -- /* 0x68 -- Reserved --
-    vsec_0x6C <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01101100")) else '0'; -- /* 0x6C -- Reserved --
+    vsec_0x60 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11100000")) else '0'; -- /* 0x60 -- Reserved --
+    vsec_0x64 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11100100")) else '0'; -- /* 0x64 -- Reserved --
+    vsec_0x68 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11101000")) else '0'; -- /* 0x68 -- Reserved --
+    vsec_0x6C <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11101100")) else '0'; -- /* 0x6C -- Reserved --
 
-    vsec_0x70 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01110000")) else '0'; -- /* 0x70 -- Reserved --
-    vsec_0x74 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01110100")) else '0'; -- /* 0x74 -- Reserved --
-    vsec_0x78 <= '1' when (vsec_base = '1'  and (vsec_addr(25 to 32)  =  "01111000")) else '0'; -- /* 0x78 -- Reserved --
+    vsec_0x70 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11110000")) else '0'; -- /* 0x70 -- Reserved --
+    vsec_0x74 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11110100")) else '0'; -- /* 0x74 -- Reserved --
+    vsec_0x78 <= '1' when (vsec_base = '1'   and (vsec_addr(25 to 32)  =  "11111000")) else '0'; -- /* 0x78 -- Reserved --
 --     vsec_0x7C <= vsec_base and (vsec_addr(25 to 32)  =  "01111100"); -- /* 0x7C -- Reserved --
 
   --bool vsec_0x70 = vsec_base & (vsec_addr.[25..32] == 0b01110000); /* 0x70 -- Reserved --
