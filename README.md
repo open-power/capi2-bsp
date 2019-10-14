@@ -15,6 +15,7 @@ This repository contains the necessary resources for creating a Xilinx Vivado IP
 
 Currently, support for the following cards is implemented:
 * [AD9V3](./AD9V3) (AlphaData 9V3)
+* [AD9H3](./AD9H3) (AlphaData 9H3 - HBM not enabled yet)
 * [N250SP](./N250SP) (Nallatech 250S+)
 * [RCXVUP](./RCXVUP) (ReflexCES XpressVUP-LP9PT)
 * [FX609](./FX609) (Flyslice FX609QL)
