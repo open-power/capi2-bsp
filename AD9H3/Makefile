@@ -18,7 +18,8 @@ SHELL=/bin/bash
 
 export FPGA_CARD    = AD9H3
 export FPGA_DISPLAY = "Alphadata 9H3"
-export FPGA_PART    = xcvu33p-fsvh2104-1-e
+# when using snap fpga chip needs to be also defined in SNAP_ROOT/scripts/Kconfig
+export FPGA_PART    = xcvu33p-fsvh2104-2-e
 export FPGA_SRC     = $(ROOT_DIR)/ultrascale_plus/src
 
 include ../capi_card.mk

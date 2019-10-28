@@ -26,7 +26,7 @@
 create_pblock capi_bsp
 resize_pblock capi_bsp -add CLOCKREGION_X3Y0:CLOCKREGION_X6Y1
 #add_cells_to_pblock c0_U0_capi_bsp [get_cells [list c0/U0/p]] -clear_locs
-#add_cells_to_pblock c0/U0/capi_bsp [get_cells [list c0/U0/p/inst]]  -clear_locs 
+add_cells_to_pblock capi_bsp [get_cells [list c0/U0/p/inst]]  -clear_locs 
 
 #unconstraint the user_reset_reg path
 set_false_path -from [get_pins -hierarchical -filter {NAME =~ c0/U0/pcihip0/inst*/user_reset_reg*/C}]
