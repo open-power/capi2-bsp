@@ -28,6 +28,10 @@ if {$fpga_card eq "U200"} {
   set_property board_part xilinx.com:au200:part0:1.0 [current_project]
 }
 
+if {$fpga_card eq "U50"} {
+  set_property board_part xilinx.com:au50:part0:1.0 [current_project]
+}
+
 # Project IP Settings
 # General
 set_property target_language VHDL [current_project]

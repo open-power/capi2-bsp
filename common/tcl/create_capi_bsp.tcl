@@ -47,7 +47,10 @@ if {$fpga_card eq "U200"} {
   set_property board_part xilinx.com:au200:part0:1.0 [current_project]
 #  set_property coreContainer.enable 1 [current_project]
 }
-
+if {$fpga_card eq "U50"} {
+  set_property board_part xilinx.com:au50:part0:1.0 [current_project]
+#  set_property coreContainer.enable 1 [current_project]
+}
 puts "card_src is :.$card_src"
 #Add source files
 puts "Adding design sources to capi_bsp project"
@@ -81,7 +84,7 @@ set_property sim.ip.auto_export_scripts false [current_project] >> $log_file
 
 set_property version $capi_bsp_version [ipx::current_core] >> $log_file
 set_property vendor_display_name IBM [ipx::current_core] >> $log_file
-set_property supported_families {zynquplus Production virtexuplus Production kintexuplus Production virtexuplushbm Production} [ipx::current_core] >> $log_file
+set_property supported_families {zynquplus Production virtexuplus Production kintexuplus Production virtexuplusHBM Production} [ipx::current_core] >> $log_file
 set_property core_revision 1 [ipx::current_core] >> $log_file
 ipx::create_xgui_files [ipx::current_core] >> $log_file
 ipx::update_checksums [ipx::current_core] >> $log_file

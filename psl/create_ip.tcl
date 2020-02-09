@@ -72,6 +72,9 @@ if {$fpga_card eq "U200"} {
   set_property board_part xilinx.com:au200:part0:1.0 [current_project]
 }
 
+if {$fpga_card eq "U50"} {
+  set_property board_part xilinx.com:au50:part0:1.0 [current_project]
+}
 
 if { ! [file exists $ip_repo_dir] } {
   puts "Creating PSL9 IP core from encrypted sources"
@@ -105,7 +108,7 @@ if { ! [file exists $ip_repo_dir] } {
   set_property version $ver_major.$ver_minor [ipx::current_core] >> $log_file
   set_property display_name PSL9_WRAP_v${ver_major}_$ver_minor [ipx::current_core] >> $log_file
   set_property description PSL9_WRAP_v${ver_major}_$ver_minor [ipx::current_core] >> $log_file
-  set_property supported_families {virtexu Production zynquplus Production virtexuplus Production kintexuplus Production kintexu Production virtexuplushbm Production} [ipx::current_core] >> $log_file
+  set_property supported_families {virtexu Production zynquplus Production virtexuplus Production kintexuplus Production kintexu Production virtexuplusHBM Production} [ipx::current_core] >> $log_file
   set_property core_revision 1 [ipx::current_core] >> $log_file
   update_compile_order -fileset sources_1 >> $log_file
   ipx::create_xgui_files [ipx::current_core] >> $log_file
