@@ -365,6 +365,7 @@ Signal msm_s0x02: std_logic;  -- bool
 Signal msm_s0x03: std_logic;  -- bool
 Signal msm_s0x04: std_logic;  -- bool
 Signal msm_s0x05: std_logic;  -- bool
+Signal msm_s0x06: std_logic;  -- bool
 Signal msm_s0x0F: std_logic;
 Signal msm_s0x30: std_logic;  -- bool
 Signal msm_s0x31: std_logic;  -- bool
@@ -373,8 +374,6 @@ Signal msm_s0x3E: std_logic;  -- bool
 Signal qspi_rst_en: std_logic_vector(0 to 7);
 Signal qspi_rst_mem: std_logic_vector(0 to 7);
 Signal qspi_enter_4B_addr: std_logic_vector(0 to 7);--Command Only
-Signal qspi_write_nonvolatile_cfg: std_logic_vector(0 to 7);
-Signal qspi_nonvolatile_cfg_data: std_logic_vector(0 to 15);
 Signal qspi_enter_quad_mode: std_logic_vector(0 to 7);--Command Only
 Signal qspi_we: std_logic_vector(0 to 7);
 Signal qspi_4B_read: std_logic_vector(0 to 7);--Com-Adr-Data--
@@ -649,11 +648,12 @@ frdack(0) <= f_read_data_ack;
     ----            Nxt State 0F
     ---- State 03  : Queue RESET MEMORY Command                                   ----
     ----            Nxt State 0F
-    ---- State 04  : Queue ENTER 4B ADDRESS MODE Command                                        ----
+    ---- State 04  : Queue Extra WRITE ENABLE Command            ----
     ----            Nxt State 0F
     ---- State 05  : Queue ENTER QUAD MODE Command                                           ----
     ----            Nxt State 0F
-    ---- State 06  : Placeholder state for more commands            ----
+    ---- State 06  : Queue ENTER 4B ADDRESS MODE Command                                        ----
+    ----            Nxt State 0F
     ---- State 07  : Placeholder state for more commands            ----
     ---- State 08  : Placeholder state for more commands            ----
     ---- State 09  : Placeholder state for more commands            ----
@@ -723,8 +723,8 @@ frdack(0) <= f_read_data_ack;
 
     ---- Next State Controls ----
     msm_rst <= not(pgm_rd_req) ;    -- Reset State Machine when program is complete --
-    msm_to_s0x0F <= (msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x05  or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31) and not(msm_rst);
-    msm_p1 <= (msm_s0x00 or msm_s0x01 or msm_s0x10 or (msm_s0x16 and not(more2erase)) or (msm_s0x15 and not(flash_busy or flash_timeout or flash_error))  or (msm_s0x1C and not(flash_busy or flash_timeout or flash_error)) or msm_s0x17 or msm_s0x30) and not(msm_rst);
+    msm_to_s0x0F <= (msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x06  or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31) and not(msm_rst);
+    msm_p1 <= (msm_s0x00 or msm_s0x01 or msm_s0x05 or msm_s0x10 or (msm_s0x16 and not(more2erase)) or (msm_s0x15 and not(flash_busy or flash_timeout or flash_error))  or (msm_s0x1C and not(flash_busy or flash_timeout or flash_error)) or msm_s0x17 or msm_s0x30) and not(msm_rst);
     msm_return <= (msm_s0x0F) and not(msm_rst);
     msm_to_s0x11 <= msm_s0x16 and more2erase and not(msm_rst);
     msm_to_s0x18 <= msm_s0x1D and more2pgm and not(msm_rst);
@@ -761,10 +761,10 @@ frdack(0) <= f_read_data_ack;
          clk   => psl_clk
     );
 
-    msm_return_p1 <= msm_s0x02 or msm_s0x03 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
-    msm_return_pgm <= msm_s0x04 and f_program_req and not(f_read_req);
-    msm_return_read <= msm_s0x04 and f_read_req;
-    msm_returnstate_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x05 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
+    msm_return_p1 <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
+    msm_return_pgm <= msm_s0x06 and f_program_req and not(f_read_req);
+    msm_return_read <= msm_s0x06 and f_read_req;
+    msm_returnstate_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x06 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
     msm_returnstate_d <= gate_and(msm_return_p1,main_sm_p1) or
                        gate_and(msm_return_pgm,"010000") or
                        gate_and(msm_return_read,"110000");--Move on from state 4 and skip quad mode for now
@@ -782,6 +782,7 @@ frdack(0) <= f_read_data_ack;
     msm_s0x03 <= '1' when (main_sm  =  "000011") else '0' ;     -- 0x03  --
     msm_s0x04 <= '1' when (main_sm  =  "000100") else '0' ;     -- 0x04  --
     msm_s0x05 <= '1' when (main_sm  =  "000101") else '0' ;     -- 0x05  --
+    msm_s0x06 <= '1' when (main_sm  =  "000110") else '0' ;     -- 0x06  --
     msm_s0x0F <= '1' when (main_sm  =  "001111") else '0' ;     -- 0x0F  --
     msm_s0x10 <= '1' when (main_sm  =  "010000") else '0' ;     -- 0x10  --
     msm_s0x11 <= '1' when (main_sm  =  "010001") else '0' ;     -- 0x11  --
@@ -859,8 +860,6 @@ frdack(0) <= f_read_data_ack;
 qspi_rst_en <= X"66";--Command only
 qspi_rst_mem <= X"99";--Command only
 qspi_enter_4B_addr <= X"B7";--Command Only
-qspi_write_nonvolatile_cfg <= X"B1"; --Command then Data--
-qspi_nonvolatile_cfg_data <= X"FFFE";
 qspi_enter_quad_mode <= X"35";--Command Only
 qspi_we <= X"06";--Command only
 qspi_4B_read <= X"13";--Com-Adr-Data--
@@ -909,7 +908,7 @@ qspi_sector_erase <= X"D8";--Command then Address
 
      command_sent <= '1';
 
-     address_sent_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x05 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
+     address_sent_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x06 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
      address_sent_d <= '1' when ((msm_s0x13 = '1') or (msm_s0x1A = '1') or (msm_s0x31 = '1')) else '0';
      endff_address_sent_q: capi_en_rise_dff PORT MAP (
          dout =>address_sent,
@@ -918,8 +917,8 @@ qspi_sector_erase <= X"D8";--Command then Address
          clk   => psl_clk
     );
 
-     data_sent_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x05 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
-     data_sent_d <= '1' when ((msm_s0x14 = '1') or (msm_s0x1A = '1') or (msm_s0x1B = '1') or (msm_s0x31 = '1') or (msm_s0x04 = '1')) else '0'; --rblack add sending data in this state for nonvolatile config reg
+     data_sent_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x06 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
+     data_sent_d <= '1' when ((msm_s0x14 = '1') or (msm_s0x1A = '1') or (msm_s0x1B = '1') or (msm_s0x31 = '1')) else '0';
      endff_data_sent_q: capi_en_rise_dff PORT MAP (
          dout =>data_sent,
          en => data_sent_update,
@@ -948,9 +947,9 @@ qspi_sector_erase <= X"D8";--Command then Address
     command_update <= msm_to_s0x0F;
     command_d <= gate_and(msm_s0x02, qspi_rst_en) or
                  gate_and(msm_s0x03, qspi_rst_mem) or
-                 --gate_and(msm_s0x04, qspi_enter_4B_addr) or --rblack use alternate method below to get to 4B address mode
-                 gate_and(msm_s0x04, qspi_write_nonvolatile_cfg) or
+                 gate_and(msm_s0x06, qspi_enter_4B_addr) or
                  gate_and(msm_s0x05, qspi_enter_quad_mode) or
+                 gate_and(msm_s0x04, qspi_we) or
                  gate_and(msm_s0x11 or msm_s0x18, qspi_fstatus_clear) or
                  gate_and(msm_s0x12 or msm_s0x19, qspi_we) or
                  gate_and(msm_s0x14 or msm_s0x1B, qspi_fstatus_read) or
@@ -1179,8 +1178,6 @@ byte_d <= command when (dsm_s0x01 = '1') else
           address(8 to 15) when ((dsm_s0x04 = '1') and (address_bytepos = "01")) else
           address(16 to 23) when ((dsm_s0x04 = '1') and (address_bytepos = "10")) else
           address(24 to 31) when ((dsm_s0x04 = '1') and (address_bytepos = "11")) else
-          qspi_nonvolatile_cfg_data(8 to 15) when ((dsm_s0x06 = '1') and (command = qspi_write_nonvolatile_cfg) and (total_dbytes = "00000001")) else
-          qspi_nonvolatile_cfg_data(0 to 7) when ((dsm_s0x06 = '1') and (command = qspi_write_nonvolatile_cfg)  and (total_dbytes = "00000000")) else
           data;
 byte_update <= dsm_s0x01 or dsm_s0x04 or dsm_s0x06;
 
@@ -1206,10 +1203,9 @@ address_done <= '1' when (dsm_s0x05 = '1' and (address_bytepos = "11")) else
                 '0';
 
     total_dbytes_d <= "11111111" when ((msm_s0x1A = '1') or (msm_s0x31 = '1')) else
-                      "00000001" when (msm_s0x04 = '1') else --rblack added to send 2 bytes for 16 bit nonvolatile cfg reg
                       std_logic_vector(unsigned(total_dbytes) - 1) when (dsm_s0x07 = '1') else
                      "00000000";
-    total_dbytes_update <= msm_s0x1A or msm_s0x31 or msm_s0x14 or msm_s0x1B or msm_s0x04 or (dsm_s0x07 and drain_sm_adv); --rblack add msm_0x04 for nonvolatile cfg
+    total_dbytes_update <= msm_s0x1A or msm_s0x31 or msm_s0x14 or msm_s0x1B or (dsm_s0x07 and drain_sm_adv);
     endff_total_dbytes_q: capi_en_rise_vdff GENERIC MAP ( width => 8 ) PORT MAP (
          dout => total_dbytes,
          en => total_dbytes_update,
