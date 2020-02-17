@@ -15,8 +15,9 @@
 -- *!
 -- *!***************************************************************************
 
-library ieee, UNISIM;
-use UNISIM.vcomponents.all;
+library ieee;
+--, UNISIM;
+--use UNISIM.vcomponents.all;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.std_logic_misc.all;
@@ -99,6 +100,8 @@ begin
   end if;
 end gate_and;
 
+attribute mark_debug : string;
+
 Signal ONE_v17bit: std_logic_vector(0 to 16);  -- v17bit
 Signal ONE_v9bit: std_logic_vector(0 to 8);  -- v9bit
 Signal Z_v10bit: std_logic_vector(0 to 9);  -- v10bit
@@ -111,6 +114,7 @@ Signal cnt_en: std_logic;  -- bool
 Signal cycdly_d: std_logic_vector(0 to 15);  -- v6bit
 Signal cycdly_m1: std_logic_vector(0 to 15);  -- v6bit
 Signal cycdly_q: std_logic_vector(0 to 15);  -- v6bit
+attribute mark_debug of cycdly_q : signal is "true";
 Signal datain_hien: std_logic;  -- bool
 Signal datain_loen: std_logic;  -- bool
 Signal dly_done: std_logic;  -- bool
@@ -123,6 +127,7 @@ Signal erase_data_out: std_logic_vector(0 to 31);  -- v32bit
 Signal erase_dly: std_logic_vector(0 to 5);  -- v6bit
 Signal erase_oe: std_logic;  -- bool
 Signal erase_sm: std_logic_vector(0 to 4);  -- v5bit
+attribute mark_debug of erase_sm : signal is "true";
 Signal erase_sm_nxt: std_logic_vector(0 to 4);  -- v5bit
 Signal erase_sm_p1: std_logic_vector(0 to 4);  -- v5bit
 Signal erase_sm_start_dly: std_logic;  -- bool
@@ -131,9 +136,11 @@ Signal esm_adv: std_logic;  -- bool
 Signal esm_blkadr_d: std_logic_vector(0 to 9);  -- v10bit
 Signal esm_blkadr_p1: std_logic_vector(0 to 9);  -- v10bit
 Signal esm_blkadr_q: std_logic_vector(0 to 9);  -- v10bit
+attribute mark_debug of esm_blkadr_q : signal is "true";
 Signal esm_blkcnt_d: std_logic_vector(0 to 9);  -- v10bit
 Signal esm_blkcnt_m1: std_logic_vector(0 to 9);  -- v10bit
 Signal esm_blkcnt_q: std_logic_vector(0 to 9);  -- v10bit
+attribute mark_debug of esm_blkcnt_q : signal is "true";
 Signal esm_datain_en: std_logic;  -- bool
 Signal esm_done: std_logic;  -- bool
 Signal esm_no_dly_sel: std_logic;  -- bool
@@ -167,7 +174,9 @@ Signal fdataout_be_d: std_logic_vector(0 to 15);  -- v16bit
 Signal fdatoe: std_logic;  -- bool
 Signal fintf_oe: std_logic;  -- bool
 Signal flash_busy: std_logic;  -- bool
+attribute mark_debug of flash_busy : signal is "true";
 Signal flash_error: std_logic;  -- bool
+attribute mark_debug of flash_error : signal is "true";
 Signal foen: std_logic;  -- bool
 Signal frstn: std_logic;  -- bool
 Signal fwen: std_logic;  -- bool
@@ -190,6 +199,7 @@ Signal new_dly: std_logic_vector(0 to 15);  -- v6bit
 Signal num_buffers: std_logic_vector(0 to 16);  -- v17bit
 Signal pflreqn: std_logic;  -- bool
 Signal pgm_addr: std_logic_vector(0 to 25);  -- v26bit
+attribute mark_debug of pgm_addr : signal is "true";
 Signal pgm_adr_sel: std_logic;  -- bool
 Signal pgm_ce: std_logic;  -- bool
 Signal pgm_complete: std_logic;  -- bool
@@ -200,6 +210,7 @@ Signal pgm_oe: std_logic;  -- bool
 Signal pgm_rd_req: std_logic;  -- bool
 Signal pgm_remainder: std_logic_vector(0 to 9);  -- v10bit
 Signal pgm_sm: std_logic_vector(0 to 4);  -- v5bit
+attribute mark_debug of pgm_sm : signal is "true";
 Signal pgm_sm_nxt: std_logic_vector(0 to 4);  -- v5bit
 Signal pgm_sm_p1: std_logic_vector(0 to 4);  -- v5bit
 Signal pgm_sm_start_dly: std_logic;  -- bool
@@ -209,12 +220,15 @@ Signal psm_adv: std_logic;  -- bool
 Signal psm_bufadr_d: std_logic_vector(0 to 16);  -- v17bit
 Signal psm_bufadr_p1: std_logic_vector(0 to 16);  -- v17bit
 Signal psm_bufadr_q: std_logic_vector(0 to 16);  -- v17bit
+attribute mark_debug of psm_bufadr_q : signal is "true";
 Signal psm_bufcnt_d: std_logic_vector(0 to 16);  -- v17bit
 Signal psm_bufcnt_m1: std_logic_vector(0 to 16);  -- v17bit
 Signal psm_bufcnt_q: std_logic_vector(0 to 16);  -- v17bit
+attribute mark_debug of psm_bufcnt_q : signal is "true";
 Signal psm_bufoff_d: std_logic_vector(0 to 8);  -- v9bit
 Signal psm_bufoff_p1: std_logic_vector(0 to 8);  -- v9bit
 Signal psm_bufoff_q: std_logic_vector(0 to 8);  -- v9bit
+attribute mark_debug of psm_bufoff_q : signal is "true";
 Signal psm_datain_en: std_logic;  -- bool
 Signal psm_done: std_logic;  -- bool
 Signal psm_more_bufs: std_logic;  -- bool
@@ -246,6 +260,7 @@ Signal psm_wrdat_q: std_logic;  -- bool
 Signal psm_wrdcnt_d: std_logic_vector(0 to 8);  -- v9bit
 Signal psm_wrdcnt_m1: std_logic_vector(0 to 8);  -- v9bit
 Signal psm_wrdcnt_q: std_logic_vector(0 to 8);  -- v9bit
+attribute mark_debug of psm_wrdcnt_q : signal is "true";
 Signal rd_start_addr: std_logic_vector(0 to 25);  -- v26bit
 Signal read_addr: std_logic_vector(0 to 25);  -- v26bit
 Signal read_adr_sel: std_logic;  -- bool
@@ -258,6 +273,7 @@ Signal read_dly: std_logic_vector(0 to 5);  -- v6bit
 Signal read_flash: std_logic;  -- bool
 Signal read_oe: std_logic;  -- bool
 Signal read_sm: std_logic_vector(0 to 4);  -- v5bit
+attribute mark_debug of read_sm : signal is "true";
 Signal read_sm_nxt: std_logic_vector(0 to 4);  -- v5bit
 Signal read_sm_p1: std_logic_vector(0 to 4);  -- v5bit
 Signal read_sm_start_dly: std_logic;  -- bool
@@ -281,9 +297,11 @@ Signal rsm_update_wrdcnt: std_logic;  -- bool
 Signal rsm_wrdadr_d: std_logic_vector(0 to 25);  -- v26bit
 Signal rsm_wrdadr_p1: std_logic_vector(0 to 25);  -- v26bit
 Signal rsm_wrdadr_q: std_logic_vector(0 to 25);  -- v26bit
+attribute mark_debug of rsm_wrdadr_q : signal is "true";
 Signal rsm_wrdcnt_d: std_logic_vector(0 to 9);  -- v10bit
 Signal rsm_wrdcnt_m1: std_logic_vector(0 to 9);  -- v10bit
 Signal rsm_wrdcnt_q: std_logic_vector(0 to 9);  -- v10bit
+attribute mark_debug of rsm_wrdcnt_q : signal is "true";
 Signal rst_pulse: std_logic_vector(0 to 5);  -- v6bit
 Signal rst_recov: std_logic_vector(0 to 5);  -- v6bit
 Signal start_buf: std_logic_vector(0 to 16);  -- v17bit
@@ -347,6 +365,7 @@ Signal msm_s0x02: std_logic;  -- bool
 Signal msm_s0x03: std_logic;  -- bool
 Signal msm_s0x04: std_logic;  -- bool
 Signal msm_s0x05: std_logic;  -- bool
+Signal msm_s0x06: std_logic;  -- bool
 Signal msm_s0x0F: std_logic;
 Signal msm_s0x30: std_logic;  -- bool
 Signal msm_s0x31: std_logic;  -- bool
@@ -407,29 +426,42 @@ Signal more2read: std_logic;
 Signal spi_clk_tristate_n: std_logic;
 Signal spi_clk_d: std_logic := '1';
 Signal spi_clk_q: std_logic := '1';
+attribute mark_debug of spi_clk_q : signal is "true";
 Signal spi_clk_qq: std_logic := '1';
 Signal spi_clk_int: std_logic := '1';
 Signal spi_cs_d: std_logic;
 Signal fifo_reset: std_logic;
 Signal pgm_fifo_push: std_logic;
+attribute mark_debug of pgm_fifo_push : signal is "true";
 Signal pgm_data_mux_d: std_logic_vector(0 to 1);
 Signal pgm_data_mux_en: std_logic;
 Signal pgm_data_mux_q: std_logic_vector(0 to 1);
 Signal pgm_fifo_wrdata: std_logic_vector(0 to 7);
+attribute mark_debug of pgm_fifo_wrdata : signal is "true";
 Signal pgm_fifo_pull: std_logic;
+attribute mark_debug of pgm_fifo_pull : signal is "true";
 Signal pgm_fifo_empty: std_logic;
+attribute mark_debug of pgm_fifo_empty : signal is "true";
 Signal pgm_fifo_full: std_logic;
+attribute mark_debug of pgm_fifo_full : signal is "true";
 Signal pgm_fifo_rddata: std_logic_vector(0 to 7);
+attribute mark_debug of pgm_fifo_rddata : signal is "true";
 Signal pgm_fifo_cnt_d: std_logic_vector(0 to 9);
 Signal pgm_fifo_cnt: std_logic_vector(0 to 9);
 Signal txfifo_has_256B: std_logic;
 Signal rd_fifo_push: std_logic;
+attribute mark_debug of rd_fifo_push : signal is "true";
 Signal rd_fifo_wrdata: std_logic_vector(0 to 7);
+attribute mark_debug of rd_fifo_wrdata : signal is "true";
 Signal rd_fifo_pull: std_logic;
+attribute mark_debug of rd_fifo_pull : signal is "true";
 Signal rd_fifo_pull_q: std_logic;
 Signal rd_fifo_empty: std_logic;
+attribute mark_debug of rd_fifo_empty : signal is "true";
 Signal rd_fifo_full: std_logic;
+attribute mark_debug of rd_fifo_full : signal is "true";
 Signal rd_fifo_rddata: std_logic_vector(0 to 7);
+attribute mark_debug of rd_fifo_rddata : signal is "true";
 Signal rd_fifo_cnt_d: std_logic_vector(0 to 9);
 Signal rd_fifo_cnt: std_logic_vector(0 to 9);
 Signal rxfifo_rec_256B: std_logic;
@@ -449,6 +481,7 @@ Signal drain_sm_m1: std_logic_vector(0 to 3);
 Signal drain_sm_nxt: std_logic_vector(0 to 3);
 Signal drain_sm_adv: std_logic;
 Signal drain_sm: std_logic_vector(0 to 3);
+attribute mark_debug of drain_sm : signal is "true";
 Signal dsm_s0x00: std_logic;
 Signal dsm_s0x01: std_logic;
 Signal dsm_s0x02: std_logic;
@@ -467,6 +500,7 @@ Signal bit_pointer_d: std_logic_vector(0 to 2);
 Signal bit_pointer: std_logic_vector(0 to 2);
 Signal spi_mosi_d: std_logic;
 Signal spi_mosi_q: std_logic;
+attribute mark_debug of spi_mosi_q : signal is "true";
 Signal run_spi_clk: std_logic;
 Signal address: std_logic_vector(0 to 31);
 Signal address_d: std_logic_vector(0 to 31);
@@ -474,6 +508,7 @@ Signal address_done: std_logic;
 Signal byte_xfer_complete: std_logic;
 Signal byte_rec_complete: std_logic;
 Signal spi_cs_q: std_logic;
+attribute mark_debug of spi_cs_q : signal is "true";
 Signal data: std_logic_vector(0 to 7);
 Signal data_done: std_logic;
 Signal xfer_count: std_logic_vector(0 to 3);
@@ -485,8 +520,10 @@ Signal total_dbytes: std_logic_vector(0 to 7);
 Signal total_dbytes_update: std_logic;
 Signal spi_miso_q: std_logic;
 Signal in_byte_update: std_logic_vector(0 to 7);
+attribute mark_debug of in_byte_update : signal is "true";
 Signal in_byte_d: std_logic_vector(0 to 7);
 Signal in_byte: std_logic_vector(0 to 7);
+attribute mark_debug of in_byte : signal is "true";
 Signal flag_status: std_logic_vector(0 to 7);
 Signal flag_status_d: std_logic_vector(0 to 7);
 Signal flag_status_update: std_logic;
@@ -611,11 +648,12 @@ frdack(0) <= f_read_data_ack;
     ----            Nxt State 0F
     ---- State 03  : Queue RESET MEMORY Command                                   ----
     ----            Nxt State 0F
-    ---- State 04  : Queue ENTER 4B ADDRESS MODE Command                                        ----
+    ---- State 04  : Queue Extra WRITE ENABLE Command            ----
     ----            Nxt State 0F
     ---- State 05  : Queue ENTER QUAD MODE Command                                           ----
     ----            Nxt State 0F
-    ---- State 06  : Placeholder state for more commands            ----
+    ---- State 06  : Queue ENTER 4B ADDRESS MODE Command                                        ----
+    ----            Nxt State 0F
     ---- State 07  : Placeholder state for more commands            ----
     ---- State 08  : Placeholder state for more commands            ----
     ---- State 09  : Placeholder state for more commands            ----
@@ -685,8 +723,8 @@ frdack(0) <= f_read_data_ack;
 
     ---- Next State Controls ----
     msm_rst <= not(pgm_rd_req) ;    -- Reset State Machine when program is complete --
-    msm_to_s0x0F <= (msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x05  or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31) and not(msm_rst);
-    msm_p1 <= (msm_s0x00 or msm_s0x01 or msm_s0x10 or (msm_s0x16 and not(more2erase)) or (msm_s0x15 and not(flash_busy or flash_timeout or flash_error))  or (msm_s0x1C and not(flash_busy or flash_timeout or flash_error)) or msm_s0x17 or msm_s0x30) and not(msm_rst);
+    msm_to_s0x0F <= (msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x06  or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31) and not(msm_rst);
+    msm_p1 <= (msm_s0x00 or msm_s0x01 or msm_s0x05 or msm_s0x10 or (msm_s0x16 and not(more2erase)) or (msm_s0x15 and not(flash_busy or flash_timeout or flash_error))  or (msm_s0x1C and not(flash_busy or flash_timeout or flash_error)) or msm_s0x17 or msm_s0x30) and not(msm_rst);
     msm_return <= (msm_s0x0F) and not(msm_rst);
     msm_to_s0x11 <= msm_s0x16 and more2erase and not(msm_rst);
     msm_to_s0x18 <= msm_s0x1D and more2pgm and not(msm_rst);
@@ -723,10 +761,10 @@ frdack(0) <= f_read_data_ack;
          clk   => psl_clk
     );
 
-    msm_return_p1 <= msm_s0x02 or msm_s0x03 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
-    msm_return_pgm <= msm_s0x04 and f_program_req and not(f_read_req);
-    msm_return_read <= msm_s0x04 and f_read_req;
-    msm_returnstate_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x05 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
+    msm_return_p1 <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
+    msm_return_pgm <= msm_s0x06 and f_program_req and not(f_read_req);
+    msm_return_read <= msm_s0x06 and f_read_req;
+    msm_returnstate_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x06 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
     msm_returnstate_d <= gate_and(msm_return_p1,main_sm_p1) or
                        gate_and(msm_return_pgm,"010000") or
                        gate_and(msm_return_read,"110000");--Move on from state 4 and skip quad mode for now
@@ -744,6 +782,7 @@ frdack(0) <= f_read_data_ack;
     msm_s0x03 <= '1' when (main_sm  =  "000011") else '0' ;     -- 0x03  --
     msm_s0x04 <= '1' when (main_sm  =  "000100") else '0' ;     -- 0x04  --
     msm_s0x05 <= '1' when (main_sm  =  "000101") else '0' ;     -- 0x05  --
+    msm_s0x06 <= '1' when (main_sm  =  "000110") else '0' ;     -- 0x06  --
     msm_s0x0F <= '1' when (main_sm  =  "001111") else '0' ;     -- 0x0F  --
     msm_s0x10 <= '1' when (main_sm  =  "010000") else '0' ;     -- 0x10  --
     msm_s0x11 <= '1' when (main_sm  =  "010001") else '0' ;     -- 0x11  --
@@ -869,7 +908,7 @@ qspi_sector_erase <= X"D8";--Command then Address
 
      command_sent <= '1';
 
-     address_sent_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x05 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
+     address_sent_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x06 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
      address_sent_d <= '1' when ((msm_s0x13 = '1') or (msm_s0x1A = '1') or (msm_s0x31 = '1')) else '0';
      endff_address_sent_q: capi_en_rise_dff PORT MAP (
          dout =>address_sent,
@@ -878,7 +917,7 @@ qspi_sector_erase <= X"D8";--Command then Address
          clk   => psl_clk
     );
 
-     data_sent_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x05 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
+     data_sent_update <= msm_s0x02 or msm_s0x03 or msm_s0x04 or msm_s0x06 or msm_s0x11 or msm_s0x12 or msm_s0x13 or msm_s0x14 or msm_s0x18 or msm_s0x19 or msm_s0x1A or msm_s0x1B or msm_s0x31;
      data_sent_d <= '1' when ((msm_s0x14 = '1') or (msm_s0x1A = '1') or (msm_s0x1B = '1') or (msm_s0x31 = '1')) else '0';
      endff_data_sent_q: capi_en_rise_dff PORT MAP (
          dout =>data_sent,
@@ -908,8 +947,9 @@ qspi_sector_erase <= X"D8";--Command then Address
     command_update <= msm_to_s0x0F;
     command_d <= gate_and(msm_s0x02, qspi_rst_en) or
                  gate_and(msm_s0x03, qspi_rst_mem) or
-                 gate_and(msm_s0x04, qspi_enter_4B_addr) or
+                 gate_and(msm_s0x06, qspi_enter_4B_addr) or
                  gate_and(msm_s0x05, qspi_enter_quad_mode) or
+                 gate_and(msm_s0x04, qspi_we) or
                  gate_and(msm_s0x11 or msm_s0x18, qspi_fstatus_clear) or
                  gate_and(msm_s0x12 or msm_s0x19, qspi_we) or
                  gate_and(msm_s0x14 or msm_s0x1B, qspi_fstatus_read) or
@@ -1329,8 +1369,8 @@ in_byte_update(7) <= '1' when ((spi_clk_qq = '0') and (spi_clk_int = '1') and ((
     run_spi_clk <= dsm_s0x03 or dsm_s0x05 or dsm_s0x07;
     spi_clk_tristate_n <= '0';
     spi_clk_d <= '1' when (run_spi_clk = '0') else
-                  not(spi_clk_q) when ((read_speed = '0') and (cycdly_q(15) = '0') and (clk_exhausted = '0')) else
-                  not(spi_clk_q) when ((read_speed = '1') and (cycdly_q(14) = '0') and (cycdly_q(15) = '0') and  (clk_exhausted = '0')) else
+                  not(spi_clk_q) when ((read_speed = '0') and (cycdly_q(13) = '0') and (cycdly_q(14) = '0') and (cycdly_q(15) = '0') and (clk_exhausted = '0')) else
+                  not(spi_clk_q) when ((read_speed = '1') and (cycdly_q(12) = '0') and (cycdly_q(13) = '0') and (cycdly_q(14) = '0') and (cycdly_q(15) = '0') and  (clk_exhausted = '0')) else
                   spi_clk_q;
     dff_spi_clk_q: capi_rise_dff_init1 PORT MAP (
          dout => spi_clk_q,
