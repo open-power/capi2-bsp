@@ -1,5 +1,5 @@
 #
-# Copyright 2018 International Business Machines
+# Copyright 2019 International Business Machines
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ include $(ROOT_DIR)/capi_bsp_env.mk
 help:
 	@echo "Main targets for the capi_board_support project make process:";
 	@echo "=============================================================";
-	@echo "* AD9H3          Creates capi_bsp ip for AlphaData 9V3 card";
+	@echo "* AD9V3          Creates capi_bsp ip for AlphaData 9V3 card";
 	@echo "* AD9H3          Creates capi_bsp ip for AlphaData 9H3 card";
 	@echo "* N250SP         Creates capi_bsp ip for Nallatech 250S+ card";
 	@echo "* RCXVUP         Creates capi_bsp ip for XpressVUP-LP9PT card";
