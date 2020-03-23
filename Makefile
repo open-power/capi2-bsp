@@ -17,7 +17,7 @@
 SHELL=/bin/bash
 export ROOT_DIR ?= $(abspath .)
 
-export CARDS += AD9H3 AD9V3 N250SP RCXVUP FX609 S241 U200
+export CARDS += AD9H3 AD9H7 D9V3 N250SP RCXVUP FX609 S241 U200
 
 include $(ROOT_DIR)/capi_bsp_env.mk
 
@@ -29,6 +29,7 @@ help:
 	@echo "=============================================================";
 	@echo "* AD9V3          Creates capi_bsp ip for AlphaData 9V3 card";
 	@echo "* AD9H3          Creates capi_bsp ip for AlphaData 9H3 card";
+	@echo "* AD9H7          Creates capi_bsp ip for AlphaData 9H7 card";
 	@echo "* N250SP         Creates capi_bsp ip for Nallatech 250S+ card";
 	@echo "* RCXVUP         Creates capi_bsp ip for XpressVUP-LP9PT card";
 	@echo "* FX609          Creates capi_bsp ip for Flyslice-FX609QL card";

@@ -1,0 +1,11 @@
+#-----------------------------------------------------------
+# Vivado v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Fri Mar 20 17:31:07 2020
+# Process ID: 11877
+# Current directory: /afs/vlsilab.boeblingen.ibm.com/proj/fpga/framework/castella2/capi2_9H7/hardware/capi2-bsp/AD9H7
+# Command line: vivado -quiet -mode batch -source /afs/vlsilab.boeblingen.ibm.com/proj/fpga/framework/castella2/capi2_9H7/hardware/capi2-bsp/common/tcl/create_capi_bsp.tcl -notrace -log /afs/vlsilab.boeblingen.ibm.com/proj/fpga/framework/castella2/capi2_9H7/hardware/capi2-bsp/AD9H7/build/logs/vivado_create_project.log -journal /afs/vlsilab.boeblingen.ibm.com/proj/fpga/framework/castella2/capi2_9H7/hardware/capi2-bsp/AD9H7/build/logs/vivado_create_project.jou
+# Log file: /afs/vlsilab.boeblingen.ibm.com/proj/fpga/framework/castella2/capi2_9H7/hardware/capi2-bsp/AD9H7/build/logs/vivado_create_project.log
+# Journal file: /afs/vlsilab.boeblingen.ibm.com/proj/fpga/framework/castella2/capi2_9H7/hardware/capi2-bsp/AD9H7/build/logs/vivado_create_project.jou
+#-----------------------------------------------------------
