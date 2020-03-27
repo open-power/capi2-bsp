@@ -1072,7 +1072,7 @@ PORT MAP (
 --    cfg_rev_id_pf2 => (others => '0'),       -- in  STD_LOGIC_VECTOR ( 7 downto 0 );
 --    cfg_rev_id_pf3 => (others => '0'),       -- in  STD_LOGIC_VECTOR ( 7 downto 0 );
 --    subsys_id_pf0 is used by capi-flash tool to detect the card and assign the proper flash area
-      cfg_subsys_id_pf0 => (X"0667"),      -- in  STD_LOGIC_VECTOR ( 15 downto 0 );
+      cfg_subsys_id_pf0 => (X"0668"),      -- in  STD_LOGIC_VECTOR ( 15 downto 0 );
 --    cfg_subsys_id_pf1 => (others => '0'),      -- in  STD_LOGIC_VECTOR ( 15 downto 0 );
 --    cfg_subsys_id_pf2 => (others => '0'),      -- in  STD_LOGIC_VECTOR ( 15 downto 0 );
 --    cfg_subsys_id_pf3 => (others => '0'),      -- in  STD_LOGIC_VECTOR ( 15 downto 0 );

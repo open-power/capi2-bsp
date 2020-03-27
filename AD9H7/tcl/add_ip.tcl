@@ -21,6 +21,7 @@
 # add pcie4c_uscale_plus
 add_files -norecurse                             $ip_dir/pcie4c_uscale_plus_0/pcie4c_uscale_plus_0.xci  -force >> $log_file
 # add sem_ultra
-add_files -norecurse                             $ip_dir/sem_ultra_0/sem_ultra_0.xci  -force >> $log_file
+# AC test to remove sem_ultra
+# add_files -norecurse                             $ip_dir/sem_ultra_0/sem_ultra_0.xci  -force >> $log_file
 # add uscale_plus_clk_wiz
 add_files -norecurse                             $ip_dir/uscale_plus_clk_wiz/uscale_plus_clk_wiz.xci  -force >> $log_file

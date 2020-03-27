@@ -235,12 +235,14 @@ if { $action_clock_freq == "225MHZ" } {
                    ] [get_ips uscale_plus_clk_wiz] >> $log_file
 }
 
-create_ip -name sem_ultra -vendor xilinx.com -library ip -module_name sem_ultra_0 -dir $ip_dir >> $log_file
-set_property -dict [list                       \
+#create_ip -name sem_ultra -vendor xilinx.com -library ip -version 3.1 -module_name sem_ultra_0 -dir $ip_dir >> $log_file
+#create_ip -name sem_ultra -vendor xilinx.com -library ip -module_name sem_ultra_0 -dir $ip_dir >> $log_file
+#set_property -dict [list                       \
                     CONFIG.MODE {detect_only}  \
                     CONFIG.CLOCK_PERIOD {10000} \
                    ] [get_ips sem_ultra_0] >> $log_file
 
 set_property generate_synth_checkpoint false [get_files pcie4c_uscale_plus_0.xci] >> $log_file
 set_property generate_synth_checkpoint false [get_files uscale_plus_clk_wiz.xci] >> $log_file
-set_property generate_synth_checkpoint false [get_files sem_ultra_0.xci] >> $log_file
+# AC removing sem_ultra ip
+#set_property generate_synth_checkpoint false [get_files sem_ultra_0.xci] >> $log_file

@@ -66,4 +66,6 @@ clean:
 	@$(RM) *~
 	@$(RM) -r vivado*
 	@$(RM) -r .Xil
+	@$(RM) -r psl/.psl_*
+	@$(RM) -r psl/build_*	
 	@echo "[CLEANING............] done  "`date +"%T %a %b %d %Y"`
