@@ -1,8 +1,0 @@
-INFO: [IP_Flow 19-234] Refreshing IP repositories
-INFO: [IP_Flow 19-1704] No user IP repositories specified
-INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/afs/bb/proj/fpga/xilinx/Vivado/2019.2/data/ip'.
-create_ip: Time (s): cpu = 00:00:05 ; elapsed = 00:00:12 . Memory (MB): peak = 1710.254 ; gain = 114.020 ; free physical = 93859 ; free virtual = 136508
-INFO: [Device 21-403] Loading part xcvu37p-fsvh2892-2-e-es1
-xit::create_sub_core: Time (s): cpu = 00:00:25 ; elapsed = 00:01:05 . Memory (MB): peak = 2940.301 ; gain = 1218.172 ; free physical = 92748 ; free virtual = 135375
-create_ip: Time (s): cpu = 00:00:37 ; elapsed = 00:02:08 . Memory (MB): peak = 3183.277 ; gain = 242.977 ; free physical = 92419 ; free virtual = 135065
-INFO: [xilinx.com:ip:sem_ultra:3.1-333] sem_ultra_0: c_board 
