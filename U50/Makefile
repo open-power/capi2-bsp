@@ -20,7 +20,7 @@ export FPGA_CARD    = U50
 export FPGA_DISPLAY = "Xilinx-U50"
 
 #Note: Set FPGA_PART first, then change to BOARD_PART
-export FPGA_PART    = xcu50-fsvh2104-2L-e
+export FPGA_PART    = xcu50-fsvh2104-2-e
 export BOARD_PART   = xilinx.com:au50:part0:1.0
 export FPGA_SRC     = $(ROOT_DIR)/ultrascale_plus/src
 

@@ -18,18 +18,16 @@
 ############################################################################
 ############################################################################
 set fpga_card        $::env(FPGA_CARD)
+set fpga_board       $::env(FPGABOARD)
+
 
 ## Create a new Vivado IP Project
 set log_file $::env(CARD_LOGS)/create_required_ip.log
 puts "\[CREATE REQUIRED IP..\] start [clock format [clock seconds] -format {%T %a %b %d %Y}]"
 exec rm -rf $ip_dir
 create_project managed_ip_project $ip_dir/managed_ip_project -part $fpga_part -ip >> $log_file
-if {$fpga_card eq "U200"} {
-  set_property board_part xilinx.com:au200:part0:1.0 [current_project]
-}
-
-if {$fpga_card eq "U50"} {
-  set_property board_part xilinx.com:au50:part0:1.0 [current_project]
+if { ($fpga_card eq "U200") || ($fpga_card eq "U50") } {
+  set_property board_part $fpga_board [current_project]
 }
 
 # Project IP Settings

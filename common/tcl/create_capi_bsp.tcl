@@ -35,6 +35,7 @@ set vivado           $::env(XILINX_VIVADO)
 set top_level        capi_bsp
 set proj_name        capi_board_support
 set fpga_card        $::env(FPGA_CARD)
+set fpga_board       $::env(FPGABOARD)
 
 source $common_tcl/create_ip.tcl
 
@@ -43,14 +44,11 @@ set log_file $::env(CARD_LOGS)/create_capi_bsp.log
 puts "\[CREATE CAPI BSP.....\] start [clock format [clock seconds] -format {%T %a %b %d %Y}]"
 
 create_project $proj_name $proj_dir -part $fpga_part -force >> $log_file
-if {$fpga_card eq "U200"} {
-  set_property board_part xilinx.com:au200:part0:1.0 [current_project]
+if { ($fpga_card eq "U200") || ($fpga_card eq "U50") } {
+  set_property board_part $fpga_board [current_project]
 #  set_property coreContainer.enable 1 [current_project]
 }
-if {$fpga_card eq "U50"} {
-  set_property board_part xilinx.com:au50:part0:1.0 [current_project]
-#  set_property coreContainer.enable 1 [current_project]
-}
+
 puts "card_src is :.$card_src"
 #Add source files
 puts "Adding design sources to capi_bsp project"
