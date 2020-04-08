@@ -69,7 +69,7 @@ set log_file   $logs_dir/create_ip.log
 # Create project
 create_project psl9d $build_dir/viv_project -part $fpga_part -force >> $log_file
 
-if { ($fpga_card == "U200" ) || ($fpga_card == "U50") } {
+if { ($fpga_card eq "U200" ) || ($fpga_card eq "U50") } {
   set_property board_part $fpga_board [current_project]
 }
 
