@@ -18,7 +18,6 @@
 ############################################################################
 ############################################################################
 set fpga_card        $::env(FPGA_CARD)
-set fpga_board       $::env(FPGABOARD)
 
 
 ## Create a new Vivado IP Project
@@ -27,6 +26,7 @@ puts "\[CREATE REQUIRED IP..\] start [clock format [clock seconds] -format {%T %
 exec rm -rf $ip_dir
 create_project managed_ip_project $ip_dir/managed_ip_project -part $fpga_part -ip >> $log_file
 if { ($fpga_card eq "U200") || ($fpga_card eq "U50") } {
+  set fpga_board       $::env(FPGABOARD)
   set_property board_part $fpga_board [current_project]
 }
 

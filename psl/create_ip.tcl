@@ -20,7 +20,6 @@
 
 set fpga_part $::env(FPGA_PART)
 set fpga_card $::env(FPGA_CARD)
-set fpga_board $::env(FPGABOARD)
 
 set psl_version $::env(PSL_VERSION)
 set ver_major [string range $psl_version 0 [string first "." $psl_version]-1]
@@ -70,6 +69,7 @@ set log_file   $logs_dir/create_ip.log
 create_project psl9d $build_dir/viv_project -part $fpga_part -force >> $log_file
 
 if { ($fpga_card eq "U200" ) || ($fpga_card eq "U50") } {
+  set fpga_board $::env(FPGABOARD)
   set_property board_part $fpga_board [current_project]
 }
 

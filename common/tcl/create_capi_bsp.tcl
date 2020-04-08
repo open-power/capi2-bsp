@@ -35,7 +35,6 @@ set vivado           $::env(XILINX_VIVADO)
 set top_level        capi_bsp
 set proj_name        capi_board_support
 set fpga_card        $::env(FPGA_CARD)
-set fpga_board       $::env(FPGABOARD)
 
 source $common_tcl/create_ip.tcl
 
@@ -45,6 +44,7 @@ puts "\[CREATE CAPI BSP.....\] start [clock format [clock seconds] -format {%T %
 
 create_project $proj_name $proj_dir -part $fpga_part -force >> $log_file
 if { ($fpga_card eq "U200") || ($fpga_card eq "U50") } {
+  set fpga_board       $::env(FPGABOARD)
   set_property board_part $fpga_board [current_project]
 #  set_property coreContainer.enable 1 [current_project]
 }
