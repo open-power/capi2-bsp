@@ -1,7 +1,7 @@
 ############################################################################
 ############################################################################
 ##
-## Copyright 2018 International Business Machines
+## Copyright 2020 International Business Machines
 ##
 ## Licensed under the Apache License, Version 2.0 (the "License");
 ## you may not use this file except in compliance with the License.
@@ -45,10 +45,10 @@ CONFIG.PF2_MSIX_CAP_TABLE_BIR {BAR_1:0} \
 CONFIG.PF3_DEVICE_ID {963F} \
 CONFIG.PF3_MSIX_CAP_PBA_BIR {BAR_1:0} \
 CONFIG.PF3_MSIX_CAP_TABLE_BIR {BAR_1:0} \
-CONFIG.PF0_SUBSYSTEM_VENDOR_ID {0667} \
-CONFIG.PF1_SUBSYSTEM_VENDOR_ID {0667} \
-CONFIG.PF2_SUBSYSTEM_VENDOR_ID {0667} \
-CONFIG.PF3_SUBSYSTEM_VENDOR_ID {0667} \
+CONFIG.PF0_SUBSYSTEM_VENDOR_ID {0668} \
+CONFIG.PF1_SUBSYSTEM_VENDOR_ID {0668} \
+CONFIG.PF2_SUBSYSTEM_VENDOR_ID {0668} \
+CONFIG.PF3_SUBSYSTEM_VENDOR_ID {0668} \
 CONFIG.pf0_vc_cap_enabled {false} \
 CONFIG.pf2_bar2_enabled {true} \
 CONFIG.pf3_bar2_enabled {true} \
@@ -235,12 +235,14 @@ if { $action_clock_freq == "225MHZ" } {
                    ] [get_ips uscale_plus_clk_wiz] >> $log_file
 }
 
-create_ip -name sem_ultra -vendor xilinx.com -library ip -module_name sem_ultra_0 -dir $ip_dir >> $log_file
-set_property -dict [list                       \
+#create_ip -name sem_ultra -vendor xilinx.com -library ip -version 3.1 -module_name sem_ultra_0 -dir $ip_dir >> $log_file
+#create_ip -name sem_ultra -vendor xilinx.com -library ip -module_name sem_ultra_0 -dir $ip_dir >> $log_file
+#set_property -dict [list                       \
                     CONFIG.MODE {detect_only}  \
                     CONFIG.CLOCK_PERIOD {10000} \
                    ] [get_ips sem_ultra_0] >> $log_file
 
 set_property generate_synth_checkpoint false [get_files pcie4c_uscale_plus_0.xci] >> $log_file
 set_property generate_synth_checkpoint false [get_files uscale_plus_clk_wiz.xci] >> $log_file
-set_property generate_synth_checkpoint false [get_files sem_ultra_0.xci] >> $log_file
+# AC removing sem_ultra ip
+#set_property generate_synth_checkpoint false [get_files sem_ultra_0.xci] >> $log_file

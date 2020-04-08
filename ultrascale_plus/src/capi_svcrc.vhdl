@@ -35,50 +35,50 @@ end capi_svcrc;
 
 architecture capi_svcrc of capi_svcrc is
 
-component sem_ultra_0
-  port (
-    status_heartbeat : out std_logic;
-    status_initialization : out std_logic;   --// output wire status_initialization
-    status_observation : out std_logic;        --  // output wire status_observation
-    status_correction : out std_logic;           -- // output wire status_correction
-    status_classification : out std_logic;    --// output wire status_classification
-    status_injection : out std_logic;         --  // output wire status_injection
-    status_essential : out std_logic;          --    // output wire status_essential
-    status_uncorrectable : out std_logic;      --// output wire status_uncorrectable
-    status_diagnostic_scan : OUT STD_LOGIC;
-    status_detect_only : OUT STD_LOGIC;
-    monitor_txdata : out std_logic_vector(7 downto 0); --            // output wire [7 : 0] monitor_txdata
-    monitor_txwrite : out std_logic;                --// output wire monitor_txwrite
-    monitor_txfull : in std_logic;                 --// input wire monitor_txfull
-    monitor_rxdata : in std_logic_vector(7 downto 0);  --                // input wire [7 : 0] monitor_rxdata
-    monitor_rxread : out std_logic;                 --// output wire monitor_rxread
-    monitor_rxempty : in std_logic;                --// input wire monitor_rxempty
-    command_strobe : in std_logic;                  --// input wire command_strobe
-    command_busy : out std_logic;                  --// output wire command_busy
-    command_code : in std_logic_vector(43 downto 0); --                    // input wire [39 : 0] command_code
-    icap_clk : in std_logic;                           --   // input wire icap_clk
-    icap_o : in std_logic_vector(31 downto 0);           --                       // input wire [31 : 0] icap_o
-    icap_csib : out std_logic;                    --// output wire icap_csib
-    icap_rdwrb : out std_logic;                     --  // output wire icap_rdwrb
-    icap_i : out std_logic_vector(31 downto 0);       --               // output wire [31 : 0] icap_i
-    icap_prerror : in std_logic;                      --// input wire icap_prerror
-    icap_prdone : in std_logic;                       -- // input wire icap_prdone
-    icap_avail : in std_logic;                        --  // input wire icap_avail
-    cap_rel : in std_logic;                           --     // input wire cap_rel
-    cap_gnt : in std_logic;                           --     // input wire cap_gnt
-    cap_req : out std_logic;                          --      // output wire cap_req
-    fecc_eccerrornotsingle : in std_logic;  --// input wire fecc_eccerrornotsingle
-    fecc_eccerrorsingle : in std_logic;       -- // input wire fecc_eccerrorsingle
-    fecc_endofframe : in std_logic;             -- // input wire fecc_endofframe
-    fecc_endofscan : in std_logic;                --  // input wire fecc_endofscan
-    fecc_crcerror : in std_logic;                   -- // input wire fecc_crcerror
-    fecc_far : in std_logic_vector(26 downto 0);      --                        // input wire [25 : 0] fecc_far
-    fecc_farsel : out std_logic_vector(1 downto 0);     --                   // output wire [1 : 0] fecc_farsel
-    aux_error_cr_ne : in std_logic;                --// input wire aux_error_cr_ne
-    aux_error_cr_es : in std_logic;                --// input wire aux_error_cr_es
-    aux_error_uc : in std_logic                      --// input wire aux_error_uc
-    );
-End Component sem_ultra_0;
+-- component sem_ultra_0
+--   port (
+--     status_heartbeat : out std_logic;
+--     status_initialization : out std_logic;   --// output wire status_initialization
+--     status_observation : out std_logic;        --  // output wire status_observation
+--     status_correction : out std_logic;           -- // output wire status_correction
+--     status_classification : out std_logic;    --// output wire status_classification
+--     status_injection : out std_logic;         --  // output wire status_injection
+--     status_essential : out std_logic;          --    // output wire status_essential
+--     status_uncorrectable : out std_logic;      --// output wire status_uncorrectable
+--     status_diagnostic_scan : OUT STD_LOGIC;
+--     status_detect_only : OUT STD_LOGIC;
+--     monitor_txdata : out std_logic_vector(7 downto 0); --            // output wire [7 : 0] monitor_txdata
+--     monitor_txwrite : out std_logic;                --// output wire monitor_txwrite
+--     monitor_txfull : in std_logic;                 --// input wire monitor_txfull
+--     monitor_rxdata : in std_logic_vector(7 downto 0);  --                // input wire [7 : 0] monitor_rxdata
+--     monitor_rxread : out std_logic;                 --// output wire monitor_rxread
+--     monitor_rxempty : in std_logic;                --// input wire monitor_rxempty
+--     command_strobe : in std_logic;                  --// input wire command_strobe
+--     command_busy : out std_logic;                  --// output wire command_busy
+--     command_code : in std_logic_vector(43 downto 0); --                    // input wire [39 : 0] command_code
+--     icap_clk : in std_logic;                           --   // input wire icap_clk
+--     icap_o : in std_logic_vector(31 downto 0);           --                       // input wire [31 : 0] icap_o
+--     icap_csib : out std_logic;                    --// output wire icap_csib
+--     icap_rdwrb : out std_logic;                     --  // output wire icap_rdwrb
+--     icap_i : out std_logic_vector(31 downto 0);       --               // output wire [31 : 0] icap_i
+--     icap_prerror : in std_logic;                      --// input wire icap_prerror
+--     icap_prdone : in std_logic;                       -- // input wire icap_prdone
+--     icap_avail : in std_logic;                        --  // input wire icap_avail
+--     cap_rel : in std_logic;                           --     // input wire cap_rel
+--     cap_gnt : in std_logic;                           --     // input wire cap_gnt
+--     cap_req : out std_logic;                          --      // output wire cap_req
+--     fecc_eccerrornotsingle : in std_logic;  --// input wire fecc_eccerrornotsingle
+--     fecc_eccerrorsingle : in std_logic;       -- // input wire fecc_eccerrorsingle
+--     fecc_endofframe : in std_logic;             -- // input wire fecc_endofframe
+--     fecc_endofscan : in std_logic;                --  // input wire fecc_endofscan
+--     fecc_crcerror : in std_logic;                   -- // input wire fecc_crcerror
+--     fecc_far : in std_logic_vector(26 downto 0);      --                        // input wire [25 : 0] fecc_far
+--     fecc_farsel : out std_logic_vector(1 downto 0);     --                   // output wire [1 : 0] fecc_farsel
+--     aux_error_cr_ne : in std_logic;                --// input wire aux_error_cr_ne
+--     aux_error_cr_es : in std_logic;                --// input wire aux_error_cr_es
+--     aux_error_uc : in std_logic                      --// input wire aux_error_uc
+--     );
+-- End Component sem_ultra_0;
 
 Component capi_rise_dff
       PORT (clk   : in std_logic;
@@ -214,49 +214,49 @@ rdwrb <= icap_mltbt_rdwrb when (icap_mltbt_takeover = '1') else icap_rdwrb;
 icap_avail <= avail;
 icap_o <= o;
 
-sem_core_inst : sem_ultra_0
-port map (
-status_heartbeat => status_heartbeat,
-status_initialization => status_initialization,   --// output wire status_initialization
-status_observation => status_observation,        --  // output wire status_observation
-status_correction => status_correction,           -- // output wire status_correction
-status_classification => status_classification,    --// output wire status_classification
-status_injection => status_injection,         --  // output wire status_injection
-status_essential => status_essential,          --    // output wire status_essential
-status_uncorrectable => status_uncorrectable,      --// output wire status_uncorrectable
-status_diagnostic_scan => status_diagnostic_scan,  --// output wire status_diagnostic_scan
-status_detect_only => status_detect_only,          --// output wire status_detect_only
-monitor_txdata  => open, --            // output wire [7 : 0] monitor_txdata
-monitor_txwrite  => open,                --// output wire monitor_txwrite
-monitor_txfull => '0',                 --// input wire monitor_txfull
-monitor_rxdata  => "00000000",  --                // input wire [7 : 0] monitor_rxdata
-monitor_rxread => open,                 --// output wire monitor_rxread
-monitor_rxempty => '1',                --// input wire monitor_rxempty
-command_strobe => command_strobe,                  --// input wire command_strobe
-command_busy => command_busy,                  --// output wire command_busy
-command_code => command_code, --                    // input wire [39 : 0] command_code
-icap_clk => icap_clk_conv,                           --   // input wire icap_clk
-icap_o => icap_o,           --                       // input wire [31 : 0] icap_o
-icap_csib => icap_csib,                    --// output wire icap_csib
-icap_rdwrb => icap_rdwrb,                    --  // output wire icap_rdwrb
-icap_i => icap_i,       --               // output wire [31 : 0] icap_i
-icap_prerror => icap_prerror,                      --// input wire icap_prerror
-icap_prdone => icap_prdone,                       -- // input wire icap_prdone
-icap_avail => icap_avail,                        --  // input wire icap_avail
-cap_rel => icap_release,                           --     // input wire cap_rel
-cap_gnt => icap_grant,                           --     // input wire cap_gnt
-cap_req => icap_request_conv,                          --      // output wire cap_req
-fecc_eccerrornotsingle => fecc_eccerrornotsingle,  --// input wire fecc_eccerrornotsingle
-fecc_eccerrorsingle => fecc_eccerrorsingle,       -- // input wire fecc_eccerrorsingle
-fecc_endofframe => fecc_endofframe,             -- // input wire fecc_endofframe
-fecc_endofscan => fecc_endofscan,                --  // input wire fecc_endofscan
-fecc_crcerror => fecc_crcerror,                   -- // input wire fecc_crcerror
-fecc_far => fecc_far,      --                        // input wire [25 : 0] fecc_far
-fecc_farsel => fecc_farsel,     --                   // output wire [1 : 0] fecc_farsel
-aux_error_cr_ne => '0',                --// input wire aux_error_cr_ne
-aux_error_cr_es => '0',                --// input wire aux_error_cr_es
-aux_error_uc => '0'                      --// input wire aux_error_uc
-);
+-- sem_core_inst : sem_ultra_0
+-- port map (
+-- status_heartbeat => status_heartbeat,
+-- status_initialization => status_initialization,   --// output wire status_initialization
+-- status_observation => status_observation,        --  // output wire status_observation
+-- status_correction => status_correction,           -- // output wire status_correction
+-- status_classification => status_classification,    --// output wire status_classification
+-- status_injection => status_injection,         --  // output wire status_injection
+-- status_essential => status_essential,          --    // output wire status_essential
+-- status_uncorrectable => status_uncorrectable,      --// output wire status_uncorrectable
+-- status_diagnostic_scan => status_diagnostic_scan,  --// output wire status_diagnostic_scan
+-- status_detect_only => status_detect_only,          --// output wire status_detect_only
+-- monitor_txdata  => open, --            // output wire [7 : 0] monitor_txdata
+-- monitor_txwrite  => open,                --// output wire monitor_txwrite
+-- monitor_txfull => '0',                 --// input wire monitor_txfull
+-- monitor_rxdata  => "00000000",  --                // input wire [7 : 0] monitor_rxdata
+-- monitor_rxread => open,                 --// output wire monitor_rxread
+-- monitor_rxempty => '1',                --// input wire monitor_rxempty
+-- command_strobe => command_strobe,                  --// input wire command_strobe
+-- command_busy => command_busy,                  --// output wire command_busy
+-- command_code => command_code, --                    // input wire [39 : 0] command_code
+-- icap_clk => icap_clk_conv,                           --   // input wire icap_clk
+-- icap_o => icap_o,           --                       // input wire [31 : 0] icap_o
+-- icap_csib => icap_csib,                    --// output wire icap_csib
+-- icap_rdwrb => icap_rdwrb,                    --  // output wire icap_rdwrb
+-- icap_i => icap_i,       --               // output wire [31 : 0] icap_i
+-- icap_prerror => icap_prerror,                      --// input wire icap_prerror
+-- icap_prdone => icap_prdone,                       -- // input wire icap_prdone
+-- icap_avail => icap_avail,                        --  // input wire icap_avail
+-- cap_rel => icap_release,                           --     // input wire cap_rel
+-- cap_gnt => icap_grant,                           --     // input wire cap_gnt
+-- cap_req => icap_request_conv,                          --      // output wire cap_req
+-- fecc_eccerrornotsingle => fecc_eccerrornotsingle,  --// input wire fecc_eccerrornotsingle
+-- fecc_eccerrorsingle => fecc_eccerrorsingle,       -- // input wire fecc_eccerrorsingle
+-- fecc_endofframe => fecc_endofframe,             -- // input wire fecc_endofframe
+-- fecc_endofscan => fecc_endofscan,                --  // input wire fecc_endofscan
+-- fecc_crcerror => fecc_crcerror,                   -- // input wire fecc_crcerror
+-- fecc_far => fecc_far,      --                        // input wire [25 : 0] fecc_far
+-- fecc_farsel => fecc_farsel,     --                   // output wire [1 : 0] fecc_farsel
+-- aux_error_cr_ne => '0',                --// input wire aux_error_cr_ne
+-- aux_error_cr_es => '0',                --// input wire aux_error_cr_es
+-- aux_error_uc => '0'                      --// input wire aux_error_uc
+-- );
 icap_request <= icap_request_conv;
 
 end capi_svcrc;

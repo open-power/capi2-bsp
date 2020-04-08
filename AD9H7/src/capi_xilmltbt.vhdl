@@ -1,5 +1,5 @@
 -- *!***************************************************************************
--- *! Copyright 2014-2018 International Business Machines
+-- *! Copyright 2014-2020 International Business Machines
 -- *!
 -- *! Licensed under the Apache License, Version 2.0 (the "License");
 -- *! you may not use this file except in compliance with the License.
@@ -131,7 +131,7 @@ begin
     -- setting 0x100_0000 as User space address (default for AD9V3 card)
     --wbstart_addr <= ( "000" & "0000" & cpld_user_bs_req_inv & "000000000000000000000000" );
 
-   -- setting 0x400_0000 as User space address (default for AD9H3 card)
+   -- setting 0x800_0000 as User space address (default TBchecked for AD9H7 card)
     wbstart_addr <= ( "000" & "0000" & cpld_user_bs_req & "000000000000000000000000" );
 
 
