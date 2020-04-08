@@ -22,6 +22,7 @@ export PSL_DIR                 ?= $(ROOT_DIR)/psl
 export PSL_VERSION             ?= 2.00
 export CAPI_BSP_VERSION        ?= 1.00
 export FPGA_CARD               ?= $@
+export FPGABOARD               ?= $@
 export CARD_DIR                ?= $(ROOT_DIR)/$(FPGA_CARD)
 export CARD_BUILD              ?= $(CARD_DIR)/build
 export CARD_IP                 ?= $(CARD_BUILD)/ip
