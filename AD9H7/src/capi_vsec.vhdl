@@ -73,7 +73,7 @@ ENTITY capi_vsec IS
        -- -------------- --
        f_read_req: out std_logic;
        f_num_words_m1: out std_logic_vector(0 to 9);                        -- N-1 words --
-       f_read_start_addr: out std_logic_vector(0 to 25);
+       f_read_start_addr: out std_logic_vector(0 to 30);
        f_read_data: in std_logic_vector(0 to 31);
        f_read_data_val: in std_logic;
        f_read_data_ack: out std_logic;
@@ -274,7 +274,7 @@ Signal vsec_0x58: std_logic;  -- bool
 Signal vsec_0x5C: std_logic;  -- bool
 Signal vsec_addr: std_logic_vector(0 to 32);  -- v33bit
 Signal vsec_base: std_logic;  -- bool
-Signal vsec_fadr: std_logic_vector(0 to 25);  -- v26bit
+Signal vsec_fadr: std_logic_vector(0 to 30);  -- v26bit initially increased to 31
 Signal vsec_fsize: std_logic_vector(0 to 9);  -- v10bit
 Signal vsec_rddata: std_logic_vector(0 to 31);  -- v32bit
 Signal vsec_wrdata: std_logic_vector(0 to 31);  -- v32bit
@@ -1187,18 +1187,22 @@ begin
  -- AM Feb27, 2017                               cseb_be_l(1)  and  cseb_be_l(0)  and  wren_pulse ;
                                 cseb_be_l(1)  and  cseb_be_l(0)  and  wren_pulse_in ;
 
-    endff_vsec_fadr: capi_en_rise_vdff GENERIC MAP ( width => 26 ) PORT MAP (
+--    endff_vsec_fadr: capi_en_rise_vdff GENERIC MAP ( width => 26 ) PORT MAP (
+    endff_vsec_fadr: capi_en_rise_vdff GENERIC MAP ( width => 31 ) PORT MAP (
          dout => vsec_fadr,
          en => vfadr_en,
-         din => vsec_wrdata(6 to 31),
+--         din => vsec_wrdata(6 to 31),
+         din => vsec_wrdata(1 to 31),
          clk   => psl_clk
     );
 
 
-    vsec50data <= ( "000000" & vsec_fadr );
+--    vsec50data <= ( "000000" & vsec_fadr );
+    vsec50data <= ( "0" & vsec_fadr );
 
 
-    f_start_blk <= vsec50data(6 to 15) ;
+--  f_start_blk <= vsec50data(6 to 15) ;
+    f_start_blk <= vsec50data(1 to 10) ;
     --v26bit f_read_start_addr = vsec_fadr;
  -- -- End Section -- --
 

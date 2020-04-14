@@ -181,7 +181,7 @@ Component capi_vsec
        -- -------------- --
          f_read_req                    : out   std_logic;
          f_num_words_m1                : out   std_logic_vector(0 to 9)    ;                        -- N-1 words --
-         f_read_start_addr             : out   std_logic_vector(0 to 25);
+         f_read_start_addr             : out   std_logic_vector(0 to 30);
          f_read_data                   : in    std_logic_vector(0 to 31);
          f_read_data_val               : in    std_logic;
          f_read_data_ack               : out   std_logic;
@@ -256,7 +256,7 @@ Component capi_flash_spi_mt25qt
        -- Read Interface --
        f_read_req: in std_logic;
        f_num_words_m1: in std_logic_vector(0 to 9);                         -- N-1 words --
-       f_read_start_addr: in std_logic_vector(0 to 25);
+       f_read_start_addr: in std_logic_vector(0 to 30);
        f_read_data: out std_logic_vector(0 to 31);
        f_read_data_val: out std_logic;
        f_read_data_ack: in std_logic);
@@ -292,7 +292,7 @@ Signal f_read_data: std_logic_vector(0 to 31);  -- v32bit
 Signal f_read_data_ack: std_logic;  -- bool
 Signal f_read_data_val: std_logic;  -- bool
 Signal f_read_req: std_logic;  -- bool
-Signal f_read_start_addr: std_logic_vector(0 to 25);  -- v26bit
+Signal f_read_start_addr: std_logic_vector(0 to 30);  -- v30bit
 Signal f_ready: std_logic;  -- bool
 Signal f_remainder: std_logic_vector(0 to 9);  -- v10bit
 Signal f_start_blk: std_logic_vector(0 to 9);  -- v10bit
@@ -576,15 +576,15 @@ spi_in_primary <= spi_in_startup;
          f_remainder => f_remainder,
          f_read_req => f_read_req,
          f_num_words_m1 => f_num_words_m1,
-         f_read_start_addr => '0' & f_read_start_addr(1 to 25),
+         f_read_start_addr => '0' & f_read_start_addr(1 to 30),
          f_read_data => f_read_data,
          f_read_data_val => f_read_data_val,
          f_read_data_ack => f_read_data_ack,
          psl_clk => pcihip0_psl_clk -- 250MHz clock, not a psl_clk
     );
 
---Logic to control which spi to drive. size on ad 9v3 is 32MiB per spi.
---f_read_start_addr(0) is 32MB address select bit. 0 will drive primary spi, and 1 will drive secondary.
+--Logic to control which spi to drive. size on AD9H7 is 256MiB per spi, we keep a provision for larger flash
+--f_read_start_addr(0) is 256MB address select bit. 0 will drive primary spi, and 1 will drive secondary.
 drive_primary <= not(f_read_start_addr(0));
 drive_secondary <= f_read_start_addr(0);
 spi_clk <= fspi_clk;

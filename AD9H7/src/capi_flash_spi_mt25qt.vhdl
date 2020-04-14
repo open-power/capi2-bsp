@@ -48,7 +48,7 @@ ENTITY capi_flash_spi_mt25qt IS
        -- Read Interface --
        f_read_req: in std_logic;
        f_num_words_m1: in std_logic_vector(0 to 9);                         -- N-1 words --
-       f_read_start_addr: in std_logic_vector(0 to 25);
+       f_read_start_addr: in std_logic_vector(0 to 30);                     -- we make a provision for larger flashes
        f_read_data: out std_logic_vector(0 to 31);
        f_read_data_val: out std_logic;
        f_read_data_ack: in std_logic);
@@ -927,7 +927,8 @@ qspi_sector_erase <= X"D8";--Command then Address
     );
 
     start_address_update <= msm_s0x01;
-    start_address_d <= f_read_start_addr & "000000";
+--    start_address_d <= f_read_start_addr & "000000";
+    start_address_d <= f_read_start_addr & "0";                 -- increasing max flash size
     endff_start_address_q: capi_en_rise_vdff GENERIC MAP ( width => 32 ) PORT MAP (
          dout => start_address,
          en => start_address_update,
