@@ -17,25 +17,18 @@
 ##
 ############################################################################
 ############################################################################
-set fpga_card        $::env(FPGA_CARD)
 
+#Adding source files
+add_files -norecurse $common_src/capi_en_rise_dff.vhdl >> $log_file
+add_files -norecurse $common_src/capi_en_rise_vdff.vhdl >> $log_file
+add_files -norecurse $common_src/CAPI_FPGA_RESET_GEN.v >> $log_file
+add_files -norecurse $common_src/capi_rise_dff_init1.vhdl >> $log_file
+add_files -norecurse $common_src/capi_rise_dff.vhdl >> $log_file
+add_files -norecurse $common_src/capi_rise_vdff.vhdl >> $log_file
+add_files -norecurse $common_src/capi_sreconfig.vhdl >> $log_file
+add_files -norecurse $common_src/CAPI_STP_COUNTER.v >> $log_file
+add_files -norecurse $common_src/capi_fifo.vhdl >> $log_file
+add_files -norecurse $common_src/capi_ram.vhdl >> $log_file
+add_files -norecurse $common_src/capi_rise_dff.vhdl >> $log_file
 
-## Create a new Vivado IP Project
-set log_file $::env(CARD_LOGS)/create_required_ip.log
-puts "\[CREATE REQUIRED IP..\] start [clock format [clock seconds] -format {%T %a %b %d %Y}]"
-exec rm -rf $ip_dir
-create_project managed_ip_project $ip_dir/managed_ip_project -part $fpga_part -ip >> $log_file
-if { ($fpga_card eq "U200") || ($fpga_card eq "U50") } {
-  set fpga_board       $::env(FPGABOARD)
-  set_property board_part $fpga_board [current_project]
-}
-
-# Project IP Settings
-# General
-set_property target_language VHDL [current_project]
-
-# Create card specific IPs
-source $card_tcl/create_ip.tcl
-
-close_project >> $log_file
-puts "\[CREATE REQUIRED IP..\] done  [clock format [clock seconds] -format {%T %a %b %d %Y}]"
+add_files -norecurse $fpga_src/capi_svcrc_U50.vhdl >> $log_file

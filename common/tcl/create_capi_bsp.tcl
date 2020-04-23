@@ -43,8 +43,9 @@ set log_file $::env(CARD_LOGS)/create_capi_bsp.log
 puts "\[CREATE CAPI BSP.....\] start [clock format [clock seconds] -format {%T %a %b %d %Y}]"
 
 create_project $proj_name $proj_dir -part $fpga_part -force >> $log_file
-if {$fpga_card eq "U200"} {
-  set_property board_part xilinx.com:au200:part0:1.0 [current_project]
+if { ($fpga_card eq "U200") || ($fpga_card eq "U50") } {
+  set fpga_board       $::env(FPGABOARD)
+  set_property board_part $fpga_board [current_project]
 #  set_property coreContainer.enable 1 [current_project]
 }
 
@@ -81,7 +82,7 @@ set_property sim.ip.auto_export_scripts false [current_project] >> $log_file
 
 set_property version $capi_bsp_version [ipx::current_core] >> $log_file
 set_property vendor_display_name IBM [ipx::current_core] >> $log_file
-set_property supported_families {zynquplus Production virtexuplus Production kintexuplus Production virtexuplushbm Production} [ipx::current_core] >> $log_file
+set_property supported_families {zynquplus Production virtexuplus Production kintexuplus Production virtexuplusHBM Production} [ipx::current_core] >> $log_file
 set_property core_revision 1 [ipx::current_core] >> $log_file
 ipx::create_xgui_files [ipx::current_core] >> $log_file
 ipx::update_checksums [ipx::current_core] >> $log_file

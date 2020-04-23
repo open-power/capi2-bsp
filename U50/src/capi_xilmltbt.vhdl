@@ -1,5 +1,5 @@
 -- *!***************************************************************************
--- *! Copyright 2014-2020 International Business Machines
+-- *! Copyright 2014-2018 International Business Machines
 -- *!
 -- *! Licensed under the Apache License, Version 2.0 (the "License");
 -- *! you may not use this file except in compliance with the License.
@@ -90,6 +90,7 @@ signal icap_request_q: std_logic;
 signal icap_request_fall: std_logic;
 signal icap_mltbt_takeover_d: std_logic;
 signal icap_mltbt_takeover_q: std_logic;
+
 begin
 
     dff_start: capi_rise_dff PORT MAP (
@@ -116,25 +117,13 @@ begin
 
     axi_icap_start_pre <= cpld_softreconfigreq  or  start ;
 
-    --FIXME !!
-    --  In this section we tune the Warm Boot Register value, used when a User image is requested
-    --  when cpld_user_bs_req=1 for a Factory image, it will then try to load the User image at specified address
-    --BPI MODE :
-    --  16MiB is start address for user image in primary. RS pins not used in SPI mode
-    --  wbstart_addr <= ( '0' & cpld_user_bs_req & '1' & '0' & "0000000000000000000000000000" );
-    --SPI MODE :
-    -- setting 0x100_0000 as User space address (default for AD9V3 card and still used for RCXVUP as address expansion is not tested yet):
-    --  wbstart_addr <= ( "000" & "0000" & cpld_user_bs_req      & "000000000000000000000000" );
-    -- setting 0x400_0000 as User space address (default for RCXVUP card, not implemented yet):
-    --  wbstart_addr <= ( "000" & "00" & cpld_user_bs_req & "00" & "000000000000000000000000" );
+    -- This is for Semptian NSA241. 256MiB total. Split to 2 areas.
+    -- User image will be placed at 128MiB place 0x0800_0000 
+    -- RS pins not used in SPI mode
 
-    -- setting 0x100_0000 as User space address (default for AD9V3 card)
-    --wbstart_addr <= ( "000" & "0000" & cpld_user_bs_req_inv & "000000000000000000000000" );
-
-   -- setting 0x400_0000 as User space address (default for AD9H7 card)
-    wbstart_addr <= ( "000" & "00" & cpld_user_bs_req & "00000000000000000000000000" );
-
-
+    -- wbstart_addr: [31,30]: RS | [29]: RS_TS_B | [28:0]: START_ADDR
+    -- Wait address expansion
+    wbstart_addr <= ( "000" & "0" & cpld_user_bs_req & "000" & "000000000000000000000000" );
 
     dff_wbstart_addrl1: capi_rise_vdff GENERIC MAP ( width => 32 ) PORT MAP (
          dout => wbstart_addr_l1,
