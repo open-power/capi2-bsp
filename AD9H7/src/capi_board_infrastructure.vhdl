@@ -589,7 +589,13 @@ spi_in_primary <= spi_in_startup;
 --they select 2GB/1GB/512MB/256MB
 -- drive_primary <= not(f_read_start_addr(4));
 -- drive_secondary <= f_read_start_addr(4);
--- trying to make MSB selection bit
+-- However to prepare for future extensions, we will use the MSB bit 0 to select the secondary flash
+-- FACTORY flashing :
+--	Hence adresses from 0x0000 0000 to 0x03FF FFFF can be used to program primary   flash memory
+--	while adresses from 0x8000 0000 to 0x83FF FFFF can be used to program secondary flash memory
+-- USER flashing :
+--      Hence adresses from 0x0400 0000 to 0x07FF FFFF can be used to program primary   user memory 
+--      while adresses from 0x8400 0000 to 0x87FF FFFF can be used to program primary   user memory
 drive_primary <= not(f_read_start_addr(0));
 drive_secondary <= f_read_start_addr(0);
 spi_clk <= fspi_clk;
