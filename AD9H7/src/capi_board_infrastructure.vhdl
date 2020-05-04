@@ -164,7 +164,7 @@ Component capi_vsec
 
        -- --------------- --
          f_program_req                 : out   std_logic                   ;                                        -- Level --
-         f_num_blocks                  : out   std_logic_vector(0 to 9)    ;                          -- 128KB Block Size --
+         f_num_blocks                  : out   std_logic_vector(0 to 15)    ;                          -- 128KB Block Size --
          f_start_blk                   : out   std_logic_vector(0 to 9);
          f_program_data                : out   std_logic_vector(0 to 31);
          f_program_data_val            : out   std_logic;
@@ -174,14 +174,14 @@ Component capi_vsec
          f_stat_erase                  : in    std_logic;
          f_stat_program                : in    std_logic;
          f_stat_read                   : in    std_logic;
-         f_remainder                   : in    std_logic_vector(0 to 9);
+         f_remainder                   : in    std_logic_vector(0 to 15);
          f_states                      : in    std_logic_vector(0 to 31);
          f_memstat                     : in    std_logic_vector(0 to 15);
          f_memstat_past                : in    std_logic_vector(0 to 15);
        -- -------------- --
          f_read_req                    : out   std_logic;
-         f_num_words_m1                : out   std_logic_vector(0 to 9)    ;                        -- N-1 words --
-         f_read_start_addr             : out   std_logic_vector(0 to 25);
+         f_num_words_m1                : out   std_logic_vector(0 to 15)    ;                        -- N-1 words --
+         f_read_start_addr             : out   std_logic_vector(0 to 31);
          f_read_data                   : in    std_logic_vector(0 to 31);
          f_read_data_val               : in    std_logic;
          f_read_data_ack               : out   std_logic;
@@ -241,7 +241,7 @@ Component capi_flash_spi_mt25qt
 
        -- -------------- --
        f_program_req: in std_logic;                                         -- Level --
-       f_num_blocks: in std_logic_vector(0 to 9);                           -- 128KB Block Size --
+       f_num_blocks: in std_logic_vector(0 to 15);                           -- 128KB Block Size --
        f_start_blk: in std_logic_vector(0 to 9);
        f_program_data: in std_logic_vector(0 to 31);
        f_program_data_val: in std_logic;
@@ -251,12 +251,12 @@ Component capi_flash_spi_mt25qt
        f_stat_erase: out std_logic;
        f_stat_program: out std_logic;
        f_stat_read: out std_logic;
-       f_remainder: out std_logic_vector(0 to 9);
+       f_remainder: out std_logic_vector(0 to 15);
 
        -- Read Interface --
        f_read_req: in std_logic;
-       f_num_words_m1: in std_logic_vector(0 to 9);                         -- N-1 words --
-       f_read_start_addr: in std_logic_vector(0 to 25);
+       f_num_words_m1: in std_logic_vector(0 to 15);                         -- N-1 words --
+       f_read_start_addr: in std_logic_vector(0 to 31);
        f_read_data: out std_logic_vector(0 to 31);
        f_read_data_val: out std_logic;
        f_read_data_ack: in std_logic);
@@ -282,8 +282,8 @@ Signal cpld_user_bs_req: std_logic;  -- bool
 
 
 Signal f_done: std_logic;  -- bool
-Signal f_num_blocks: std_logic_vector(0 to 9);  -- v10bit
-Signal f_num_words_m1: std_logic_vector(0 to 9);  -- v10bit
+Signal f_num_blocks: std_logic_vector(0 to 15);  -- v10bit
+Signal f_num_words_m1: std_logic_vector(0 to 15);  -- v10bit
 Signal f_program_data: std_logic_vector(0 to 31);  -- v32bit
 Signal f_program_data_ack: std_logic;  -- bool
 Signal f_program_data_val: std_logic;  -- bool
@@ -292,9 +292,9 @@ Signal f_read_data: std_logic_vector(0 to 31);  -- v32bit
 Signal f_read_data_ack: std_logic;  -- bool
 Signal f_read_data_val: std_logic;  -- bool
 Signal f_read_req: std_logic;  -- bool
-Signal f_read_start_addr: std_logic_vector(0 to 25);  -- v26bit
+Signal f_read_start_addr: std_logic_vector(0 to 31);  -- v30bit
 Signal f_ready: std_logic;  -- bool
-Signal f_remainder: std_logic_vector(0 to 9);  -- v10bit
+Signal f_remainder: std_logic_vector(0 to 15);  -- v10bit
 Signal f_start_blk: std_logic_vector(0 to 9);  -- v10bit
 Signal f_stat_erase: std_logic;  -- bool
 Signal f_stat_program: std_logic;  -- bool
@@ -576,15 +576,20 @@ spi_in_primary <= spi_in_startup;
          f_remainder => f_remainder,
          f_read_req => f_read_req,
          f_num_words_m1 => f_num_words_m1,
-         f_read_start_addr => '0' & f_read_start_addr(1 to 25),
+         f_read_start_addr =>  "00000" & f_read_start_addr(5 to 31),
          f_read_data => f_read_data,
          f_read_data_val => f_read_data_val,
          f_read_data_ack => f_read_data_ack,
          psl_clk => pcihip0_psl_clk -- 250MHz clock, not a psl_clk
     );
 
---Logic to control which spi to drive. size on ad 9v3 is 32MiB per spi.
---f_read_start_addr(0) is 32MB address select bit. 0 will drive primary spi, and 1 will drive secondary.
+--Address field expanded to 32 bit byte address. Can now address 2^32 bytes = 4GB
+--Most appropriate bit for selecting lower/upper flash on 9H7 is now bit 4, the 128MB address selct bit
+--Since each flash is 128MB in size. Address bits 0-3 should not toggle for this card since
+--they select 2GB/1GB/512MB/256MB
+-- drive_primary <= not(f_read_start_addr(4));
+-- drive_secondary <= f_read_start_addr(4);
+-- trying to make MSB selection bit
 drive_primary <= not(f_read_start_addr(0));
 drive_secondary <= f_read_start_addr(0);
 spi_clk <= fspi_clk;

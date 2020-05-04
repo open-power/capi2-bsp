@@ -55,7 +55,7 @@ ENTITY capi_vsec IS
 
        -- --------------- --
        f_program_req: out std_logic;                                        -- Level --
-       f_num_blocks: out std_logic_vector(0 to 9);                          -- 128KB Block Size --
+       f_num_blocks: out std_logic_vector(0 to 15);                          -- 128KB Block Size --
        f_start_blk: out std_logic_vector(0 to 9);
        f_program_data: out std_logic_vector(0 to 31);
        f_program_data_val: out std_logic;
@@ -65,15 +65,15 @@ ENTITY capi_vsec IS
        f_stat_erase: in std_logic;
        f_stat_program: in std_logic;
        f_stat_read: in std_logic;
-       f_remainder: in std_logic_vector(0 to 9);
+       f_remainder: in std_logic_vector(0 to 15);
        f_states: in std_logic_vector(0 to 31);
        f_memstat: in std_logic_vector(0 to 15);
        f_memstat_past: in std_logic_vector(0 to 15);
 
        -- -------------- --
        f_read_req: out std_logic;
-       f_num_words_m1: out std_logic_vector(0 to 9);                        -- N-1 words --
-       f_read_start_addr: out std_logic_vector(0 to 25);
+       f_num_words_m1: out std_logic_vector(0 to 15);                        -- N-1 words --
+       f_read_start_addr: out std_logic_vector(0 to 31);
        f_read_data: in std_logic_vector(0 to 31);
        f_read_data_val: in std_logic;
        f_read_data_ack: out std_logic;
@@ -274,8 +274,8 @@ Signal vsec_0x58: std_logic;  -- bool
 Signal vsec_0x5C: std_logic;  -- bool
 Signal vsec_addr: std_logic_vector(0 to 32);  -- v33bit
 Signal vsec_base: std_logic;  -- bool
-Signal vsec_fadr: std_logic_vector(0 to 25);  -- v26bit
-Signal vsec_fsize: std_logic_vector(0 to 9);  -- v10bit
+Signal vsec_fadr: std_logic_vector(0 to 31);  -- v26bit initially increased to 31
+Signal vsec_fsize: std_logic_vector(0 to 15);  -- v10bit
 Signal vsec_rddata: std_logic_vector(0 to 31);  -- v32bit
 Signal vsec_wrdata: std_logic_vector(0 to 31);  -- v32bit
 Signal vvpdadr_en: std_logic;  -- bool
@@ -1187,18 +1187,22 @@ begin
  -- AM Feb27, 2017                               cseb_be_l(1)  and  cseb_be_l(0)  and  wren_pulse ;
                                 cseb_be_l(1)  and  cseb_be_l(0)  and  wren_pulse_in ;
 
-    endff_vsec_fadr: capi_en_rise_vdff GENERIC MAP ( width => 26 ) PORT MAP (
+--    endff_vsec_fadr: capi_en_rise_vdff GENERIC MAP ( width => 26 ) PORT MAP (
+    endff_vsec_fadr: capi_en_rise_vdff GENERIC MAP ( width => 32 ) PORT MAP (
          dout => vsec_fadr,
          en => vfadr_en,
-         din => vsec_wrdata(6 to 31),
+--         din => vsec_wrdata(6 to 31),
+         din => vsec_wrdata,
          clk   => psl_clk
     );
 
 
-    vsec50data <= ( "000000" & vsec_fadr );
+--    vsec50data <= ( "000000" & vsec_fadr );
+    vsec50data <= vsec_fadr;
 
 
-    f_start_blk <= vsec50data(6 to 15) ;
+--  f_start_blk <= vsec50data(6 to 15) ;
+    f_start_blk <= vsec50data(1 to 10) ;
     --v26bit f_read_start_addr = vsec_fadr;
  -- -- End Section -- --
 
@@ -1217,15 +1221,15 @@ begin
                                  cseb_be_l(3)  and  wren_pulse_in ;
 
 
-    endff_vsec_fsize: capi_en_rise_vdff GENERIC MAP ( width => 10 ) PORT MAP (
+    endff_vsec_fsize: capi_en_rise_vdff GENERIC MAP ( width => 16 ) PORT MAP (
          dout => vsec_fsize,
          en => vfsize_en,
-         din => vsec_wrdata(22 to 31),
+         din => vsec_wrdata(16 to 31),
          clk   => psl_clk
     );
 
 
-    vsec54data <= ( "0000000000000000000000" & vsec_fsize );
+    vsec54data <= ( "0000000000000000" & vsec_fsize );
 
 
     f_num_blocks <= std_logic_vector(unsigned(vsec_fsize) + 1) ;
@@ -1258,7 +1262,7 @@ begin
 
     --concat(type=v32bit) (vsec58data, f_ready, f_done, 0b00, flash_rd_req, f_program_req, 0b0000000000,
     --                                 f_stat_erase, f_stat_program, f_stat_read, 0b000, f_remainder);
-    vsec58data <= ( f_ready & f_done & "0" & f_states(31) & flash_rd_req & f_program_reqinternal & "0000000000" & f_stat_erase & f_stat_program & f_stat_read & f_program_data_valinternal & f_read_data_val & '0' & f_remainder );
+    vsec58data <= ( f_ready & f_done & "0" & f_states(31) & flash_rd_req & f_program_reqinternal & "0000000000" & f_stat_erase & f_stat_program & f_stat_read & f_program_data_valinternal & f_read_data_val & '0' & f_remainder(6 to 15) );
 
  -- -- End Section -- --
 
