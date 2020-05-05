@@ -33,7 +33,7 @@ ENTITY capi_flash_spi_mt25qt IS
 
        -- -------------- --
        f_program_req: in std_logic;                                         -- Level --
-       f_num_blocks: in std_logic_vector(0 to 9);                           -- 128KB Block Size --
+       f_num_blocks: in std_logic_vector(0 to 15);                           -- 128KB Block Size --
        f_start_blk: in std_logic_vector(0 to 9);
        f_program_data: in std_logic_vector(0 to 31);
        f_program_data_val: in std_logic;
@@ -43,12 +43,12 @@ ENTITY capi_flash_spi_mt25qt IS
        f_stat_erase: out std_logic;
        f_stat_program: out std_logic;
        f_stat_read: out std_logic;
-       f_remainder: out std_logic_vector(0 to 9);
+       f_remainder: out std_logic_vector(0 to 15);
 
        -- Read Interface --
        f_read_req: in std_logic;
-       f_num_words_m1: in std_logic_vector(0 to 9);                         -- N-1 words --
-       f_read_start_addr: in std_logic_vector(0 to 25);
+       f_num_words_m1: in std_logic_vector(0 to 15);                         -- N-1 words --
+       f_read_start_addr: in std_logic_vector(0 to 31);                     -- we make a provision for larger flashes
        f_read_data: out std_logic_vector(0 to 31);
        f_read_data_val: out std_logic;
        f_read_data_ack: in std_logic);
@@ -133,13 +133,13 @@ Signal erase_sm_p1: std_logic_vector(0 to 4);  -- v5bit
 Signal erase_sm_start_dly: std_logic;  -- bool
 Signal erase_we: std_logic;  -- bool
 Signal esm_adv: std_logic;  -- bool
-Signal esm_blkadr_d: std_logic_vector(0 to 9);  -- v10bit
-Signal esm_blkadr_p1: std_logic_vector(0 to 9);  -- v10bit
-Signal esm_blkadr_q: std_logic_vector(0 to 9);  -- v10bit
+Signal esm_blkadr_d: std_logic_vector(0 to 15);  -- v10bit
+Signal esm_blkadr_p1: std_logic_vector(0 to 15);  -- v10bit
+Signal esm_blkadr_q: std_logic_vector(0 to 15);  -- v10bit
 attribute mark_debug of esm_blkadr_q : signal is "true";
-Signal esm_blkcnt_d: std_logic_vector(0 to 9);  -- v10bit
-Signal esm_blkcnt_m1: std_logic_vector(0 to 9);  -- v10bit
-Signal esm_blkcnt_q: std_logic_vector(0 to 9);  -- v10bit
+Signal esm_blkcnt_d: std_logic_vector(0 to 15);  -- v10bit
+Signal esm_blkcnt_m1: std_logic_vector(0 to 15);  -- v10bit
+Signal esm_blkcnt_q: std_logic_vector(0 to 15);  -- v10bit
 attribute mark_debug of esm_blkcnt_q : signal is "true";
 Signal esm_datain_en: std_logic;  -- bool
 Signal esm_done: std_logic;  -- bool
@@ -208,7 +208,7 @@ Signal pgm_data_out: std_logic_vector(0 to 31);  -- v32bit
 Signal pgm_dly: std_logic_vector(0 to 5);  -- v6bit
 Signal pgm_oe: std_logic;  -- bool
 Signal pgm_rd_req: std_logic;  -- bool
-Signal pgm_remainder: std_logic_vector(0 to 9);  -- v10bit
+Signal pgm_remainder: std_logic_vector(0 to 15);  -- v10bit
 Signal pgm_sm: std_logic_vector(0 to 4);  -- v5bit
 attribute mark_debug of pgm_sm : signal is "true";
 Signal pgm_sm_nxt: std_logic_vector(0 to 4);  -- v5bit
@@ -298,9 +298,9 @@ Signal rsm_wrdadr_d: std_logic_vector(0 to 25);  -- v26bit
 Signal rsm_wrdadr_p1: std_logic_vector(0 to 25);  -- v26bit
 Signal rsm_wrdadr_q: std_logic_vector(0 to 25);  -- v26bit
 attribute mark_debug of rsm_wrdadr_q : signal is "true";
-Signal rsm_wrdcnt_d: std_logic_vector(0 to 9);  -- v10bit
-Signal rsm_wrdcnt_m1: std_logic_vector(0 to 9);  -- v10bit
-Signal rsm_wrdcnt_q: std_logic_vector(0 to 9);  -- v10bit
+Signal rsm_wrdcnt_d: std_logic_vector(0 to 15);  -- v10bit
+Signal rsm_wrdcnt_m1: std_logic_vector(0 to 15);  -- v10bit
+Signal rsm_wrdcnt_q: std_logic_vector(0 to 15);  -- v10bit
 attribute mark_debug of rsm_wrdcnt_q : signal is "true";
 Signal rst_pulse: std_logic_vector(0 to 5);  -- v6bit
 Signal rst_recov: std_logic_vector(0 to 5);  -- v6bit
@@ -397,8 +397,8 @@ Signal data_sent: std_logic;
 Signal start_address_update: std_logic;
 Signal start_address_d: std_logic_vector(0 to 31);
 Signal start_address: std_logic_vector(0 to 31);
-Signal start_sectors_d: std_logic_vector(0 to 9);
-Signal start_sectors: std_logic_vector(0 to 9);
+Signal start_sectors_d: std_logic_vector(0 to 15);
+Signal start_sectors: std_logic_vector(0 to 15);
 Signal start_sectors_update: std_logic;
 Signal command_update: std_logic;
 Signal command_d: std_logic_vector(0 to 7);
@@ -410,17 +410,17 @@ Signal msm_update_blkadr: std_logic;
 Signal msm_update_blkadr_q: std_logic;
 Signal esm_blkadr: std_logic_vector(0 to 31);
 Signal msm_byteadr: std_logic_vector(0 to 31);
-Signal msm_byteadr_p1: std_logic_vector(0 to 17);
-Signal msm_byteadr_d: std_logic_vector(0 to 17);
+Signal msm_byteadr_p1: std_logic_vector(0 to 23);
+Signal msm_byteadr_d: std_logic_vector(0 to 23);
 Signal msm_update_byteadr: std_logic;
 Signal msm_update_byteadr_q: std_logic;
-Signal msm_byteadr_q: std_logic_vector(0 to 17);
+Signal msm_byteadr_q: std_logic_vector(0 to 23);
 Signal more2erase: std_logic;
-Signal msm_bytecnt_m1: std_logic_vector(0 to 17);
-Signal msm_bytecnt_d: std_logic_vector(0 to 17);
+Signal msm_bytecnt_m1: std_logic_vector(0 to 23);
+Signal msm_bytecnt_d: std_logic_vector(0 to 23);
 Signal msm_update_bytecnt:std_logic;
-Signal msm_bytecnt_q: std_logic_vector(0 to 17);
-Signal msm_bytecnt: std_logic_vector(0 to 17);
+Signal msm_bytecnt_q: std_logic_vector(0 to 23);
+Signal msm_bytecnt: std_logic_vector(0 to 23);
 Signal more2pgm: std_logic;
 Signal more2read: std_logic;
 Signal spi_clk_tristate_n: std_logic;
@@ -630,7 +630,7 @@ frdack(0) <= f_read_data_ack;
  -- Outputs                             --
  -- ----------------------------------- --
 
-    pgm_remainder <= psm_bufcnt_q(0 to 9) when erase_complete='1' else esm_blkcnt_q;
+    pgm_remainder <= psm_bufcnt_q(0 to 15) when erase_complete='1' else esm_blkcnt_q;
 
     f_remainder <= rsm_wrdcnt_q when f_read_req='1' else pgm_remainder;
 
@@ -927,7 +927,8 @@ qspi_sector_erase <= X"D8";--Command then Address
     );
 
     start_address_update <= msm_s0x01;
-    start_address_d <= f_read_start_addr & "000000";
+--    start_address_d <= f_read_start_addr & "000000";
+    start_address_d <= f_read_start_addr;                 -- increasing max flash size
     endff_start_address_q: capi_en_rise_vdff GENERIC MAP ( width => 32 ) PORT MAP (
          dout => start_address,
          en => start_address_update,
@@ -937,7 +938,7 @@ qspi_sector_erase <= X"D8";--Command then Address
 
     start_sectors_update <= msm_s0x01;
     start_sectors_d <= f_num_blocks; --Size in 64KB sectors
-    endff_start_size_q: capi_en_rise_vdff GENERIC MAP ( width => 10 ) PORT MAP (
+    endff_start_size_q: capi_en_rise_vdff GENERIC MAP ( width => 16 ) PORT MAP (
          dout => start_sectors,
          en => start_sectors_update,
          din => start_sectors_d,
@@ -982,12 +983,12 @@ qspi_sector_erase <= X"D8";--Command then Address
 
     esm_blkadr_p1 <= std_logic_vector(unsigned(esm_blkadr_q) + 1) ;
 
-    esm_blkadr_d <= start_address(0 to 9) when msm_s0x10='1' else esm_blkadr_p1;
+    esm_blkadr_d <= start_address(0 to 15) when msm_s0x10='1' else esm_blkadr_p1;
 
     --bool esm_update_blkadr = (init_cnt_adr | esm_s0x11);--
     msm_update_blkadr <= (msm_s0x10 or msm_s0x16) ;
 
-    endff_esm_blkadr_q: capi_en_rise_vdff GENERIC MAP ( width => 10 ) PORT MAP (
+    endff_esm_blkadr_q: capi_en_rise_vdff GENERIC MAP ( width => 16 ) PORT MAP (
          dout => esm_blkadr_q,
          en => msm_update_blkadr,
          din => esm_blkadr_d,
@@ -999,7 +1000,7 @@ qspi_sector_erase <= X"D8";--Command then Address
          clk   => psl_clk
     );
 
-    esm_blkadr <= "000000" & esm_blkadr_q & "0000000000000000";
+    esm_blkadr <= esm_blkadr_q & "0000000000000000";
  -- -- End Section -- --
 
  -- ----------------------------------- --
@@ -1008,12 +1009,12 @@ qspi_sector_erase <= X"D8";--Command then Address
 
     msm_byteadr_p1 <=std_logic_vector(unsigned(msm_byteadr_q) + 1) ;
 
-    msm_byteadr_d <= (start_address(0 to 17)) when ((msm_s0x30='1') or (msm_s0x17='1')) else msm_byteadr_p1;
+    msm_byteadr_d <= (start_address(0 to 23)) when ((msm_s0x30='1') or (msm_s0x17='1')) else msm_byteadr_p1;
 
     --bool esm_update_blkadr = (init_cnt_adr | esm_s0x11);--
     msm_update_byteadr <= (msm_s0x17 or msm_s0x1D or msm_s0x30 or msm_s0x32) ;
 
-    endff_msm_byteadr_q: capi_en_rise_vdff GENERIC MAP ( width => 18 ) PORT MAP (
+    endff_msm_byteadr_q: capi_en_rise_vdff GENERIC MAP ( width => 24 ) PORT MAP (
          dout => msm_byteadr_q,
          en => msm_update_byteadr,
          din => msm_byteadr_d,
@@ -1025,7 +1026,7 @@ qspi_sector_erase <= X"D8";--Command then Address
          clk   => psl_clk
     );
 
-    msm_byteadr <= "000000" & msm_byteadr_q & "00000000";
+    msm_byteadr <= msm_byteadr_q & "00000000";
 
     address_d <= esm_blkadr when (msm_update_blkadr_q = '1') else
                msm_byteadr when (msm_update_byteadr_q = '1') else
@@ -1046,7 +1047,7 @@ qspi_sector_erase <= X"D8";--Command then Address
 
     esm_update_blkcnt <= msm_s0x10 or msm_s0x16 ;
 
-    endff_esm_blkcnt_q: capi_en_rise_vdff GENERIC MAP ( width => 10 ) PORT MAP (
+    endff_esm_blkcnt_q: capi_en_rise_vdff GENERIC MAP ( width => 16 ) PORT MAP (
          dout => esm_blkcnt_q,
          en => esm_update_blkcnt,
          din => esm_blkcnt_d,
@@ -1066,7 +1067,7 @@ qspi_sector_erase <= X"D8";--Command then Address
 
     msm_update_bytecnt <= msm_s0x17 or msm_s0x1D or msm_s0x30 or msm_s0x32;
 
-    endff_msm_bytecnt_q: capi_en_rise_vdff GENERIC MAP ( width => 18 ) PORT MAP (
+    endff_msm_bytecnt_q: capi_en_rise_vdff GENERIC MAP ( width => 24 ) PORT MAP (
          dout => msm_bytecnt_q,
          en => msm_update_bytecnt,
          din => msm_bytecnt_d,
