@@ -14,12 +14,15 @@ The Power Service Layer (PSL) is the component for FPGAs that provides access to
 This repository contains the necessary resources for creating a Xilinx Vivado IP container that integrates the PSL component into an FPGA card specific infrastructure for CAPI 2.0.
 
 Currently, support for the following cards is implemented:
-* [AD9V3](./AD9V3) (AlphaData 9V3)
-* [AD9H3](./AD9H3) (AlphaData 9H3 - HBM not enabled yet)
+* [AD9V3](./AD9V3)   (AlphaData 9V3)
+* [AD9H3](./AD9H3)   (AlphaData 9H3)
+* [AD9H7](./AD9H7)   (AlphaData 9H7)
 * [N250SP](./N250SP) (Nallatech 250S+)
 * [RCXVUP](./RCXVUP) (ReflexCES XpressVUP-LP9PT)
-* [FX609](./FX609) (Flyslice FX609QL)
-* [S241](./S241) (Semptian NSA241)
+* [FX609](./FX609)   (Flyslice FX609QL)
+* [S241](./S241)     (Semptian NSA241)
+* [U50](./U50)       (Xilinx U50 still in development)
+* [U200](./U200)     (Xilinx U200 still in development)
 
 The build process for the CAPI 2.0 board support depends on POWER9 PSL (PSL9) sources that can be obtained as zip archive from the IBM Portal for OpenPOWER
 
