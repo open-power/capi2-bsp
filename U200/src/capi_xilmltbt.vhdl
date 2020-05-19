@@ -117,13 +117,16 @@ begin
 
     axi_icap_start_pre <= cpld_softreconfigreq  or  start ;
 
-    -- This is for Semptian NSA241. 256MiB total. Split to 2 areas.
-    -- User image will be placed at 128MiB place 0x0800_0000 
+    -- This is for Flyslice FX609QL. 128MiB total. Split to 2 areas.
+    -- User image will be placed at 64MiB place 0x400_0000 
     -- RS pins not used in SPI mode
-
     -- wbstart_addr: [31,30]: RS | [29]: RS_TS_B | [28:0]: START_ADDR
-    -- Wait address expansion
-    wbstart_addr <= ( "000" & "0" & cpld_user_bs_req & "000" & "000000000000000000000000" );
+    -- wbstart_addr <= ( "000" & "00" & cpld_user_bs_req & "00" & "000000000000000000000000" );
+
+    --Initial wbstart_addr <= ( "000" & "0" & cpld_user_bs_req & "000" & "000000000000000000000000" );
+    --N250SP wbstart_addr <= ( '0' & cpld_user_bs_req & '1' & '0' & "0000000000000000000000000000" );
+    -- wbstart_addr <= ( '0' & cpld_user_bs_req & '1' & '0' & "0001000000000011000000000000" );
+    wbstart_addr <= ( "000" & "00" & cpld_user_bs_req & "00" & "000000000000000000000000" );
 
     dff_wbstart_addrl1: capi_rise_vdff GENERIC MAP ( width => 32 ) PORT MAP (
          dout => wbstart_addr_l1,
